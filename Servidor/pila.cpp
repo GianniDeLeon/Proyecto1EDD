@@ -2,8 +2,10 @@
 #include "enemigo.h"
 #include<stdlib.h>
 #include<time.h>
+#include <iostream>
+using namespace std;
 
-struct Pila::Nodo
+typedef struct Pila::Nodo
 {
     Enemigo *enemi;
     Nodo *siguiente;
@@ -22,7 +24,7 @@ void Pila::Push(Nodo *nuevo)
     inicioPila = nuevo;
 }
 
-Nodo *Pila::Push()
+Nodo *Pila::Pop()
 {
     Nodo *pop;
     pop = inicioPila;

@@ -1,13 +1,12 @@
 #ifndef HILOGENERACIONENEMIGOS_H
 #define HILOGENERACIONENEMIGOS_H
-
 #include <QThread>
 
 class HiloGeneracionEnemigos : public QThread
 {
     Q_OBJECT
 public:
-    explicit HiloGeneracionEnemigos(QObject *parent = nullptr);
+    HiloGeneracionEnemigos();
 
 protected:
     void run();

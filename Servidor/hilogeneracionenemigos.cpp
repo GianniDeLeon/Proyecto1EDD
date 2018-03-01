@@ -3,7 +3,7 @@
 
 Pila *pila;
 
-HiloGeneracionEnemigos::HiloGeneracionEnemigos(QObject *parent) : QObject(parent)
+HiloGeneracionEnemigos::HiloGeneracionEnemigos()
 {
     pila = new Pila();
 }
