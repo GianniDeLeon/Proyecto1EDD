@@ -25,10 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    pila.cpp \
+    enemigo.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    enemigo.h \
+    pila.h
 
 FORMS += \
         mainwindow.ui
