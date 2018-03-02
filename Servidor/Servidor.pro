@@ -28,13 +28,15 @@ SOURCES += \
         mainwindow.cpp \
     pila.cpp \
     enemigo.cpp \
-    hilogeneracionenemigos.cpp
+    hilogeneracionenemigos.cpp \
+    matrizortogonal.cpp
 
 HEADERS += \
         mainwindow.h \
     enemigo.h \
     pila.h \
-    hilogeneracionenemigos.h
+    hilogeneracionenemigos.h \
+    matrizortogonal.h
 
 FORMS += \
         mainwindow.ui
