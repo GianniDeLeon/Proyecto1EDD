@@ -4,6 +4,7 @@ Enemigo::Enemigo(int vida, int id)
 {
     this->vida = vida;
     this->id = id;
+    this->nivel = vida;
 }
 
 int Enemigo::impacto()
@@ -20,4 +21,9 @@ int Enemigo::getId()
 int Enemigo::getVida()
 {
     return vida;
+}
+
+int Enemigo::getNivel()
+{
+    return nivel;
 }

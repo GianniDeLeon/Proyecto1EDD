@@ -9,7 +9,9 @@ public:
     int impacto();
     int getVida();
     int getId();
+    int getNivel();
 protected:
+    int nivel;
     int vida;
     int id;
 };

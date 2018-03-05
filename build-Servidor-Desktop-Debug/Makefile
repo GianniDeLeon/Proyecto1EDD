@@ -54,13 +54,15 @@ SOURCES       = ../Servidor/main.cpp \
 		../Servidor/mainwindow.cpp \
 		../Servidor/pila.cpp \
 		../Servidor/enemigo.cpp \
-		../Servidor/hilogeneracionenemigos.cpp moc_mainwindow.cpp \
+		../Servidor/hilogeneracionenemigos.cpp \
+		../Servidor/matrizortogonal.cpp moc_mainwindow.cpp \
 		moc_hilogeneracionenemigos.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		pila.o \
 		enemigo.o \
 		hilogeneracionenemigos.o \
+		matrizortogonal.o \
 		moc_mainwindow.o \
 		moc_hilogeneracionenemigos.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -321,6 +323,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		../Servidor/.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -343,11 +346,13 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		../Servidor/Servidor.pro ../Servidor/mainwindow.h \
 		../Servidor/enemigo.h \
 		../Servidor/pila.h \
-		../Servidor/hilogeneracionenemigos.h ../Servidor/main.cpp \
+		../Servidor/hilogeneracionenemigos.h \
+		../Servidor/matrizortogonal.h ../Servidor/main.cpp \
 		../Servidor/mainwindow.cpp \
 		../Servidor/pila.cpp \
 		../Servidor/enemigo.cpp \
-		../Servidor/hilogeneracionenemigos.cpp
+		../Servidor/hilogeneracionenemigos.cpp \
+		../Servidor/matrizortogonal.cpp
 QMAKE_TARGET  = Servidor
 DESTDIR       = 
 TARGET        = Servidor
@@ -617,6 +622,7 @@ Makefile: ../Servidor/Servidor.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -899,6 +905,7 @@ Makefile: ../Servidor/Servidor.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr
 /usr/lib/qt/mkspecs/features/qt_config.prf:
 /usr/lib/qt/mkspecs/linux-g++/qmake.conf:
 /usr/lib/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/toolchain.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
@@ -937,8 +944,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Servidor/mainwindow.h ../Servidor/enemigo.h ../Servidor/pila.h ../Servidor/hilogeneracionenemigos.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Servidor/main.cpp ../Servidor/mainwindow.cpp ../Servidor/pila.cpp ../Servidor/enemigo.cpp ../Servidor/hilogeneracionenemigos.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Servidor/mainwindow.h ../Servidor/enemigo.h ../Servidor/pila.h ../Servidor/hilogeneracionenemigos.h ../Servidor/matrizortogonal.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Servidor/main.cpp ../Servidor/mainwindow.cpp ../Servidor/pila.cpp ../Servidor/enemigo.cpp ../Servidor/hilogeneracionenemigos.cpp ../Servidor/matrizortogonal.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Servidor/mainwindow.ui $(DISTDIR)/
 
 
@@ -1006,7 +1013,8 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 ####### Compile
 
 main.o: ../Servidor/main.cpp ../Servidor/mainwindow.h \
-		../Servidor/hilogeneracionenemigos.h
+		../Servidor/hilogeneracionenemigos.h \
+		../Servidor/matrizortogonal.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Servidor/main.cpp
 
 mainwindow.o: ../Servidor/mainwindow.cpp ../Servidor/mainwindow.h \
@@ -1023,6 +1031,10 @@ enemigo.o: ../Servidor/enemigo.cpp ../Servidor/enemigo.h
 hilogeneracionenemigos.o: ../Servidor/hilogeneracionenemigos.cpp ../Servidor/hilogeneracionenemigos.h \
 		../Servidor/pila.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hilogeneracionenemigos.o ../Servidor/hilogeneracionenemigos.cpp
+
+matrizortogonal.o: ../Servidor/matrizortogonal.cpp ../Servidor/matrizortogonal.h \
+		../Servidor/pila.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o matrizortogonal.o ../Servidor/matrizortogonal.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

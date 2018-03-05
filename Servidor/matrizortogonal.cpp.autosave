@@ -272,7 +272,7 @@ void MatrizOrtogonal::setPosicionXNodo(Nodo *&nod, int x)
            bool opt = true;
            while(opt)
            {
-               //ndo x igual problema...
+               //ndo x igual problema...                                                            
                cout << "Nodo X:"<<nop->x<<" =X:"<<x<<endl;
                if(nop->x > x)
                {

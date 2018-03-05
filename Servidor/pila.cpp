@@ -24,12 +24,13 @@ void Pila::Push(Nodo *nuevo)
     inicioPila = nuevo;
 }
 
-Nodo *Pila::Pop()
+Enemigo *Pila::Pop()
 {
     Nodo *pop;
     pop = inicioPila;
     inicioPila = inicioPila->siguiente;
-    return pop;
+    Enemigo *popp = pop->enemi;
+    return popp;
 }
 
 void Pila::generarEnemigo()
