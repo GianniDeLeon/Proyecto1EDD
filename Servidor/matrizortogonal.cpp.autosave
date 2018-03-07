@@ -167,16 +167,26 @@ bool MatrizOrtogonal::eliminarCabecerax(int x)
     {
         if(cab->x == x)
         {
-            if(cab->anterior == NULL)
+            if(cab->anterior == NULL && cab->sigiente == NULL)
             {
                 inicio->izquierda = NULL;
             }
+            else if(cab->anterior == NULL)
+            {
+                inicio->izquierda = cab->sigiente;
+                cab->sigiente->anterior = NULL;
+                cab = NULL;
+            }
+            else if(cab->sigiente == NULL)
+            {
+                cab->anterior->sigiente = NULL;
+                cab = NULL;
+            }
             else
             {
-                CabezeraX *aux;
-                aux = cab->anterior;
-                aux->sigiente = cab->sigiente;
-                cab->sigiente->anterior = aux;
+                cab->anterior->sigiente = cab->sigiente;
+                cab->sigiente->anterior = cab->anterior;
+                cab = NULL;
             }
             return true;
         }
@@ -193,16 +203,26 @@ bool MatrizOrtogonal::eliminarCabeceray(int y)
     {
         if(cab->y ==y)
         {
-            if(cab->anterior == NULL)
+            if(cab->anterior == NULL && cab->sigiente == NULL)
             {
                 inicio->abajo = NULL;
             }
+            else if(cab->anterior == NULL)
+            {
+                inicio->abajo = cab->sigiente;
+                cab->sigiente->anterior = NULL;
+                cab = NULL;
+            }
+            else if(cab->sigiente == NULL)
+            {
+                cab->anterior->sigiente = NULL;
+                cab = NULL;
+            }
             else
             {
-                CabezeraY *aux;
-                aux = cab->anterior;
-                aux->sigiente = cab->sigiente;
-                cab->sigiente->anterior = aux;
+                cab->anterior->sigiente = cab->sigiente;
+                cab->sigiente->anterior = cab->anterior;
+                cab = NULL;
             }
             return true;
         }
@@ -249,16 +269,17 @@ void MatrizOrtogonal::incertarNodo(int x, int y)
     nuevo->pila = pil;
     nuevo->x = x;
     nuevo->y = y;
-    cout << "Enviando a posicionar el nodo en x" << endl;
-    setPosicionXNodo(*&nuevo,x);
-    cout << "Enviando a posicionar el nodo en y" << endl;
-    setPosicionYNodo(*&nuevo,y);
+    nuevo->abajo = NULL;
+    nuevo->arriba = NULL;
+    nuevo->derecha = NULL;
+    nuevo->izquierda = NULL;
+    setPosicionXNodo(*&nuevo,x,y);
+    setPosicionYNodo(*&nuevo,y,x);
 }
 
-void MatrizOrtogonal::setPosicionXNodo(Nodo *&nod, int x)
+void MatrizOrtogonal::setPosicionXNodo(Nodo *&nod, int x,int y)
 {
        CabezeraX *cab = buscarCabeceraX(x);
-       cout << "Cabezera retornadaX: "<<cab->x << endl;
        Nodo *nop = cab->abajo;
        if(nop == NULL)
        {
@@ -268,13 +289,10 @@ void MatrizOrtogonal::setPosicionXNodo(Nodo *&nod, int x)
        }
        else
        {
-           cout << "Nodo retornado X:"<<nop->x<<" Y:"<<nop->y<<endl;
            bool opt = true;
            while(opt)
            {
-               //ndo x igual problema...                                                            
-               cout << "Nodo X:"<<nop->x<<" =X:"<<x<<endl;
-               if(nop->x > x)
+               if(nop->y > y)
                {
                    if(nop->arriba == NULL)
                    {
@@ -292,12 +310,18 @@ void MatrizOrtogonal::setPosicionXNodo(Nodo *&nod, int x)
                    opt = false;
                    break;
                }
+               else if(nop->abajo == NULL)
+               {
+                   nop->abajo = nod;
+                   nod->arriba = nop;
+                   break;
+               }
                nop = nop->abajo;
            }
        }
 }
 
-void MatrizOrtogonal::setPosicionYNodo(Nodo *&nod,int y)
+void MatrizOrtogonal::setPosicionYNodo(Nodo *&nod,int y, int x)
 {
     CabezeraY *cab = buscarCabeceraY(y);
     Nodo *nop = cab->izquierda;
@@ -312,7 +336,7 @@ void MatrizOrtogonal::setPosicionYNodo(Nodo *&nod,int y)
         bool opt = true;
         while(opt)
         {
-            if(nop->y > y)
+            if(nop->x > x)
             {
                 if(nop->derecha == NULL)
                 {
@@ -329,18 +353,128 @@ void MatrizOrtogonal::setPosicionYNodo(Nodo *&nod,int y)
                 }
                 break;
             }
+            else if(nop->izquierda == NULL)
+            {
+                nop->izquierda = nod;
+                nod->derecha = nod;
+                break;
+            }
             nop = nop->izquierda;
         }
     }
+}
+
+Nodo *MatrizOrtogonal::buscarNodo(int x, int y)
+{
+    CabezeraX *cabx = buscarCabeceraX(x);
+    if(cabx != NULL)
+    {
+        Nodo *nod = cabx->abajo;
+        if(nod != NULL)
+        {
+            while(nod != NULL)
+            {
+                if(nod->x == x && nod->y == y)
+                {
+                    return nod;
+                }
+                nod = nod->abajo;
+            }
+        }
+    }
+    return NULL;
+}
+
+void MatrizOrtogonal::eliminarNodo(int x, int y)
+{
+    Nodo *nod = buscarNodo(x,y);
+    if(nod != NULL)
+    {
+        eliminarNodoX(*&nod);
+        eliminarNodoY(*&nod);
+    }
+}
+
+void MatrizOrtogonal::eliminarNodoX(Nodo *&nod)
+{
+    if(nod->arriba == NULL && nod->abajo == NULL)
+    {
+        eliminarCabecerax(nod->x);
+        //nod = NULL;
+    }
+    else if(nod->arriba == NULL)
+    {
+        CabezeraX *cabx = buscarCabeceraX(nod->x);
+        cabx->abajo = nod->abajo;
+        nod->abajo->arriba = NULL;
+        //nod = NULL;
+    }
+    else if(nod->abajo == NULL)
+    {
+        nod->arriba->abajo = NULL;
+        //nod = NULL;
+    }
+    else
+    {
+        nod->arriba->abajo = nod->abajo;
+        nod->abajo->arriba = nod->arriba;
+        //nod = NULL;
+    }
+}
+
+void MatrizOrtogonal::eliminarNodoY(Nodo *&nod)
+{
+    if(nod->izquierda == NULL && nod->derecha == NULL)
+    {
+        eliminarCabeceray(nod->y);
+        nod = NULL;
+    }
+    else if(nod->derecha == NULL)
+    {
+        CabezeraY *caby = buscarCabeceraY(nod->y);
+        caby->izquierda = nod->izquierda;
+        nod->izquierda->derecha = NULL;
+        nod= NULL;
+    }
+    else if(nod->izquierda == NULL)
+    {
+        cout <<"Eliminando nodo Final de la Cabecera Y"<<endl;
+        nod->derecha->izquierda = NULL;
+        nod = NULL;
+    }
+    else
+    {
+        nod->izquierda->derecha = nod->derecha;
+        nod->derecha->izquierda = nod->izquierda;
+        nod = NULL;
+    }
+}
+
+void MatrizOrtogonal::incertarMaloPila(Nodo *&nod)
+{
+    Pila *pill = *&nod->pila;
+    pill->generarEnemigo();
 }
 
 void MatrizOrtogonal::menuCab()
 {
     incertarNodo(1,1);
     incertarNodo(1,2);
-    //incertarNodo(3,3);
-    //incertarNodo(1,3);
+    incertarNodo(3,3);
+    incertarNodo(1,3);
     incertarNodo(2,2);
+    cout << "Recorriendo cabezera X" << endl;
+    recorrerCabX();
+    cout << "Recorriendo cabezera y" << endl;
+    recorrerCaby();
+    cout << "Eliminando Nodo" << endl;
+    eliminarNodo(1,2);
+    //eliminarNodo(1,3);
+    //eliminarNodo(1,1);
+    //eliminarNodo(1,2);
+
+    eliminarNodo(2,2);
+    cout << "#######ELIMINACION##############"<<endl;
     cout << "Recorriendo cabezera X" << endl;
     recorrerCabX();
     cout << "Recorriendo cabezera y" << endl;

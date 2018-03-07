@@ -25,6 +25,7 @@ public:
     void eliminarNodoX(Nodo *&nod);
     Nodo *buscarNodo(int x, int y);
     void eliminarNodoY(Nodo *&nod);
+    void incertarMaloPila(Nodo *&nod);
     void menuCab();
     void recorrerCabX();
     void recorrerNodoX(Nodo *nod);
