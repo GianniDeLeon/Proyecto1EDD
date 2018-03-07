@@ -10,7 +10,8 @@ public:
     void generarEnemigo();
     void Push(Nodo*);
     Enemigo *Pop();
-
+    bool Vacia();
+    void pushEnemigo(Enemigo *en);
 protected:
     Nodo *inicioPila;
 };

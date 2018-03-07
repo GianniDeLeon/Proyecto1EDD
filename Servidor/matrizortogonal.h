@@ -1,6 +1,6 @@
 #ifndef MATRIZORTOGONAL_H
 #define MATRIZORTOGONAL_H
-
+#include "enemigo.h"
 
 class MatrizOrtogonal
 {
@@ -10,6 +10,7 @@ public:
     struct Nodo;
     struct CabezeraX;
     struct CabezeraY;
+    struct ListaEnemigos;
     CabezeraX *crearCabezerax(int x);
     CabezeraX *incertarCabezeraX(int x);
     CabezeraY *crearCabezeray(int y);
@@ -19,13 +20,21 @@ public:
     bool eliminarCabecerax(int x);
     bool eliminarCabeceray(int y);
     void incertarNodo(int x, int y);
+    void incertarNodo(int x, int y, Enemigo *en);
     void setPosicionXNodo(Nodo *&nod, int x,int y);
     void setPosicionYNodo(Nodo *&nod, int y,int x);
     void eliminarNodo(int x, int y);
     void eliminarNodoX(Nodo *&nod);
     Nodo *buscarNodo(int x, int y);
     void eliminarNodoY(Nodo *&nod);
+    void incertarMaloPila(Nodo *&nod);
+    void moverTopePila(int xi, int yi);
+    void incertarEnemigoLista(ListaEnemigos *&ini, Enemigo *en);
+    void atacarNodo(int x, int y);
     void menuCab();
+    void recorrerLV1();
+    void recorrerLV2();
+    void recorrerLV3();
     void recorrerCabX();
     void recorrerNodoX(Nodo *nod);
     void recorrerCaby();

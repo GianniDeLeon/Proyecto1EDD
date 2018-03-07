@@ -1,6 +1,9 @@
 #include "matrizortogonal.h"
 #include "pila.h"
+#include "enemigo.h"
 #include <iostream>
+#include<time.h>
+
 using namespace std;
 
 typedef struct MatrizOrtogonal::Nodo
@@ -30,6 +33,13 @@ typedef struct MatrizOrtogonal::NodoRaiz
     CabezeraY *abajo;
 }NodoRaiz;
 
+typedef struct MatrizOrtogonal::ListaEnemigos
+{
+    Enemigo *enemigo;
+    ListaEnemigos *siguiente;
+}ListaEnemigos;
+
+ListaEnemigos *LV1,*LV2,*LV3;
 NodoRaiz *inicio;
 int limit;
 
@@ -39,6 +49,7 @@ MatrizOrtogonal::MatrizOrtogonal(int limit)
     inicio = new NodoRaiz;
     inicio->abajo = NULL;
     inicio->izquierda = NULL;
+    srand(time(NULL));
 }
 
 CabezeraX *MatrizOrtogonal::incertarCabezeraX(int x)
@@ -277,6 +288,21 @@ void MatrizOrtogonal::incertarNodo(int x, int y)
     setPosicionYNodo(*&nuevo,y,x);
 }
 
+void MatrizOrtogonal::incertarNodo(int x, int y, Enemigo *en)
+{
+    Nodo *nuevo = new Nodo;
+    Pila *pil = new Pila;
+    pil->pushEnemigo(en);
+    nuevo->pila = pil;
+    nuevo->x = x;
+    nuevo->y = y;
+    nuevo->abajo = NULL;
+    nuevo->arriba = NULL;
+    nuevo->derecha = NULL;
+    nuevo->izquierda = NULL;
+    setPosicionXNodo(*&nuevo,x,y);
+    setPosicionYNodo(*&nuevo,y,x);
+}
 void MatrizOrtogonal::setPosicionXNodo(Nodo *&nod, int x,int y)
 {
        CabezeraX *cab = buscarCabeceraX(x);
@@ -449,6 +475,161 @@ void MatrizOrtogonal::eliminarNodoY(Nodo *&nod)
         nod = NULL;
     }
 }
+
+void MatrizOrtogonal::incertarMaloPila(Nodo *&nod)
+{
+    Pila *pill = *&nod->pila;
+    pill->generarEnemigo();
+}
+
+void MatrizOrtogonal::moverTopePila(int xi, int yi)
+{
+    Nodo *nod = buscarNodo(xi,yi);
+    Enemigo *en = nod->pila->Pop();
+    int movimiento = 1 + rand()%(4-1);
+    cout <<"Moviendo tope de pila de X:"<<nod->x<<" Y:"<<nod->y<<" Random:"<<movimiento<<endl;
+    Nodo *nodaux;
+    int y=0,x=0;
+    switch (movimiento) {
+    case 1:
+            //Movimiento hacia arriba
+        if(nod->y > 1)
+        {
+            y = nod->y -1;
+            x = nod->x;
+            nodaux = buscarNodo(x,y);
+            if(nodaux != NULL)
+            {
+                nodaux->pila->pushEnemigo(en);
+            }
+            else
+            {
+                incertarNodo(x,y,en);
+            }
+        }
+        else
+        {
+            //moverTopePila(xi,yi);
+        }
+        break;
+    case 2:
+            //Movimiento hacia abajo
+        if(nod->y < limit)
+        {
+            y = nod->y + 1;
+            x = nod->x;
+            nodaux = buscarNodo(x,y);
+            if(nodaux != NULL)
+            {
+                nodaux->pila->pushEnemigo(en);
+            }
+            else
+            {
+                incertarNodo(x,y,en);
+            }
+        }
+        else
+        {
+            //moverTopePila(xi,yi);
+        }
+        break;
+    case 3:
+            //Moviminto hacia la derecha
+        if(nod->x > 1)
+        {
+            y = nod->y;
+            x = nod->x -1;
+            nodaux = buscarNodo(x,y);
+            if(nodaux != NULL)
+            {
+                nodaux->pila->pushEnemigo(en);
+            }
+            else
+            {
+                incertarNodo(x,y,en);
+            }
+        }
+        else
+        {
+            //moverTopePila(xi,yi);
+        }
+        break;
+    case 4:
+            //Movimiento hacia la izquierda
+        if(nod->x < limit)
+        {
+            y = nod->y;
+            x = nod->x +1;
+            nodaux = buscarNodo(x,y);
+            if(nodaux != NULL)
+            {
+                nodaux->pila->pushEnemigo(en);
+            }
+            else
+            {
+                incertarNodo(x,y,en);
+            }
+        }
+        else
+        {
+           // moverTopePila(xi,yi);
+        }
+        break;
+    default:
+        break;
+    }
+    cout << "Movimiento tope de pila de X:"<<nod->x<<" Y:"<<nod->y<<" a X:"<<x<<" Y:"<<y<<endl;
+}
+
+void MatrizOrtogonal::incertarEnemigoLista(ListaEnemigos *&ini, Enemigo *en)
+{
+    ListaEnemigos *nuevo = new ListaEnemigos;
+    nuevo->enemigo = en;
+    if(ini == NULL)
+    {
+        nuevo->siguiente= NULL;
+        ini = nuevo;
+    }
+    else
+    {
+        nuevo->siguiente = ini;
+        ini = nuevo;
+    }
+}
+
+void MatrizOrtogonal::atacarNodo(int x, int y)
+{
+    Nodo *nod = buscarNodo(x,y);
+    Pila *pill = nod->pila;
+    Enemigo *en = pill->Pop();
+    cout << "Atacando en la posicion X:"<<x<<" Y:"<<y<<endl;
+    int vida = en->impacto();
+    cout << "Vida restante del enemigo "<<vida<<" Nivel:"<<en->getNivel()<<endl;
+    if(vida == 0)
+    {
+        switch (en->getNivel()) {
+        case 1:
+            cout << "Incertando en nivel 1"<<endl;
+            incertarEnemigoLista(*&LV1,en);
+            break;
+        case 2:
+            cout << "Incertando en nivel 2"<<endl;
+            incertarEnemigoLista(*&LV2,en);
+            break;
+        case 3:
+            cout << "Incertando en nivel 3"<<endl;
+            incertarEnemigoLista(*&LV3,en);
+            break;
+        default:
+            break;
+        }
+    }
+    else
+    {
+        pill->pushEnemigo(en);
+    }
+}
+
 void MatrizOrtogonal::menuCab()
 {
     incertarNodo(1,1);
@@ -456,22 +637,65 @@ void MatrizOrtogonal::menuCab()
     incertarNodo(3,3);
     incertarNodo(1,3);
     incertarNodo(2,2);
-    cout << "Recorriendo cabezera X" << endl;
-    recorrerCabX();
-    cout << "Recorriendo cabezera y" << endl;
-    recorrerCaby();
-    cout << "Eliminando Nodo" << endl;
-    eliminarNodo(1,2);
-    //eliminarNodo(1,3);
-    //eliminarNodo(1,1);
-    //eliminarNodo(1,2);
+    cout << "Mover tope de pila"<<endl;
+    moverTopePila(1,1);
+    cout << "Atacando Nodo"<<endl;
+    atacarNodo(1,2);
+    atacarNodo(1,2);
+    cout << "Recorriendo Lista de enemigos"<<endl;
+    recorrerLV1();
+    recorrerLV2();
+    recorrerLV3();
+//    cout << "Recorriendo cabezera X" << endl;
+//    recorrerCabX();
+//    cout << "Recorriendo cabezera y" << endl;
+//    recorrerCaby();
+//    cout << "Eliminando Nodo" << endl;
+//    eliminarNodo(1,2);
+//    //eliminarNodo(1,3);
+//    //eliminarNodo(1,1);
+//    //eliminarNodo(1,2);
 
-    eliminarNodo(2,2);
-    cout << "#######ELIMINACION##############"<<endl;
-    cout << "Recorriendo cabezera X" << endl;
-    recorrerCabX();
-    cout << "Recorriendo cabezera y" << endl;
-    recorrerCaby();
+//    eliminarNodo(2,2);
+//    cout << "#######ELIMINACION##############"<<endl;
+//    cout << "Recorriendo cabezera X" << endl;
+//    recorrerCabX();
+//    cout << "Recorriendo cabezera y" << endl;
+//    recorrerCaby();
+
+}
+
+void MatrizOrtogonal::recorrerLV1()
+{
+    ListaEnemigos *aux = LV1;
+    while(aux != NULL)
+    {
+        Enemigo *en = aux->enemigo;
+        cout << "Enemigo ID:"<<en->getId()<<" Nivel:"<<en->getNivel()<<endl;
+        aux = aux->siguiente;
+    }
+}
+
+void MatrizOrtogonal::recorrerLV2()
+{
+    ListaEnemigos *aux = LV2;
+    while(aux != NULL)
+    {
+        Enemigo *en = aux->enemigo;
+        cout << "Enemigo ID:"<<en->getId()<<" Nivel:"<<en->getNivel()<<endl;
+        aux = aux->siguiente;
+    }
+}
+
+void MatrizOrtogonal::recorrerLV3()
+{
+    ListaEnemigos *aux = LV3;
+    while(aux != NULL)
+    {
+        Enemigo *en = aux->enemigo;
+        cout << "Enemigo ID:"<<en->getId()<<" Nivel:"<<en->getNivel()<<endl;
+        aux = aux->siguiente;
+    }
 }
 
 void MatrizOrtogonal::recorrerCabX()
