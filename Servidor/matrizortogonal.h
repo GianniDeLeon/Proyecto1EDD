@@ -31,6 +31,7 @@ public:
     void moverTopePila(int xi, int yi);
     void incertarEnemigoLista(ListaEnemigos *&ini, Enemigo *en);
     void atacarNodo(int x, int y);
+    void PilaVacia(Nodo *&nod);
     void menuCab();
     void recorrerLV1();
     void recorrerLV2();

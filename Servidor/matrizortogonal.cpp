@@ -49,7 +49,7 @@ MatrizOrtogonal::MatrizOrtogonal(int limit)
     inicio = new NodoRaiz;
     inicio->abajo = NULL;
     inicio->izquierda = NULL;
-    srand(time(NULL));
+    //srand(time(NULL));
 }
 
 CabezeraX *MatrizOrtogonal::incertarCabezeraX(int x)
@@ -509,7 +509,7 @@ void MatrizOrtogonal::moverTopePila(int xi, int yi)
         }
         else
         {
-            //moverTopePila(xi,yi);
+            moverTopePila(xi,yi);
         }
         break;
     case 2:
@@ -530,7 +530,7 @@ void MatrizOrtogonal::moverTopePila(int xi, int yi)
         }
         else
         {
-            //moverTopePila(xi,yi);
+            moverTopePila(xi,yi);
         }
         break;
     case 3:
@@ -551,7 +551,7 @@ void MatrizOrtogonal::moverTopePila(int xi, int yi)
         }
         else
         {
-            //moverTopePila(xi,yi);
+            moverTopePila(xi,yi);
         }
         break;
     case 4:
@@ -572,7 +572,7 @@ void MatrizOrtogonal::moverTopePila(int xi, int yi)
         }
         else
         {
-           // moverTopePila(xi,yi);
+           moverTopePila(xi,yi);
         }
         break;
     default:
@@ -611,6 +611,7 @@ void MatrizOrtogonal::atacarNodo(int x, int y)
         case 1:
             cout << "Incertando en nivel 1"<<endl;
             incertarEnemigoLista(*&LV1,en);
+
             break;
         case 2:
             cout << "Incertando en nivel 2"<<endl;
@@ -623,10 +624,35 @@ void MatrizOrtogonal::atacarNodo(int x, int y)
         default:
             break;
         }
+        PilaVacia(*&nod);
     }
     else
     {
         pill->pushEnemigo(en);
+    }
+}
+
+void MatrizOrtogonal::PilaVacia(Nodo *&nod)
+{
+    Pila *pil = nod->pila;
+    if(pil->PilaVacia())
+    {
+        eliminarNodo(nod->x,nod->y);
+    }
+}
+
+void run()
+{
+    int x,y;
+    while(true)
+    {
+        x = 1 + rand()%(limit-1);
+        y = 1 + rand()%(limit-1);
+        incertarNodo(x,y);
+        x = 1 + rand()%(limit-1);
+        y = 1 + rand()%(limit-1);
+        moverTopePila(x,y);
+        msleep(8000);
     }
 }
 
