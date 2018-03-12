@@ -1,16 +1,20 @@
 #ifndef MATRIZORTOGONAL_H
 #define MATRIZORTOGONAL_H
 #include "enemigo.h"
-
-class MatrizOrtogonal
+#include "gema.h"
+#include <QThread>
+class MatrizOrtogonal : public QThread
 {
 public:
     MatrizOrtogonal(int);
+    int NumImpactos;
     struct NodoRaiz;
     struct Nodo;
     struct CabezeraX;
     struct CabezeraY;
     struct ListaEnemigos;
+    struct ListaGemas;
+    void setLimit(int limit);
     CabezeraX *crearCabezerax(int x);
     CabezeraX *incertarCabezeraX(int x);
     CabezeraY *crearCabezeray(int y);
@@ -30,6 +34,8 @@ public:
     void incertarMaloPila(Nodo *&nod);
     void moverTopePila(int xi, int yi);
     void incertarEnemigoLista(ListaEnemigos *&ini, Enemigo *en);
+    void incertarGema(Gema *gem);
+    ListaGemas *getListaGemas();
     void atacarNodo(int x, int y);
     void PilaVacia(Nodo *&nod);
     void menuCab();
@@ -43,6 +49,9 @@ public:
 private:
     NodoRaiz *inicio;
     int limit;
+
+protected:
+    void run();
 };
 
 #endif // MATRIZORTOGONAL_H

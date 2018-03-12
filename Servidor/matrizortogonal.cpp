@@ -3,7 +3,7 @@
 #include "enemigo.h"
 #include <iostream>
 #include<time.h>
-
+#include "gema.h"
 using namespace std;
 
 typedef struct MatrizOrtogonal::Nodo
@@ -39,17 +39,29 @@ typedef struct MatrizOrtogonal::ListaEnemigos
     ListaEnemigos *siguiente;
 }ListaEnemigos;
 
-ListaEnemigos *LV1,*LV2,*LV3;
-NodoRaiz *inicio;
+typedef struct MatrizOrtogonal::ListaGemas
+{
+    Gema *gem;
+    ListaGemas *siguiente;
+}ListaGemas;
+
+ListaEnemigos *LV1=NULL,*LV2=NULL,*LV3=NULL;
+ListaGemas *LG=NULL;
+NodoRaiz *inicio=NULL;
 int limit;
 
 MatrizOrtogonal::MatrizOrtogonal(int limit)
 {
     this->limit = limit;
+    this->NumImpactos =0;
     inicio = new NodoRaiz;
     inicio->abajo = NULL;
     inicio->izquierda = NULL;
-    //srand(time(NULL));
+}
+
+void MatrizOrtogonal::setLimit(int limit)
+{
+    this->limit = limit;
 }
 
 CabezeraX *MatrizOrtogonal::incertarCabezeraX(int x)
@@ -284,7 +296,9 @@ void MatrizOrtogonal::incertarNodo(int x, int y)
     nuevo->arriba = NULL;
     nuevo->derecha = NULL;
     nuevo->izquierda = NULL;
+    cout << "Setiando posicion X"<<endl;
     setPosicionXNodo(*&nuevo,x,y);
+    cout << "Setiando posicion Y"<<endl;
     setPosicionYNodo(*&nuevo,y,x);
 }
 
@@ -485,100 +499,107 @@ void MatrizOrtogonal::incertarMaloPila(Nodo *&nod)
 void MatrizOrtogonal::moverTopePila(int xi, int yi)
 {
     Nodo *nod = buscarNodo(xi,yi);
-    Enemigo *en = nod->pila->Pop();
-    int movimiento = 1 + rand()%(4-1);
-    cout <<"Moviendo tope de pila de X:"<<nod->x<<" Y:"<<nod->y<<" Random:"<<movimiento<<endl;
-    Nodo *nodaux;
-    int y=0,x=0;
-    switch (movimiento) {
-    case 1:
-            //Movimiento hacia arriba
-        if(nod->y > 1)
-        {
-            y = nod->y -1;
-            x = nod->x;
-            nodaux = buscarNodo(x,y);
-            if(nodaux != NULL)
+    if(nod != NULL)
+    {
+        Enemigo *en = nod->pila->Pop();
+        int movimiento = 1 + rand()%(4-1);
+        cout <<"Moviendo tope de pila de X:"<<nod->x<<" Y:"<<nod->y<<" Random:"<<movimiento<<endl;
+        Nodo *nodaux;
+        int y=0,x=0;
+        switch (movimiento) {
+        case 1:
+                //Movimiento hacia arriba
+            if(nod->y > 1)
             {
-                nodaux->pila->pushEnemigo(en);
+                y = nod->y -1;
+                x = nod->x;
+                nodaux = buscarNodo(x,y);
+                if(nodaux != NULL)
+                {
+                    nodaux->pila->pushEnemigo(en);
+                }
+                else
+                {
+                    incertarNodo(x,y,en);
+                }
             }
             else
             {
-                incertarNodo(x,y,en);
+                //moverTopePila(xi,yi);
             }
-        }
-        else
-        {
-            moverTopePila(xi,yi);
-        }
-        break;
-    case 2:
-            //Movimiento hacia abajo
-        if(nod->y < limit)
-        {
-            y = nod->y + 1;
-            x = nod->x;
-            nodaux = buscarNodo(x,y);
-            if(nodaux != NULL)
+            break;
+        case 2:
+                //Movimiento hacia abajo
+            if(nod->y < limit)
             {
-                nodaux->pila->pushEnemigo(en);
+                y = nod->y + 1;
+                x = nod->x;
+                nodaux = buscarNodo(x,y);
+                if(nodaux != NULL)
+                {
+                    nodaux->pila->pushEnemigo(en);
+                }
+                else
+                {
+                    incertarNodo(x,y,en);
+                }
             }
             else
             {
-                incertarNodo(x,y,en);
+                //moverTopePila(xi,yi);
             }
-        }
-        else
-        {
-            moverTopePila(xi,yi);
-        }
-        break;
-    case 3:
-            //Moviminto hacia la derecha
-        if(nod->x > 1)
-        {
-            y = nod->y;
-            x = nod->x -1;
-            nodaux = buscarNodo(x,y);
-            if(nodaux != NULL)
+            break;
+        case 3:
+                //Moviminto hacia la derecha
+            if(nod->x > 1)
             {
-                nodaux->pila->pushEnemigo(en);
+                y = nod->y;
+                x = nod->x -1;
+                nodaux = buscarNodo(x,y);
+                if(nodaux != NULL)
+                {
+                    nodaux->pila->pushEnemigo(en);
+                }
+                else
+                {
+                    incertarNodo(x,y,en);
+                }
             }
             else
             {
-                incertarNodo(x,y,en);
+                //moverTopePila(xi,yi);
             }
-        }
-        else
-        {
-            moverTopePila(xi,yi);
-        }
-        break;
-    case 4:
-            //Movimiento hacia la izquierda
-        if(nod->x < limit)
-        {
-            y = nod->y;
-            x = nod->x +1;
-            nodaux = buscarNodo(x,y);
-            if(nodaux != NULL)
+            break;
+        case 4:
+                //Movimiento hacia la izquierda
+            if(nod->x < limit)
             {
-                nodaux->pila->pushEnemigo(en);
+                y = nod->y;
+                x = nod->x +1;
+                nodaux = buscarNodo(x,y);
+                if(nodaux != NULL)
+                {
+                    nodaux->pila->pushEnemigo(en);
+                }
+                else
+                {
+                    incertarNodo(x,y,en);
+                }
             }
             else
             {
-                incertarNodo(x,y,en);
+               //moverTopePila(xi,yi);
             }
+            break;
+        default:
+            break;
         }
-        else
-        {
-           moverTopePila(xi,yi);
-        }
-        break;
-    default:
-        break;
+        cout << "Movimiento tope de pila de X:"<<nod->x<<" Y:"<<nod->y<<" a X:"<<x<<" Y:"<<y<<endl;
     }
-    cout << "Movimiento tope de pila de X:"<<nod->x<<" Y:"<<nod->y<<" a X:"<<x<<" Y:"<<y<<endl;
+    else
+    {
+        cout << "No se movio tope de pila puesto que el nodo no existe"<<endl;
+    }
 }
 
 void MatrizOrtogonal::incertarEnemigoLista(ListaEnemigos *&ini, Enemigo *en)
@@ -597,62 +618,110 @@ void MatrizOrtogonal::incertarEnemigoLista(ListaEnemigos *&ini, Enemigo *en)
     }
 }
 
+void MatrizOrtogonal::incertarGema(Gema *gem)
+{
+    ListaGemas *nuevo = new ListaGemas;
+    nuevo->gem = gem;
+    nuevo->siguiente = LG;
+    LG = nuevo;
+}
+
+ListaGemas *MatrizOrtogonal::getListaGemas()
+{
+    return LG;
+}
+
 void MatrizOrtogonal::atacarNodo(int x, int y)
 {
     Nodo *nod = buscarNodo(x,y);
-    Pila *pill = nod->pila;
-    Enemigo *en = pill->Pop();
-    cout << "Atacando en la posicion X:"<<x<<" Y:"<<y<<endl;
-    int vida = en->impacto();
-    cout << "Vida restante del enemigo "<<vida<<" Nivel:"<<en->getNivel()<<endl;
-    if(vida == 0)
+    if(nod != NULL)
     {
-        switch (en->getNivel()) {
-        case 1:
-            cout << "Incertando en nivel 1"<<endl;
-            incertarEnemigoLista(*&LV1,en);
+        this->NumImpactos ++;
+        Pila *pill = nod->pila;
+        Enemigo *en = pill->Pop();
+        if(en != NULL)
+        {
+            cout << "Atacando en la posicion X:"<<x<<" Y:"<<y<<endl;
+            int vida = en->impacto();
+            cout << "Vida restante del enemigo "<<vida<<" Nivel:"<<en->getNivel()<<endl;
+            if(this->NumImpactos == 5)
+            {
+                this->NumImpactos = 0;
+                pill->generarGema();
+            }
+            if(vida == 0)
+            {
+                switch (en->getNivel()) {
+                case 1:
+                    cout << "Incertando en nivel 1"<<endl;
+                    incertarEnemigoLista(*&LV1,en);
 
-            break;
-        case 2:
-            cout << "Incertando en nivel 2"<<endl;
-            incertarEnemigoLista(*&LV2,en);
-            break;
-        case 3:
-            cout << "Incertando en nivel 3"<<endl;
-            incertarEnemigoLista(*&LV3,en);
-            break;
-        default:
-            break;
+                    break;
+                case 2:
+                    cout << "Incertando en nivel 2"<<endl;
+                    incertarEnemigoLista(*&LV2,en);
+                    break;
+                case 3:
+                    cout << "Incertando en nivel 3"<<endl;
+                    incertarEnemigoLista(*&LV3,en);
+                    break;
+                default:
+                    break;
+                }
+                PilaVacia(*&nod);
+            }
+            else
+            {
+                pill->pushEnemigo(en);
+            }
         }
-        PilaVacia(*&nod);
+        else
+        {
+            Gema *gem = pill->getGema();
+            incertarGema(gem);
+        }
     }
     else
     {
-        pill->pushEnemigo(en);
+        NumImpactos =0;
     }
 }
 
 void MatrizOrtogonal::PilaVacia(Nodo *&nod)
 {
     Pila *pil = nod->pila;
-    if(pil->PilaVacia())
+    if(pil->Vacia())
     {
         eliminarNodo(nod->x,nod->y);
     }
 }
 
-void run()
+void MatrizOrtogonal::run()
 {
     int x,y;
     while(true)
     {
+        cout << "Generando coordenadas aleatorias para incertar nodo"<<endl;
         x = 1 + rand()%(limit-1);
         y = 1 + rand()%(limit-1);
-        incertarNodo(x,y);
+        cout << "Incertando nodo en X:"<<x<<" Y:"<<y<<endl;
+        Nodo *nod = buscarNodo(x,y);
+        if(nod != NULL)
+        {
+            cout << "Nodo ya existente se generara malo en dicha posicion"<<endl;
+            incertarMaloPila(*&nod);
+        }
+        else
+        {
+            cout << "Incertando nodo"<<endl;
+            incertarNodo(x,y);
+        }
+        cout << "Generando coordenadas aleatorias para Mover tope de pila"<<endl;
         x = 1 + rand()%(limit-1);
         y = 1 + rand()%(limit-1);
+        cout << "Moviendo Tope de pila en X:"<<x<<" Y:"<<y<<endl;
         moverTopePila(x,y);
-        msleep(8000);
+        msleep(1000);
     }
 }
 

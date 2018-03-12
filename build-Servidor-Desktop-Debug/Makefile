@@ -55,7 +55,9 @@ SOURCES       = ../Servidor/main.cpp \
 		../Servidor/pila.cpp \
 		../Servidor/enemigo.cpp \
 		../Servidor/hilogeneracionenemigos.cpp \
-		../Servidor/matrizortogonal.cpp moc_mainwindow.cpp \
+		../Servidor/matrizortogonal.cpp \
+		../Servidor/gema.cpp \
+		../Servidor/niveles.cpp moc_mainwindow.cpp \
 		moc_hilogeneracionenemigos.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
@@ -63,6 +65,8 @@ OBJECTS       = main.o \
 		enemigo.o \
 		hilogeneracionenemigos.o \
 		matrizortogonal.o \
+		gema.o \
+		niveles.o \
 		moc_mainwindow.o \
 		moc_hilogeneracionenemigos.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -347,12 +351,16 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		../Servidor/enemigo.h \
 		../Servidor/pila.h \
 		../Servidor/hilogeneracionenemigos.h \
-		../Servidor/matrizortogonal.h ../Servidor/main.cpp \
+		../Servidor/matrizortogonal.h \
+		../Servidor/gema.h \
+		../Servidor/niveles.h ../Servidor/main.cpp \
 		../Servidor/mainwindow.cpp \
 		../Servidor/pila.cpp \
 		../Servidor/enemigo.cpp \
 		../Servidor/hilogeneracionenemigos.cpp \
-		../Servidor/matrizortogonal.cpp
+		../Servidor/matrizortogonal.cpp \
+		../Servidor/gema.cpp \
+		../Servidor/niveles.cpp
 QMAKE_TARGET  = Servidor
 DESTDIR       = 
 TARGET        = Servidor
@@ -944,8 +952,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Servidor/mainwindow.h ../Servidor/enemigo.h ../Servidor/pila.h ../Servidor/hilogeneracionenemigos.h ../Servidor/matrizortogonal.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Servidor/main.cpp ../Servidor/mainwindow.cpp ../Servidor/pila.cpp ../Servidor/enemigo.cpp ../Servidor/hilogeneracionenemigos.cpp ../Servidor/matrizortogonal.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Servidor/mainwindow.h ../Servidor/enemigo.h ../Servidor/pila.h ../Servidor/hilogeneracionenemigos.h ../Servidor/matrizortogonal.h ../Servidor/gema.h ../Servidor/niveles.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Servidor/main.cpp ../Servidor/mainwindow.cpp ../Servidor/pila.cpp ../Servidor/enemigo.cpp ../Servidor/hilogeneracionenemigos.cpp ../Servidor/matrizortogonal.cpp ../Servidor/gema.cpp ../Servidor/niveles.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Servidor/mainwindow.ui $(DISTDIR)/
 
 
@@ -1014,7 +1022,9 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 main.o: ../Servidor/main.cpp ../Servidor/mainwindow.h \
 		../Servidor/hilogeneracionenemigos.h \
-		../Servidor/matrizortogonal.h
+		../Servidor/matrizortogonal.h \
+		../Servidor/enemigo.h \
+		../Servidor/gema.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Servidor/main.cpp
 
 mainwindow.o: ../Servidor/mainwindow.cpp ../Servidor/mainwindow.h \
@@ -1022,19 +1032,33 @@ mainwindow.o: ../Servidor/mainwindow.cpp ../Servidor/mainwindow.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Servidor/mainwindow.cpp
 
 pila.o: ../Servidor/pila.cpp ../Servidor/pila.h \
-		../Servidor/enemigo.h
+		../Servidor/enemigo.h \
+		../Servidor/gema.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pila.o ../Servidor/pila.cpp
 
 enemigo.o: ../Servidor/enemigo.cpp ../Servidor/enemigo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o enemigo.o ../Servidor/enemigo.cpp
 
 hilogeneracionenemigos.o: ../Servidor/hilogeneracionenemigos.cpp ../Servidor/hilogeneracionenemigos.h \
-		../Servidor/pila.h
+		../Servidor/pila.h \
+		../Servidor/enemigo.h \
+		../Servidor/gema.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hilogeneracionenemigos.o ../Servidor/hilogeneracionenemigos.cpp
 
 matrizortogonal.o: ../Servidor/matrizortogonal.cpp ../Servidor/matrizortogonal.h \
+		../Servidor/enemigo.h \
+		../Servidor/gema.h \
 		../Servidor/pila.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o matrizortogonal.o ../Servidor/matrizortogonal.cpp
+
+gema.o: ../Servidor/gema.cpp ../Servidor/gema.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gema.o ../Servidor/gema.cpp
+
+niveles.o: ../Servidor/niveles.cpp ../Servidor/niveles.h \
+		../Servidor/matrizortogonal.h \
+		../Servidor/enemigo.h \
+		../Servidor/gema.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o niveles.o ../Servidor/niveles.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

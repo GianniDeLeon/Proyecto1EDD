@@ -1,5 +1,6 @@
 #include "pila.h"
 #include "enemigo.h"
+#include "gema.h"
 #include<stdlib.h>
 #include<time.h>
 #include <iostream>
@@ -8,6 +9,7 @@ using namespace std;
 typedef struct Pila::Nodo
 {
     Enemigo *enemi;
+    Gema *gem;
     Nodo *siguiente;
 }Nodo;
 
@@ -26,13 +28,19 @@ void Pila::Push(Nodo *nuevo)
 
 Enemigo *Pila::Pop()
 {
+    this->gemPop = NULL;
     Nodo *pop;
     pop = inicioPila;
     inicioPila = inicioPila->siguiente;
     Enemigo *popp = pop->enemi;
+    this->gemPop = pop->gem;
     return popp;
 }
 
+Gema *Pila::getGema()
+{
+    return this->gemPop;
+}
 void Pila::generarEnemigo()
 {
     int vida,id;
@@ -43,6 +51,18 @@ void Pila::generarEnemigo()
     cout << "Vida:" << vida << endl;
     Nodo *newNodo = new Nodo;
     newNodo->enemi = nuevo;
+    newNodo->gem = NULL;
+    Push(newNodo);
+}
+
+void Pila::generarGema()
+{
+    int id = rand()%10000;
+    Gema *nuevo = new Gema(id);
+    cout << "Nueva gema ID:" << id << endl;
+    Nodo *newNodo = new Nodo;
+    newNodo->enemi = NULL;
+    newNodo->gem = nuevo;
     Push(newNodo);
 }
 

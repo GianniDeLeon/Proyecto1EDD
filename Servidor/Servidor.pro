@@ -29,14 +29,18 @@ SOURCES += \
     pila.cpp \
     enemigo.cpp \
     hilogeneracionenemigos.cpp \
-    matrizortogonal.cpp
+    matrizortogonal.cpp \
+    gema.cpp \
+    niveles.cpp
 
 HEADERS += \
         mainwindow.h \
     enemigo.h \
     pila.h \
     hilogeneracionenemigos.h \
-    matrizortogonal.h
+    matrizortogonal.h \
+    gema.h \
+    niveles.h
 
 FORMS += \
         mainwindow.ui
