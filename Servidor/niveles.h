@@ -16,6 +16,7 @@ public:
     void Jugar(int nivel);
     MatrizOrtogonal::ListaGemas *ini;
     void stop();
+    void graficarNiveles();
 };
 
 #endif // NIVELES_H

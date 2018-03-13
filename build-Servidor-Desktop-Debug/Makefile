@@ -1020,15 +1020,15 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-main.o: ../Servidor/main.cpp ../Servidor/mainwindow.h \
-		../Servidor/hilogeneracionenemigos.h \
-		../Servidor/matrizortogonal.h \
-		../Servidor/enemigo.h \
-		../Servidor/gema.h
+main.o: ../Servidor/main.cpp ../Servidor/mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Servidor/main.cpp
 
 mainwindow.o: ../Servidor/mainwindow.cpp ../Servidor/mainwindow.h \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		../Servidor/niveles.h \
+		../Servidor/matrizortogonal.h \
+		../Servidor/enemigo.h \
+		../Servidor/gema.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Servidor/mainwindow.cpp
 
 pila.o: ../Servidor/pila.cpp ../Servidor/pila.h \

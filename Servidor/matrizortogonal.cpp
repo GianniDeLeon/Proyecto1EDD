@@ -115,6 +115,7 @@ CabezeraX *MatrizOrtogonal::incertarCabezeraX(int x)
             cab = cab->sigiente;
         }
     }
+    return NULL;
 }
 
 CabezeraX *MatrizOrtogonal::crearCabezerax(int x)
@@ -174,6 +175,7 @@ CabezeraY *MatrizOrtogonal::incertarCabezeray(int y)
             cab = cab->sigiente;
         }
     }
+    return NULL;
 }
 
 CabezeraY *MatrizOrtogonal::crearCabezeray(int y)
@@ -497,7 +499,7 @@ void MatrizOrtogonal::eliminarNodoY(Nodo *&nod)
 
 void MatrizOrtogonal::incertarMaloPila(Nodo *&nod)
 {
-    this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Generando enemigo en tope de pila");
+    //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Generando enemigo en tope de pila");
     Pila *pill = *&nod->pila;
     pill->generarEnemigo();
 }
@@ -708,7 +710,7 @@ void MatrizOrtogonal::atacarNodo(int x, int y)
 
 void MatrizOrtogonal::PilaVacia(Nodo *&nod)
 {
-    this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Pila vacia eliminando");
+    //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Pila vacia eliminando");
     Pila *pil = nod->pila;
     if(pil->Vacia())
     {
@@ -720,6 +722,7 @@ void MatrizOrtogonal::run()
 {
     while(true)
     {
+        //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Moviendo Tope de Pila");
         movertope();
         msleep(4000);
         movertope();
@@ -751,6 +754,7 @@ void MatrizOrtogonal::generarEnemigo()
 
 void MatrizOrtogonal::movertope()
 {
+    int x,y;
     x = 1 + rand()%(limit-1);
     y = 1 + rand()%(limit-1);
     //cout << "Moviendo Tope de pila en X:"<<x<<" Y:"<<y<<endl;

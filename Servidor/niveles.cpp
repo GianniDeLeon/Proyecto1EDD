@@ -2,6 +2,8 @@
 #include "niveles.h"
 #include "matrizortogonal.h"
 #include <QTextEdit>
+#include <fstream>
+#include <string>
 QTextEdit *texto;
 using namespace std;
 typedef struct Niveles::Nodo
@@ -12,7 +14,7 @@ typedef struct Niveles::Nodo
     Nodo *siguiente, *anterior;
 }Nodo;
 
-Nodo *Play;
+Nodo *Play,*Pnivel;
 
 Niveles::Niveles(int tam,QTextEdit *texto)
 {
@@ -39,6 +41,7 @@ void Niveles::crearNiveles()
             nuevo->anterior = NULL;
             nuevo->siguiente = NULL;
             inicio = nuevo;
+            Pnivel = nuevo;
         }
         else
         {
@@ -59,9 +62,9 @@ void Niveles::setTam(int tam)
 
 void Niveles::aumentarTam()
 {
-    texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Aumentando los niveles");
+    texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Realizando cambio de tamaño en los niveles");
     int i;
-    Nodo *aux = inicio;
+    Nodo *aux = Pnivel;
     MatrizOrtogonal *mat;
     for(i=1;i<=this->tam;i++)
     {
@@ -70,6 +73,11 @@ void Niveles::aumentarTam()
             mat = aux->matriz;
             mat->setLimit(this->tam);
             aux = aux->siguiente;
+            if(aux != NULL && i == this->tam)
+            {
+                cout << "Debe ser el ultimo Nivel:"<<aux->nivel<<endl;
+                aux->anterior->siguiente = NULL;
+            }
         }
         else
         {
@@ -107,6 +115,47 @@ void Niveles::Jugar(int nivel)
         aux = aux->anterior;
     }
 }
+
+void Niveles::graficarNiveles()
+{
+    ofstream ficheroSalida;
+    ficheroSalida.open ("niveles.dot");
+    ficheroSalida << "digraph niveles{";
+    Nodo *aux = Pnivel;
+    Nodo *ant = Pnivel;
+    string lockan, lockaux;
+    while(aux != NULL)
+    {
+        aux = aux->siguiente;
+        if(aux != NULL)
+        {
+            if(ant->Lock)
+            {
+                lockan = "Lock";
+            }
+            else
+            {
+                lockan = "Unlock";
+            }
+            if(aux->Lock)
+            {
+                lockaux = "Lock";
+            }
+            else
+            {
+                lockaux = "Unlock";
+            }
+            ficheroSalida<<lockan<<ant->nivel<< " -> " <<lockaux<<aux->nivel<<";\n";
+            ficheroSalida<<lockaux<<aux->nivel<< " -> "<<lockan<<ant->nivel<<";\n";
+            ant = aux;
+        }
+    }
+    ficheroSalida << "}";
+    ficheroSalida.close();
+    system("dot -Tpng niveles.dot -o niveles.png");
+    system("nomacs niveles.png");
+}
+
 //void Niveles::stop()
 //{
 //    if(ini != NULL)
