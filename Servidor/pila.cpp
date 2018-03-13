@@ -30,10 +30,14 @@ Enemigo *Pila::Pop()
 {
     this->gemPop = NULL;
     Nodo *pop;
-    pop = inicioPila;
-    inicioPila = inicioPila->siguiente;
-    Enemigo *popp = pop->enemi;
-    this->gemPop = pop->gem;
+    Enemigo *popp = NULL;
+    if(inicioPila != NULL)
+    {
+        pop = inicioPila;
+        inicioPila = inicioPila->siguiente;
+        popp = pop->enemi;
+        this->gemPop = pop->gem;
+    }
     return popp;
 }
 
@@ -47,8 +51,8 @@ void Pila::generarEnemigo()
     id = rand()%10000;
     vida = 1 + rand()%(4-1);
     Enemigo *nuevo = new Enemigo(vida,id);
-    cout << "Id nueva: "<< id << endl;
-    cout << "Vida:" << vida << endl;
+    //cout << "Id nueva: "<< id << endl;
+    //cout << "Vida:" << vida << endl;
     Nodo *newNodo = new Nodo;
     newNodo->enemi = nuevo;
     newNodo->gem = NULL;

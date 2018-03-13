@@ -1,6 +1,8 @@
 #include <iostream>
 #include "niveles.h"
 #include "matrizortogonal.h"
+#include <QTextEdit>
+QTextEdit *texto;
 using namespace std;
 typedef struct Niveles::Nodo
 {
@@ -12,10 +14,12 @@ typedef struct Niveles::Nodo
 
 Nodo *Play;
 
-Niveles::Niveles(int tam)
+Niveles::Niveles(int tam,QTextEdit *texto)
 {
     this->tam = tam;
     this->inicio = NULL;
+    this->texto = texto;
+    texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Creando niveles");
     crearNiveles();
 }
 
@@ -28,7 +32,7 @@ void Niveles::crearNiveles()
         Nodo *nuevo = new Nodo;
         nuevo->nivel = i;
         nuevo->Lock = lock;
-        MatrizOrtogonal *nuevaMa = new MatrizOrtogonal(this->tam);
+        MatrizOrtogonal *nuevaMa = new MatrizOrtogonal(this->tam,this->texto);
         nuevo->matriz = nuevaMa;
         if(inicio == NULL)
         {
@@ -48,12 +52,14 @@ void Niveles::crearNiveles()
 
 void Niveles::setTam(int tam)
 {
+    texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Cambiando la cantidad de niveles y los limites de las matrices");
     this->tam = tam;
-
+    aumentarTam();
 }
 
 void Niveles::aumentarTam()
 {
+    texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Aumentando los niveles");
     int i;
     Nodo *aux = inicio;
     MatrizOrtogonal *mat;
@@ -70,7 +76,7 @@ void Niveles::aumentarTam()
             Nodo *nuevo = new Nodo;
             nuevo->nivel = i;
             nuevo->Lock = true;
-            MatrizOrtogonal *nuevaMa = new MatrizOrtogonal(this->tam);
+            MatrizOrtogonal *nuevaMa = new MatrizOrtogonal(this->tam,this->texto);
             nuevo->matriz = nuevaMa;
             inicio->siguiente = nuevo;
             nuevo->anterior = inicio;
@@ -81,6 +87,7 @@ void Niveles::aumentarTam()
 
 void Niveles::Jugar(int nivel)
 {
+    texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Iniciando el juego");
     Nodo *aux = inicio;
     while(aux != NULL)
     {

@@ -1,12 +1,13 @@
 #ifndef NIVELES_H
 #define NIVELES_H
 #include "matrizortogonal.h"
-
+#include <QTextEdit>
 class Niveles
 {
 public:
     int tam;
-    Niveles(int tam);
+    QTextEdit *texto;
+    Niveles(int tam,QTextEdit *texto);
     struct Nodo;
     void crearNiveles();
     Nodo *inicio;

@@ -3,10 +3,12 @@
 #include "enemigo.h"
 #include "gema.h"
 #include <QThread>
+#include <QTextEdit>
 class MatrizOrtogonal : public QThread
 {
 public:
-    MatrizOrtogonal(int);
+    QTextEdit *texto;
+    MatrizOrtogonal(int,QTextEdit *texto);
     int NumImpactos;
     struct NodoRaiz;
     struct Nodo;
