@@ -718,32 +718,44 @@ void MatrizOrtogonal::PilaVacia(Nodo *&nod)
 
 void MatrizOrtogonal::run()
 {
-    int x,y;
     while(true)
     {
-        //cout << "Generando coordenadas aleatorias para incertar nodo"<<endl;
-        x = 1 + rand()%(limit-1);
-        y = 1 + rand()%(limit-1);
-        //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Incertando Nodo o Generando enemigo");
-        Nodo *nod = buscarNodo(x,y);
-        if(nod != NULL)
-        {
-            //cout << "Nodo ya existente se generara malo en dicha posicion"<<endl;
-            incertarMaloPila(*&nod);
-        }
-        else
-        {
-            //cout << "Incertando nodo"<<endl;
-            incertarNodo(x,y);
-        }
-        //cout << "Generando coordenadas aleatorias para Mover tope de pila"<<endl;
-        x = 1 + rand()%(limit-1);
-        y = 1 + rand()%(limit-1);
-        //cout << "Moviendo Tope de pila en X:"<<x<<" Y:"<<y<<endl;
-        //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Moviendo tope de pila");
-        moverTopePila(x,y);
-        msleep(8000);
+        movertope();
+        msleep(4000);
+        movertope();
+        msleep(4000);
+        generarEnemigo();
     }
+}
+
+void MatrizOrtogonal::generarEnemigo()
+{
+    int x,y;
+    //cout << "Generando coordenadas aleatorias para incertar nodo"<<endl;
+    x = 1 + rand()%(limit-1);
+    y = 1 + rand()%(limit-1);
+    //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Incertando Nodo o Generando enemigo");
+    Nodo *nod = buscarNodo(x,y);
+    if(nod != NULL)
+    {
+        //cout << "Nodo ya existente se generara malo en dicha posicion"<<endl;
+        incertarMaloPila(*&nod);
+    }
+    else
+    {
+        //cout << "Incertando nodo"<<endl;
+        incertarNodo(x,y);
+    }
+    //cout << "Generando coordenadas aleatorias para Mover tope de pila"<<endl;
+}
+
+void MatrizOrtogonal::movertope()
+{
+    x = 1 + rand()%(limit-1);
+    y = 1 + rand()%(limit-1);
+    //cout << "Moviendo Tope de pila en X:"<<x<<" Y:"<<y<<endl;
+    //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Moviendo tope de pila");
+    moverTopePila(x,y);
 }
 
 void MatrizOrtogonal::menuCab()

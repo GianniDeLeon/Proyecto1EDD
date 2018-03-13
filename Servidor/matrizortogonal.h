@@ -40,6 +40,8 @@ public:
     ListaGemas *getListaGemas();
     void atacarNodo(int x, int y);
     void PilaVacia(Nodo *&nod);
+    void generarEnemigo();
+    void movertope();
     void menuCab();
     void recorrerLV1();
     void recorrerLV2();
