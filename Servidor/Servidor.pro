@@ -11,6 +11,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Servidor
 TEMPLATE = app
 
+QMAKE_CXXFLAGS += -std=c++0x -DHAVE_INTTYPES_H -DHAVE_NETINET_IN_H -Wall
+INCLUDEPATH += -I/usr/local/include/thrift
+LIBS+= -L/usr/local/lib -lthrift
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -31,7 +34,11 @@ SOURCES += \
     hilogeneracionenemigos.cpp \
     matrizortogonal.cpp \
     gema.cpp \
-    niveles.cpp
+    niveles.cpp \
+    Juego.cpp \
+    Servidor_constants.cpp \
+    Servidor_types.cpp \
+    hiloapache.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,7 +47,11 @@ HEADERS += \
     hilogeneracionenemigos.h \
     matrizortogonal.h \
     gema.h \
-    niveles.h
+    niveles.h \
+    Juego.h \
+    Servidor_constants.h \
+    Servidor_types.h \
+    hiloapache.h
 
 FORMS += \
         mainwindow.ui

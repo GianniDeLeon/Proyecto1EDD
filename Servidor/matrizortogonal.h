@@ -38,7 +38,7 @@ public:
     void incertarEnemigoLista(ListaEnemigos *&ini, Enemigo *en);
     void incertarGema(Gema *gem);
     ListaGemas *getListaGemas();
-    void atacarNodo(int x, int y);
+    bool atacarNodo(int x, int y);
     void PilaVacia(Nodo *&nod);
     void generarEnemigo();
     void movertope();

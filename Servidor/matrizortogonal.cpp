@@ -649,9 +649,10 @@ ListaGemas *MatrizOrtogonal::getListaGemas()
     return LG;
 }
 
-void MatrizOrtogonal::atacarNodo(int x, int y)
+bool MatrizOrtogonal::atacarNodo(int x, int y)
 {
-    this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Atacando nodo");
+    cout << "Iniciando el ataque en X:"<<x<<" Y:"<<y<<endl;
+    //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Atacando nodo");
     Nodo *nod = buscarNodo(x,y);
     if(nod != NULL)
     {
@@ -660,18 +661,18 @@ void MatrizOrtogonal::atacarNodo(int x, int y)
         Enemigo *en = pill->Pop();
         if(en != NULL)
         {
-            //cout << "Atacando en la posicion X:"<<x<<" Y:"<<y<<endl;
+            cout << "Atacando en la posicion X:"<<x<<" Y:"<<y<<endl;
             int vida = en->impacto();
-            //cout << "Vida restante del enemigo "<<vida<<" Nivel:"<<en->getNivel()<<endl;
+            cout << "Vida restante del enemigo "<<vida<<" Nivel:"<<en->getNivel()<<endl;
             if(this->NumImpactos == 5)
             {
-                this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ 5 impactos generando gema");
+                //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ 5 impactos generando gema");
                 this->NumImpactos = 0;
                 pill->generarGema();
             }
             if(vida == 0)
             {
-                this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Enemigo eliminado");
+                //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Enemigo eliminado");
                 switch (en->getNivel()) {
                 case 1:
                     //cout << "Incertando en nivel 1"<<endl;
@@ -701,10 +702,12 @@ void MatrizOrtogonal::atacarNodo(int x, int y)
             Gema *gem = pill->getGema();
             incertarGema(gem);
         }
+        return true;
     }
     else
     {
         NumImpactos =0;
+        return false;
     }
 }
 

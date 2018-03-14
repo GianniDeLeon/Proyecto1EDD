@@ -104,6 +104,7 @@ void Niveles::Jugar(int nivel)
             cout << "Nivel:" << nivel << " Encontrado"<<endl;
             if(aux->Lock)
             {
+                texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Nivel Blocqueado");
                 cout << "Nivel bloqueado"<<endl;
             }
             else
@@ -156,6 +157,12 @@ void Niveles::graficarNiveles()
     system("nomacs niveles.png");
 }
 
+bool Niveles::atacar(int x, int y)
+{
+    MatrizOrtogonal *mat = Play->matriz;
+    //texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Atacando el nodo");
+    return mat->atacarNodo(x,y);
+}
 //void Niveles::stop()
 //{
 //    if(ini != NULL)

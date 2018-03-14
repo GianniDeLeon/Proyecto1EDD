@@ -17,6 +17,7 @@ public:
     MatrizOrtogonal::ListaGemas *ini;
     void stop();
     void graficarNiveles();
+    bool atacar(int x, int y);
 };
 
 #endif // NIVELES_H

@@ -3,6 +3,19 @@
 #include "niveles.h"
 #include <QMessageBox>
 #include<QGraphicsScene>
+#include "hiloapache.h"
+/////
+#include "Juego.h"
+#include <thrift/protocol/TBinaryProtocol.h>
+#include <thrift/server/TSimpleServer.h>
+#include <thrift/transport/TServerSocket.h>
+#include <thrift/transport/TBufferTransports.h>
+
+using namespace ::apache::thrift;
+using namespace ::apache::thrift::protocol;
+using namespace ::apache::thrift::transport;
+using namespace ::apache::thrift::server;
+using namespace  ::Servidor;
 Niveles *niveles;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->textEdit->setReadOnly(true);
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -33,6 +47,10 @@ void MainWindow::on_pushButton_clicked()
         int tam2 = tam.toInt();
         ui->textEdit->setText("201503823@Gianni:~ Iniciando los niveles");
         niveles = new Niveles(tam2,ui->textEdit);
+        ui->textEdit->setText("201503823@Gianni:~ Iniciando Servicios de apache");
+        HiloApache *apach = new HiloApache(niveles,ui->textEdit);
+        apach->start();
+        ui->textEdit->setText("201503823@Gianni:~ Apache iniciado exitosamente");
         niveles->Jugar(1);
     }
 }
