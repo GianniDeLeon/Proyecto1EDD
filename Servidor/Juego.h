@@ -21,7 +21,17 @@ namespace Servidor {
 class JuegoIf {
  public:
   virtual ~JuegoIf() {}
+  virtual bool crearUsuario(const std::string& nombre) = 0;
+  virtual bool seleccionarNivel(const int32_t nivel) = 0;
   virtual bool atacar(const int32_t x, const int32_t y) = 0;
+  virtual bool graficarEnemigosEliminados() = 0;
+  virtual bool cheats(const std::string& cheat) = 0;
+  virtual bool DesbloquearNiveleGema(const int32_t nivel) = 0;
+  virtual bool graficarPunteoLista() = 0;
+  virtual bool graficarPunteoArbol() = 0;
+  virtual bool pausar() = 0;
+  virtual void setMin(const int32_t min) = 0;
+  virtual void setSeg(const int32_t seg) = 0;
 };
 
 class JuegoIfFactory {
@@ -51,10 +61,256 @@ class JuegoIfSingletonFactory : virtual public JuegoIfFactory {
 class JuegoNull : virtual public JuegoIf {
  public:
   virtual ~JuegoNull() {}
+  bool crearUsuario(const std::string& /* nombre */) {
+    bool _return = false;
+    return _return;
+  }
+  bool seleccionarNivel(const int32_t /* nivel */) {
+    bool _return = false;
+    return _return;
+  }
   bool atacar(const int32_t /* x */, const int32_t /* y */) {
     bool _return = false;
     return _return;
   }
+  bool graficarEnemigosEliminados() {
+    bool _return = false;
+    return _return;
+  }
+  bool cheats(const std::string& /* cheat */) {
+    bool _return = false;
+    return _return;
+  }
+  bool DesbloquearNiveleGema(const int32_t /* nivel */) {
+    bool _return = false;
+    return _return;
+  }
+  bool graficarPunteoLista() {
+    bool _return = false;
+    return _return;
+  }
+  bool graficarPunteoArbol() {
+    bool _return = false;
+    return _return;
+  }
+  bool pausar() {
+    bool _return = false;
+    return _return;
+  }
+  void setMin(const int32_t /* min */) {
+    return;
+  }
+  void setSeg(const int32_t /* seg */) {
+    return;
+  }
+};
+
+typedef struct _Juego_crearUsuario_args__isset {
+  _Juego_crearUsuario_args__isset() : nombre(false) {}
+  bool nombre :1;
+} _Juego_crearUsuario_args__isset;
+
+class Juego_crearUsuario_args {
+ public:
+
+  Juego_crearUsuario_args(const Juego_crearUsuario_args&);
+  Juego_crearUsuario_args& operator=(const Juego_crearUsuario_args&);
+  Juego_crearUsuario_args() : nombre() {
+  }
+
+  virtual ~Juego_crearUsuario_args() throw();
+  std::string nombre;
+
+  _Juego_crearUsuario_args__isset __isset;
+
+  void __set_nombre(const std::string& val);
+
+  bool operator == (const Juego_crearUsuario_args & rhs) const
+  {
+    if (!(nombre == rhs.nombre))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_crearUsuario_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_crearUsuario_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_crearUsuario_pargs {
+ public:
+
+
+  virtual ~Juego_crearUsuario_pargs() throw();
+  const std::string* nombre;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_crearUsuario_result__isset {
+  _Juego_crearUsuario_result__isset() : success(false) {}
+  bool success :1;
+} _Juego_crearUsuario_result__isset;
+
+class Juego_crearUsuario_result {
+ public:
+
+  Juego_crearUsuario_result(const Juego_crearUsuario_result&);
+  Juego_crearUsuario_result& operator=(const Juego_crearUsuario_result&);
+  Juego_crearUsuario_result() : success(0) {
+  }
+
+  virtual ~Juego_crearUsuario_result() throw();
+  bool success;
+
+  _Juego_crearUsuario_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const Juego_crearUsuario_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_crearUsuario_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_crearUsuario_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_crearUsuario_presult__isset {
+  _Juego_crearUsuario_presult__isset() : success(false) {}
+  bool success :1;
+} _Juego_crearUsuario_presult__isset;
+
+class Juego_crearUsuario_presult {
+ public:
+
+
+  virtual ~Juego_crearUsuario_presult() throw();
+  bool* success;
+
+  _Juego_crearUsuario_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _Juego_seleccionarNivel_args__isset {
+  _Juego_seleccionarNivel_args__isset() : nivel(false) {}
+  bool nivel :1;
+} _Juego_seleccionarNivel_args__isset;
+
+class Juego_seleccionarNivel_args {
+ public:
+
+  Juego_seleccionarNivel_args(const Juego_seleccionarNivel_args&);
+  Juego_seleccionarNivel_args& operator=(const Juego_seleccionarNivel_args&);
+  Juego_seleccionarNivel_args() : nivel(0) {
+  }
+
+  virtual ~Juego_seleccionarNivel_args() throw();
+  int32_t nivel;
+
+  _Juego_seleccionarNivel_args__isset __isset;
+
+  void __set_nivel(const int32_t val);
+
+  bool operator == (const Juego_seleccionarNivel_args & rhs) const
+  {
+    if (!(nivel == rhs.nivel))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_seleccionarNivel_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_seleccionarNivel_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_seleccionarNivel_pargs {
+ public:
+
+
+  virtual ~Juego_seleccionarNivel_pargs() throw();
+  const int32_t* nivel;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_seleccionarNivel_result__isset {
+  _Juego_seleccionarNivel_result__isset() : success(false) {}
+  bool success :1;
+} _Juego_seleccionarNivel_result__isset;
+
+class Juego_seleccionarNivel_result {
+ public:
+
+  Juego_seleccionarNivel_result(const Juego_seleccionarNivel_result&);
+  Juego_seleccionarNivel_result& operator=(const Juego_seleccionarNivel_result&);
+  Juego_seleccionarNivel_result() : success(0) {
+  }
+
+  virtual ~Juego_seleccionarNivel_result() throw();
+  bool success;
+
+  _Juego_seleccionarNivel_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const Juego_seleccionarNivel_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_seleccionarNivel_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_seleccionarNivel_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_seleccionarNivel_presult__isset {
+  _Juego_seleccionarNivel_presult__isset() : success(false) {}
+  bool success :1;
+} _Juego_seleccionarNivel_presult__isset;
+
+class Juego_seleccionarNivel_presult {
+ public:
+
+
+  virtual ~Juego_seleccionarNivel_presult() throw();
+  bool* success;
+
+  _Juego_seleccionarNivel_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
 };
 
 typedef struct _Juego_atacar_args__isset {
@@ -168,6 +424,754 @@ class Juego_atacar_presult {
 
 };
 
+
+class Juego_graficarEnemigosEliminados_args {
+ public:
+
+  Juego_graficarEnemigosEliminados_args(const Juego_graficarEnemigosEliminados_args&);
+  Juego_graficarEnemigosEliminados_args& operator=(const Juego_graficarEnemigosEliminados_args&);
+  Juego_graficarEnemigosEliminados_args() {
+  }
+
+  virtual ~Juego_graficarEnemigosEliminados_args() throw();
+
+  bool operator == (const Juego_graficarEnemigosEliminados_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_graficarEnemigosEliminados_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_graficarEnemigosEliminados_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_graficarEnemigosEliminados_pargs {
+ public:
+
+
+  virtual ~Juego_graficarEnemigosEliminados_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_graficarEnemigosEliminados_result__isset {
+  _Juego_graficarEnemigosEliminados_result__isset() : success(false) {}
+  bool success :1;
+} _Juego_graficarEnemigosEliminados_result__isset;
+
+class Juego_graficarEnemigosEliminados_result {
+ public:
+
+  Juego_graficarEnemigosEliminados_result(const Juego_graficarEnemigosEliminados_result&);
+  Juego_graficarEnemigosEliminados_result& operator=(const Juego_graficarEnemigosEliminados_result&);
+  Juego_graficarEnemigosEliminados_result() : success(0) {
+  }
+
+  virtual ~Juego_graficarEnemigosEliminados_result() throw();
+  bool success;
+
+  _Juego_graficarEnemigosEliminados_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const Juego_graficarEnemigosEliminados_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_graficarEnemigosEliminados_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_graficarEnemigosEliminados_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_graficarEnemigosEliminados_presult__isset {
+  _Juego_graficarEnemigosEliminados_presult__isset() : success(false) {}
+  bool success :1;
+} _Juego_graficarEnemigosEliminados_presult__isset;
+
+class Juego_graficarEnemigosEliminados_presult {
+ public:
+
+
+  virtual ~Juego_graficarEnemigosEliminados_presult() throw();
+  bool* success;
+
+  _Juego_graficarEnemigosEliminados_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _Juego_cheats_args__isset {
+  _Juego_cheats_args__isset() : cheat(false) {}
+  bool cheat :1;
+} _Juego_cheats_args__isset;
+
+class Juego_cheats_args {
+ public:
+
+  Juego_cheats_args(const Juego_cheats_args&);
+  Juego_cheats_args& operator=(const Juego_cheats_args&);
+  Juego_cheats_args() : cheat() {
+  }
+
+  virtual ~Juego_cheats_args() throw();
+  std::string cheat;
+
+  _Juego_cheats_args__isset __isset;
+
+  void __set_cheat(const std::string& val);
+
+  bool operator == (const Juego_cheats_args & rhs) const
+  {
+    if (!(cheat == rhs.cheat))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_cheats_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_cheats_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_cheats_pargs {
+ public:
+
+
+  virtual ~Juego_cheats_pargs() throw();
+  const std::string* cheat;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_cheats_result__isset {
+  _Juego_cheats_result__isset() : success(false) {}
+  bool success :1;
+} _Juego_cheats_result__isset;
+
+class Juego_cheats_result {
+ public:
+
+  Juego_cheats_result(const Juego_cheats_result&);
+  Juego_cheats_result& operator=(const Juego_cheats_result&);
+  Juego_cheats_result() : success(0) {
+  }
+
+  virtual ~Juego_cheats_result() throw();
+  bool success;
+
+  _Juego_cheats_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const Juego_cheats_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_cheats_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_cheats_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_cheats_presult__isset {
+  _Juego_cheats_presult__isset() : success(false) {}
+  bool success :1;
+} _Juego_cheats_presult__isset;
+
+class Juego_cheats_presult {
+ public:
+
+
+  virtual ~Juego_cheats_presult() throw();
+  bool* success;
+
+  _Juego_cheats_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _Juego_DesbloquearNiveleGema_args__isset {
+  _Juego_DesbloquearNiveleGema_args__isset() : nivel(false) {}
+  bool nivel :1;
+} _Juego_DesbloquearNiveleGema_args__isset;
+
+class Juego_DesbloquearNiveleGema_args {
+ public:
+
+  Juego_DesbloquearNiveleGema_args(const Juego_DesbloquearNiveleGema_args&);
+  Juego_DesbloquearNiveleGema_args& operator=(const Juego_DesbloquearNiveleGema_args&);
+  Juego_DesbloquearNiveleGema_args() : nivel(0) {
+  }
+
+  virtual ~Juego_DesbloquearNiveleGema_args() throw();
+  int32_t nivel;
+
+  _Juego_DesbloquearNiveleGema_args__isset __isset;
+
+  void __set_nivel(const int32_t val);
+
+  bool operator == (const Juego_DesbloquearNiveleGema_args & rhs) const
+  {
+    if (!(nivel == rhs.nivel))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_DesbloquearNiveleGema_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_DesbloquearNiveleGema_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_DesbloquearNiveleGema_pargs {
+ public:
+
+
+  virtual ~Juego_DesbloquearNiveleGema_pargs() throw();
+  const int32_t* nivel;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_DesbloquearNiveleGema_result__isset {
+  _Juego_DesbloquearNiveleGema_result__isset() : success(false) {}
+  bool success :1;
+} _Juego_DesbloquearNiveleGema_result__isset;
+
+class Juego_DesbloquearNiveleGema_result {
+ public:
+
+  Juego_DesbloquearNiveleGema_result(const Juego_DesbloquearNiveleGema_result&);
+  Juego_DesbloquearNiveleGema_result& operator=(const Juego_DesbloquearNiveleGema_result&);
+  Juego_DesbloquearNiveleGema_result() : success(0) {
+  }
+
+  virtual ~Juego_DesbloquearNiveleGema_result() throw();
+  bool success;
+
+  _Juego_DesbloquearNiveleGema_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const Juego_DesbloquearNiveleGema_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_DesbloquearNiveleGema_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_DesbloquearNiveleGema_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_DesbloquearNiveleGema_presult__isset {
+  _Juego_DesbloquearNiveleGema_presult__isset() : success(false) {}
+  bool success :1;
+} _Juego_DesbloquearNiveleGema_presult__isset;
+
+class Juego_DesbloquearNiveleGema_presult {
+ public:
+
+
+  virtual ~Juego_DesbloquearNiveleGema_presult() throw();
+  bool* success;
+
+  _Juego_DesbloquearNiveleGema_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class Juego_graficarPunteoLista_args {
+ public:
+
+  Juego_graficarPunteoLista_args(const Juego_graficarPunteoLista_args&);
+  Juego_graficarPunteoLista_args& operator=(const Juego_graficarPunteoLista_args&);
+  Juego_graficarPunteoLista_args() {
+  }
+
+  virtual ~Juego_graficarPunteoLista_args() throw();
+
+  bool operator == (const Juego_graficarPunteoLista_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_graficarPunteoLista_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_graficarPunteoLista_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_graficarPunteoLista_pargs {
+ public:
+
+
+  virtual ~Juego_graficarPunteoLista_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_graficarPunteoLista_result__isset {
+  _Juego_graficarPunteoLista_result__isset() : success(false) {}
+  bool success :1;
+} _Juego_graficarPunteoLista_result__isset;
+
+class Juego_graficarPunteoLista_result {
+ public:
+
+  Juego_graficarPunteoLista_result(const Juego_graficarPunteoLista_result&);
+  Juego_graficarPunteoLista_result& operator=(const Juego_graficarPunteoLista_result&);
+  Juego_graficarPunteoLista_result() : success(0) {
+  }
+
+  virtual ~Juego_graficarPunteoLista_result() throw();
+  bool success;
+
+  _Juego_graficarPunteoLista_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const Juego_graficarPunteoLista_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_graficarPunteoLista_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_graficarPunteoLista_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_graficarPunteoLista_presult__isset {
+  _Juego_graficarPunteoLista_presult__isset() : success(false) {}
+  bool success :1;
+} _Juego_graficarPunteoLista_presult__isset;
+
+class Juego_graficarPunteoLista_presult {
+ public:
+
+
+  virtual ~Juego_graficarPunteoLista_presult() throw();
+  bool* success;
+
+  _Juego_graficarPunteoLista_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class Juego_graficarPunteoArbol_args {
+ public:
+
+  Juego_graficarPunteoArbol_args(const Juego_graficarPunteoArbol_args&);
+  Juego_graficarPunteoArbol_args& operator=(const Juego_graficarPunteoArbol_args&);
+  Juego_graficarPunteoArbol_args() {
+  }
+
+  virtual ~Juego_graficarPunteoArbol_args() throw();
+
+  bool operator == (const Juego_graficarPunteoArbol_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_graficarPunteoArbol_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_graficarPunteoArbol_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_graficarPunteoArbol_pargs {
+ public:
+
+
+  virtual ~Juego_graficarPunteoArbol_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_graficarPunteoArbol_result__isset {
+  _Juego_graficarPunteoArbol_result__isset() : success(false) {}
+  bool success :1;
+} _Juego_graficarPunteoArbol_result__isset;
+
+class Juego_graficarPunteoArbol_result {
+ public:
+
+  Juego_graficarPunteoArbol_result(const Juego_graficarPunteoArbol_result&);
+  Juego_graficarPunteoArbol_result& operator=(const Juego_graficarPunteoArbol_result&);
+  Juego_graficarPunteoArbol_result() : success(0) {
+  }
+
+  virtual ~Juego_graficarPunteoArbol_result() throw();
+  bool success;
+
+  _Juego_graficarPunteoArbol_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const Juego_graficarPunteoArbol_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_graficarPunteoArbol_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_graficarPunteoArbol_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_graficarPunteoArbol_presult__isset {
+  _Juego_graficarPunteoArbol_presult__isset() : success(false) {}
+  bool success :1;
+} _Juego_graficarPunteoArbol_presult__isset;
+
+class Juego_graficarPunteoArbol_presult {
+ public:
+
+
+  virtual ~Juego_graficarPunteoArbol_presult() throw();
+  bool* success;
+
+  _Juego_graficarPunteoArbol_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class Juego_pausar_args {
+ public:
+
+  Juego_pausar_args(const Juego_pausar_args&);
+  Juego_pausar_args& operator=(const Juego_pausar_args&);
+  Juego_pausar_args() {
+  }
+
+  virtual ~Juego_pausar_args() throw();
+
+  bool operator == (const Juego_pausar_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_pausar_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_pausar_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_pausar_pargs {
+ public:
+
+
+  virtual ~Juego_pausar_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_pausar_result__isset {
+  _Juego_pausar_result__isset() : success(false) {}
+  bool success :1;
+} _Juego_pausar_result__isset;
+
+class Juego_pausar_result {
+ public:
+
+  Juego_pausar_result(const Juego_pausar_result&);
+  Juego_pausar_result& operator=(const Juego_pausar_result&);
+  Juego_pausar_result() : success(0) {
+  }
+
+  virtual ~Juego_pausar_result() throw();
+  bool success;
+
+  _Juego_pausar_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const Juego_pausar_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_pausar_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_pausar_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_pausar_presult__isset {
+  _Juego_pausar_presult__isset() : success(false) {}
+  bool success :1;
+} _Juego_pausar_presult__isset;
+
+class Juego_pausar_presult {
+ public:
+
+
+  virtual ~Juego_pausar_presult() throw();
+  bool* success;
+
+  _Juego_pausar_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _Juego_setMin_args__isset {
+  _Juego_setMin_args__isset() : min(false) {}
+  bool min :1;
+} _Juego_setMin_args__isset;
+
+class Juego_setMin_args {
+ public:
+
+  Juego_setMin_args(const Juego_setMin_args&);
+  Juego_setMin_args& operator=(const Juego_setMin_args&);
+  Juego_setMin_args() : min(0) {
+  }
+
+  virtual ~Juego_setMin_args() throw();
+  int32_t min;
+
+  _Juego_setMin_args__isset __isset;
+
+  void __set_min(const int32_t val);
+
+  bool operator == (const Juego_setMin_args & rhs) const
+  {
+    if (!(min == rhs.min))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_setMin_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_setMin_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_setMin_pargs {
+ public:
+
+
+  virtual ~Juego_setMin_pargs() throw();
+  const int32_t* min;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_setMin_result {
+ public:
+
+  Juego_setMin_result(const Juego_setMin_result&);
+  Juego_setMin_result& operator=(const Juego_setMin_result&);
+  Juego_setMin_result() {
+  }
+
+  virtual ~Juego_setMin_result() throw();
+
+  bool operator == (const Juego_setMin_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_setMin_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_setMin_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_setMin_presult {
+ public:
+
+
+  virtual ~Juego_setMin_presult() throw();
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _Juego_setSeg_args__isset {
+  _Juego_setSeg_args__isset() : seg(false) {}
+  bool seg :1;
+} _Juego_setSeg_args__isset;
+
+class Juego_setSeg_args {
+ public:
+
+  Juego_setSeg_args(const Juego_setSeg_args&);
+  Juego_setSeg_args& operator=(const Juego_setSeg_args&);
+  Juego_setSeg_args() : seg(0) {
+  }
+
+  virtual ~Juego_setSeg_args() throw();
+  int32_t seg;
+
+  _Juego_setSeg_args__isset __isset;
+
+  void __set_seg(const int32_t val);
+
+  bool operator == (const Juego_setSeg_args & rhs) const
+  {
+    if (!(seg == rhs.seg))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_setSeg_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_setSeg_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_setSeg_pargs {
+ public:
+
+
+  virtual ~Juego_setSeg_pargs() throw();
+  const int32_t* seg;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_setSeg_result {
+ public:
+
+  Juego_setSeg_result(const Juego_setSeg_result&);
+  Juego_setSeg_result& operator=(const Juego_setSeg_result&);
+  Juego_setSeg_result() {
+  }
+
+  virtual ~Juego_setSeg_result() throw();
+
+  bool operator == (const Juego_setSeg_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_setSeg_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_setSeg_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_setSeg_presult {
+ public:
+
+
+  virtual ~Juego_setSeg_presult() throw();
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class JuegoClient : virtual public JuegoIf {
  public:
   JuegoClient(apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -193,9 +1197,39 @@ class JuegoClient : virtual public JuegoIf {
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
+  bool crearUsuario(const std::string& nombre);
+  void send_crearUsuario(const std::string& nombre);
+  bool recv_crearUsuario();
+  bool seleccionarNivel(const int32_t nivel);
+  void send_seleccionarNivel(const int32_t nivel);
+  bool recv_seleccionarNivel();
   bool atacar(const int32_t x, const int32_t y);
   void send_atacar(const int32_t x, const int32_t y);
   bool recv_atacar();
+  bool graficarEnemigosEliminados();
+  void send_graficarEnemigosEliminados();
+  bool recv_graficarEnemigosEliminados();
+  bool cheats(const std::string& cheat);
+  void send_cheats(const std::string& cheat);
+  bool recv_cheats();
+  bool DesbloquearNiveleGema(const int32_t nivel);
+  void send_DesbloquearNiveleGema(const int32_t nivel);
+  bool recv_DesbloquearNiveleGema();
+  bool graficarPunteoLista();
+  void send_graficarPunteoLista();
+  bool recv_graficarPunteoLista();
+  bool graficarPunteoArbol();
+  void send_graficarPunteoArbol();
+  bool recv_graficarPunteoArbol();
+  bool pausar();
+  void send_pausar();
+  bool recv_pausar();
+  void setMin(const int32_t min);
+  void send_setMin(const int32_t min);
+  void recv_setMin();
+  void setSeg(const int32_t seg);
+  void send_setSeg(const int32_t seg);
+  void recv_setSeg();
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -211,11 +1245,31 @@ class JuegoProcessor : public ::apache::thrift::TDispatchProcessor {
   typedef  void (JuegoProcessor::*ProcessFunction)(int32_t, ::apache::thrift::protocol::TProtocol*, ::apache::thrift::protocol::TProtocol*, void*);
   typedef std::map<std::string, ProcessFunction> ProcessMap;
   ProcessMap processMap_;
+  void process_crearUsuario(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_seleccionarNivel(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_atacar(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_graficarEnemigosEliminados(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_cheats(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_DesbloquearNiveleGema(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_graficarPunteoLista(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_graficarPunteoArbol(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_pausar(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_setMin(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_setSeg(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   JuegoProcessor(::apache::thrift::stdcxx::shared_ptr<JuegoIf> iface) :
     iface_(iface) {
+    processMap_["crearUsuario"] = &JuegoProcessor::process_crearUsuario;
+    processMap_["seleccionarNivel"] = &JuegoProcessor::process_seleccionarNivel;
     processMap_["atacar"] = &JuegoProcessor::process_atacar;
+    processMap_["graficarEnemigosEliminados"] = &JuegoProcessor::process_graficarEnemigosEliminados;
+    processMap_["cheats"] = &JuegoProcessor::process_cheats;
+    processMap_["DesbloquearNiveleGema"] = &JuegoProcessor::process_DesbloquearNiveleGema;
+    processMap_["graficarPunteoLista"] = &JuegoProcessor::process_graficarPunteoLista;
+    processMap_["graficarPunteoArbol"] = &JuegoProcessor::process_graficarPunteoArbol;
+    processMap_["pausar"] = &JuegoProcessor::process_pausar;
+    processMap_["setMin"] = &JuegoProcessor::process_setMin;
+    processMap_["setSeg"] = &JuegoProcessor::process_setSeg;
   }
 
   virtual ~JuegoProcessor() {}
@@ -244,6 +1298,24 @@ class JuegoMultiface : virtual public JuegoIf {
     ifaces_.push_back(iface);
   }
  public:
+  bool crearUsuario(const std::string& nombre) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->crearUsuario(nombre);
+    }
+    return ifaces_[i]->crearUsuario(nombre);
+  }
+
+  bool seleccionarNivel(const int32_t nivel) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->seleccionarNivel(nivel);
+    }
+    return ifaces_[i]->seleccionarNivel(nivel);
+  }
+
   bool atacar(const int32_t x, const int32_t y) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -251,6 +1323,78 @@ class JuegoMultiface : virtual public JuegoIf {
       ifaces_[i]->atacar(x, y);
     }
     return ifaces_[i]->atacar(x, y);
+  }
+
+  bool graficarEnemigosEliminados() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->graficarEnemigosEliminados();
+    }
+    return ifaces_[i]->graficarEnemigosEliminados();
+  }
+
+  bool cheats(const std::string& cheat) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->cheats(cheat);
+    }
+    return ifaces_[i]->cheats(cheat);
+  }
+
+  bool DesbloquearNiveleGema(const int32_t nivel) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->DesbloquearNiveleGema(nivel);
+    }
+    return ifaces_[i]->DesbloquearNiveleGema(nivel);
+  }
+
+  bool graficarPunteoLista() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->graficarPunteoLista();
+    }
+    return ifaces_[i]->graficarPunteoLista();
+  }
+
+  bool graficarPunteoArbol() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->graficarPunteoArbol();
+    }
+    return ifaces_[i]->graficarPunteoArbol();
+  }
+
+  bool pausar() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->pausar();
+    }
+    return ifaces_[i]->pausar();
+  }
+
+  void setMin(const int32_t min) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->setMin(min);
+    }
+    ifaces_[i]->setMin(min);
+  }
+
+  void setSeg(const int32_t seg) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->setSeg(seg);
+    }
+    ifaces_[i]->setSeg(seg);
   }
 
 };
@@ -283,9 +1427,39 @@ class JuegoConcurrentClient : virtual public JuegoIf {
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
+  bool crearUsuario(const std::string& nombre);
+  int32_t send_crearUsuario(const std::string& nombre);
+  bool recv_crearUsuario(const int32_t seqid);
+  bool seleccionarNivel(const int32_t nivel);
+  int32_t send_seleccionarNivel(const int32_t nivel);
+  bool recv_seleccionarNivel(const int32_t seqid);
   bool atacar(const int32_t x, const int32_t y);
   int32_t send_atacar(const int32_t x, const int32_t y);
   bool recv_atacar(const int32_t seqid);
+  bool graficarEnemigosEliminados();
+  int32_t send_graficarEnemigosEliminados();
+  bool recv_graficarEnemigosEliminados(const int32_t seqid);
+  bool cheats(const std::string& cheat);
+  int32_t send_cheats(const std::string& cheat);
+  bool recv_cheats(const int32_t seqid);
+  bool DesbloquearNiveleGema(const int32_t nivel);
+  int32_t send_DesbloquearNiveleGema(const int32_t nivel);
+  bool recv_DesbloquearNiveleGema(const int32_t seqid);
+  bool graficarPunteoLista();
+  int32_t send_graficarPunteoLista();
+  bool recv_graficarPunteoLista(const int32_t seqid);
+  bool graficarPunteoArbol();
+  int32_t send_graficarPunteoArbol();
+  bool recv_graficarPunteoArbol(const int32_t seqid);
+  bool pausar();
+  int32_t send_pausar();
+  bool recv_pausar(const int32_t seqid);
+  void setMin(const int32_t min);
+  int32_t send_setMin(const int32_t min);
+  void recv_setMin(const int32_t seqid);
+  void setSeg(const int32_t seg);
+  int32_t send_setSeg(const int32_t seg);
+  void recv_setSeg(const int32_t seqid);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;

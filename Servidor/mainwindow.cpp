@@ -47,11 +47,12 @@ void MainWindow::on_pushButton_clicked()
         int tam2 = tam.toInt();
         ui->textEdit->setText("201503823@Gianni:~ Iniciando los niveles");
         niveles = new Niveles(tam2,ui->textEdit);
+        ui->textEdit->setText("201503823@Gianni:~ Graficando los niveles");
+        niveles->graficarNiveles();
         ui->textEdit->setText("201503823@Gianni:~ Iniciando Servicios de apache");
-        HiloApache *apach = new HiloApache(niveles,ui->textEdit);
+        HiloApache *apach = new HiloApache(niveles);
         apach->start();
         ui->textEdit->setText("201503823@Gianni:~ Apache iniciado exitosamente");
-        niveles->Jugar(1);
     }
 }
 

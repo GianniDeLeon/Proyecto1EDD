@@ -35,12 +35,12 @@ SOURCES += \
     matrizortogonal.cpp \
     gema.cpp \
     niveles.cpp \
-    Juego.cpp \
-    Servidor_constants.cpp \
-    Servidor_types.cpp \
     hiloapache.cpp \
     arbolpunteo.cpp \
-    usuario.cpp
+    usuario.cpp \
+    Servidor_types.cpp \
+    Servidor_constants.cpp \
+    Juego.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -55,7 +55,10 @@ HEADERS += \
     Servidor_types.h \
     hiloapache.h \
     arbolpunteo.h \
-    usuario.h
+    usuario.h \
+    Servidor_types.h \
+    Servidor_constants.h \
+    Juego.h
 
 FORMS += \
         mainwindow.ui

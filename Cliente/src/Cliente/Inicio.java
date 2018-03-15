@@ -5,7 +5,11 @@
  */
 package Cliente;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 
@@ -127,13 +131,38 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (!jTextField1.getText().isEmpty()) {
-            GUI gui = new GUI(transport,protocol,juego);
-            gui.setVisible(true);
+            try {
+                int nivel = Integer.parseInt(jTextField1.getText());
+                juego.seleccionarNivel(nivel);
+                GUI gui = new GUI(transport,protocol,juego);
+                this.setVisible(false);
+                gui.setVisible(true);
+            } catch (TException ex) {
+                JOptionPane.showMessageDialog(null, "Error al enviar los niveles");
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        jButton1.setEnabled(true);
+        if(!jTextField2.getText().isEmpty())
+        {
+            try {
+                boolean envio;
+                envio = juego.crearUsuario(jTextField2.getText());
+                if(envio)
+                {
+                    JOptionPane.showMessageDialog(null, "Jugador creado exitosamente Elija el nivel");
+                    jButton1.setEnabled(true);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Error al crear el usario");
+                }
+            } catch (TException ex) {
+                JOptionPane.showMessageDialog(null, "Error al enviar el nombre al servidor");
+            }
+            
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

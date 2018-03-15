@@ -20,13 +20,13 @@ public:
     LisUsuario *inicioLisUsu;
     void setTam(int tam);
     void aumentarTam();
-    void Jugar(int nivel);
+    bool Jugar(int nivel);
     MatrizOrtogonal::ListaGemas *ini;
     void stop();
     void graficarNiveles();
     bool atacar(int x, int y);
     void graficarpila(int x, int y);
-    void crearUsuario(string nombre);
+    bool crearUsuario(string nombre);
     void finjuego();
     void setMin(int min);
     void setSeg(int seg);

@@ -105,7 +105,7 @@ void Niveles::aumentarTam()
     }
 }
 
-void Niveles::Jugar(int nivel)
+bool Niveles::Jugar(int nivel)
 {
     texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Iniciando el juego");
     Nodo *aux = inicio;
@@ -118,11 +118,13 @@ void Niveles::Jugar(int nivel)
             {
                 texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Nivel Blocqueado");
                 cout << "Nivel bloqueado"<<endl;
+                return false;
             }
             else
             {
                 Play = aux;
                 Play->matriz->start();
+                return true;
             }
         }
         aux = aux->anterior;
@@ -188,7 +190,7 @@ void Niveles::graficarpila(int x, int y)
     }
 }
 
-void Niveles::crearUsuario(string nombre)
+bool Niveles::crearUsuario(string nombre)
 {
     this->jugando = new Usuario(nombre);
     pushLisUsuario(jugando);
