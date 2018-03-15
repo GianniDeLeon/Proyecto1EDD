@@ -85,3 +85,27 @@ void MainWindow::on_pushButton_6_clicked()
     scene->setBackgroundBrush(m);
     ui->graphicsView->setScene(scene);
 }
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    QString x = ui->lineEdit_2->text();
+    QString y = ui->lineEdit_3->text();
+    if(x == "" || x == NULL || y == "" || y == NULL)
+    {
+        QMessageBox msgBox;
+        msgBox.setText("No se ingreso la coordenada completa");
+        msgBox.exec();
+    }
+    else
+    {
+        ui->lineEdit_2->setText("");
+        ui->lineEdit_3->setText("");
+        int xi = x.toInt();
+        int yi = y.toInt();
+        niveles->graficarpila(xi,yi);
+        QGraphicsScene *scene = new QGraphicsScene();
+        QPixmap m("Pila.png");
+        scene->setBackgroundBrush(m);
+        ui->graphicsView->setScene(scene);
+    }
+}

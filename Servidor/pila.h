@@ -15,6 +15,7 @@ public:
     Enemigo *Pop();
     bool Vacia();
     void pushEnemigo(Enemigo *en);
+    void graficarPila();
 protected:
     Nodo *inicioPila;
 };

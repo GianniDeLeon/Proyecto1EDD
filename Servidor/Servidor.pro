@@ -38,7 +38,9 @@ SOURCES += \
     Juego.cpp \
     Servidor_constants.cpp \
     Servidor_types.cpp \
-    hiloapache.cpp
+    hiloapache.cpp \
+    arbolpunteo.cpp \
+    usuario.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -51,7 +53,9 @@ HEADERS += \
     Juego.h \
     Servidor_constants.h \
     Servidor_types.h \
-    hiloapache.h
+    hiloapache.h \
+    arbolpunteo.h \
+    usuario.h
 
 FORMS += \
         mainwindow.ui

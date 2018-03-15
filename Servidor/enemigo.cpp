@@ -2,7 +2,20 @@
 
 Enemigo::Enemigo(int vida, int id)
 {
-    this->vida = vida;
+    switch (vida) {
+    case 1:
+            this->vida = 1;
+        break;
+    case 2:
+            this->vida = 3;
+        break;
+    case 3:
+        this->vida = 5;
+        break;
+    default:
+        this->vida = vida;
+        break;
+    }
     this->id = id;
     this->nivel = vida;
 }

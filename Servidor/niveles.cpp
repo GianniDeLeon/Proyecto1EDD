@@ -13,14 +13,26 @@ typedef struct Niveles::Nodo
     MatrizOrtogonal *matriz;
     Nodo *siguiente, *anterior;
 }Nodo;
+typedef struct Niveles::LisUsuario
+{
+    Usuario *usr;
+    LisUsuario *siguiente;
+}LisUsuario;
 
 Nodo *Play,*Pnivel;
+Usuario *jugando;
+LisUsuario *inicioLisUsu;
 
 Niveles::Niveles(int tam,QTextEdit *texto)
 {
     this->tam = tam;
+    this->min = 0;
+    this->seg = 0;
+    this->punteo = 0;
     this->inicio = NULL;
     this->texto = texto;
+    this->jugando = NULL;
+    this->inicioLisUsu = NULL;
     texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Creando niveles");
     crearNiveles();
 }
@@ -163,24 +175,85 @@ bool Niveles::atacar(int x, int y)
     //texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Atacando el nodo");
     return mat->atacarNodo(x,y);
 }
-//void Niveles::stop()
-//{
-//    if(ini != NULL)
-//    {
-//        struct MatrizOrtogonal::ListaGemas *aux;
-//        struct ListaGemas aux = Play->matriz->getListaGemas();
-//        if(aux != NULL)
-//        {
-//            while(aux != NULL)
-//            {
-//                aux->siguiente = ini;
-//                ini = aux;
-//                aux = aux->siguiente;
-//            }
-//        }
-//    }
-//    else
-//    {
-//        this->ini = Play->matriz->getListaGemas();
-//    }
-//}
+
+void Niveles::graficarpila(int x, int y)
+{
+    if(Play->matriz->graficarPila(x,y))
+    {
+        texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Pila graficada Correctamente");
+    }
+    else
+    {
+        texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Nodo Null no se grafica pila");
+    }
+}
+
+void Niveles::crearUsuario(string nombre)
+{
+    this->jugando = new Usuario(nombre);
+    pushLisUsuario(jugando);
+}
+
+void Niveles::finjuego()
+{
+    this->punteo = Play->matriz->getPunteo();
+    jugando->min = this->min;
+    jugando->nivel = Play->nivel;
+    jugando->punteo = this->punteo;
+    jugando->seg = this->seg;
+    //sacar gemas de clase matrizOrtogonal
+}
+
+void Niveles::setMin(int min)
+{
+    this->min = min;
+}
+
+void Niveles::setSeg(int seg)
+{
+    this->seg = seg;
+}
+
+void Niveles::pushLisUsuario(Usuario *usr)
+{
+    LisUsuario *nuevo = new LisUsuario;
+    nuevo->usr = usr;
+    if(inicioLisUsu != NULL)
+    {
+        nuevo->siguiente = inicioLisUsu;
+    }
+    else
+    {
+        nuevo->siguiente = NULL;
+    }
+    inicioLisUsu = nuevo;
+}
+
+void Niveles::graficarLisUsuario()
+{
+    if(inicioLisUsu != NULL)
+    {
+        LisUsuario *aux = inicioLisUsu;
+        ofstream ficheroSalida;
+        ficheroSalida.open ("LisUsr.dot");
+        ficheroSalida << "digraph LisUsr{";
+        while(aux != NULL)
+        {
+            Usuario *usr = aux->usr;
+            ficheroSalida << usr->nombre<<"Pts"<<usr->punteo;
+            if(aux->siguiente != NULL)
+            {
+                ficheroSalida<<" -> ";
+            }
+            else
+            {
+                ficheroSalida<<";\n";
+            }
+            aux = aux->siguiente;
+        }
+        ficheroSalida << "}";
+        ficheroSalida.close();
+        system("dot -Tpng LisUsr.dot -o LisUsr.png");
+        system("nomacs LisUsr.png");
+    }
+}

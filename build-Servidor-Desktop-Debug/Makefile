@@ -61,7 +61,9 @@ SOURCES       = ../Servidor/main.cpp \
 		../Servidor/Juego.cpp \
 		../Servidor/Servidor_constants.cpp \
 		../Servidor/Servidor_types.cpp \
-		../Servidor/hiloapache.cpp moc_mainwindow.cpp \
+		../Servidor/hiloapache.cpp \
+		../Servidor/arbolpunteo.cpp \
+		../Servidor/usuario.cpp moc_mainwindow.cpp \
 		moc_hilogeneracionenemigos.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
@@ -75,6 +77,8 @@ OBJECTS       = main.o \
 		Servidor_constants.o \
 		Servidor_types.o \
 		hiloapache.o \
+		arbolpunteo.o \
+		usuario.o \
 		moc_mainwindow.o \
 		moc_hilogeneracionenemigos.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -365,7 +369,9 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		../Servidor/Juego.h \
 		../Servidor/Servidor_constants.h \
 		../Servidor/Servidor_types.h \
-		../Servidor/hiloapache.h ../Servidor/main.cpp \
+		../Servidor/hiloapache.h \
+		../Servidor/arbolpunteo.h \
+		../Servidor/usuario.h ../Servidor/main.cpp \
 		../Servidor/mainwindow.cpp \
 		../Servidor/pila.cpp \
 		../Servidor/enemigo.cpp \
@@ -376,7 +382,9 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		../Servidor/Juego.cpp \
 		../Servidor/Servidor_constants.cpp \
 		../Servidor/Servidor_types.cpp \
-		../Servidor/hiloapache.cpp
+		../Servidor/hiloapache.cpp \
+		../Servidor/arbolpunteo.cpp \
+		../Servidor/usuario.cpp
 QMAKE_TARGET  = Servidor
 DESTDIR       = 
 TARGET        = Servidor
@@ -968,8 +976,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Servidor/mainwindow.h ../Servidor/enemigo.h ../Servidor/pila.h ../Servidor/hilogeneracionenemigos.h ../Servidor/matrizortogonal.h ../Servidor/gema.h ../Servidor/niveles.h ../Servidor/Juego.h ../Servidor/Servidor_constants.h ../Servidor/Servidor_types.h ../Servidor/hiloapache.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Servidor/main.cpp ../Servidor/mainwindow.cpp ../Servidor/pila.cpp ../Servidor/enemigo.cpp ../Servidor/hilogeneracionenemigos.cpp ../Servidor/matrizortogonal.cpp ../Servidor/gema.cpp ../Servidor/niveles.cpp ../Servidor/Juego.cpp ../Servidor/Servidor_constants.cpp ../Servidor/Servidor_types.cpp ../Servidor/hiloapache.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Servidor/mainwindow.h ../Servidor/enemigo.h ../Servidor/pila.h ../Servidor/hilogeneracionenemigos.h ../Servidor/matrizortogonal.h ../Servidor/gema.h ../Servidor/niveles.h ../Servidor/Juego.h ../Servidor/Servidor_constants.h ../Servidor/Servidor_types.h ../Servidor/hiloapache.h ../Servidor/arbolpunteo.h ../Servidor/usuario.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Servidor/main.cpp ../Servidor/mainwindow.cpp ../Servidor/pila.cpp ../Servidor/enemigo.cpp ../Servidor/hilogeneracionenemigos.cpp ../Servidor/matrizortogonal.cpp ../Servidor/gema.cpp ../Servidor/niveles.cpp ../Servidor/Juego.cpp ../Servidor/Servidor_constants.cpp ../Servidor/Servidor_types.cpp ../Servidor/hiloapache.cpp ../Servidor/arbolpunteo.cpp ../Servidor/usuario.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Servidor/mainwindow.ui $(DISTDIR)/
 
 
@@ -1045,6 +1053,8 @@ mainwindow.o: ../Servidor/mainwindow.cpp ../Servidor/mainwindow.h \
 		../Servidor/matrizortogonal.h \
 		../Servidor/enemigo.h \
 		../Servidor/gema.h \
+		../Servidor/arbolpunteo.h \
+		../Servidor/usuario.h \
 		../Servidor/hiloapache.h \
 		../Servidor/Juego.h \
 		../Servidor/Servidor_types.h
@@ -1076,7 +1086,9 @@ gema.o: ../Servidor/gema.cpp ../Servidor/gema.h
 niveles.o: ../Servidor/niveles.cpp ../Servidor/niveles.h \
 		../Servidor/matrizortogonal.h \
 		../Servidor/enemigo.h \
-		../Servidor/gema.h
+		../Servidor/gema.h \
+		../Servidor/arbolpunteo.h \
+		../Servidor/usuario.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o niveles.o ../Servidor/niveles.cpp
 
 Juego.o: ../Servidor/Juego.cpp ../Servidor/Juego.h \
@@ -1091,9 +1103,22 @@ Servidor_types.o: ../Servidor/Servidor_types.cpp ../Servidor/Servidor_types.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Servidor_types.o ../Servidor/Servidor_types.cpp
 
 hiloapache.o: ../Servidor/hiloapache.cpp ../Servidor/hiloapache.h \
+		../Servidor/niveles.h \
+		../Servidor/matrizortogonal.h \
+		../Servidor/enemigo.h \
+		../Servidor/gema.h \
+		../Servidor/arbolpunteo.h \
+		../Servidor/usuario.h \
 		../Servidor/Juego.h \
 		../Servidor/Servidor_types.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hiloapache.o ../Servidor/hiloapache.cpp
+
+arbolpunteo.o: ../Servidor/arbolpunteo.cpp ../Servidor/arbolpunteo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arbolpunteo.o ../Servidor/arbolpunteo.cpp
+
+usuario.o: ../Servidor/usuario.cpp ../Servidor/usuario.h \
+		../Servidor/arbolpunteo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o usuario.o ../Servidor/usuario.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

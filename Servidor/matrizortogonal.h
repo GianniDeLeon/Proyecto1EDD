@@ -9,7 +9,7 @@ class MatrizOrtogonal : public QThread
 public:
     QTextEdit *texto;
     MatrizOrtogonal(int,QTextEdit *texto);
-    int NumImpactos;
+    int NumImpactos,Punteo;
     struct NodoRaiz;
     struct Nodo;
     struct CabezeraX;
@@ -39,9 +39,12 @@ public:
     void incertarGema(Gema *gem);
     ListaGemas *getListaGemas();
     bool atacarNodo(int x, int y);
+    void sumarPunteo(int nivel);
+    int getPunteo();
     void PilaVacia(Nodo *&nod);
     void generarEnemigo();
     void movertope();
+    bool graficarPila(int x, int y);
     void menuCab();
     void recorrerLV1();
     void recorrerLV2();

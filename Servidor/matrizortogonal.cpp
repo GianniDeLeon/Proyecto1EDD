@@ -54,6 +54,7 @@ MatrizOrtogonal::MatrizOrtogonal(int limit,QTextEdit *texto)
 {
     this->limit = limit;
     this->NumImpactos =0;
+    this->Punteo = 0;
     this->texto = texto;
     inicio = new NodoRaiz;
     inicio->abajo = NULL;
@@ -433,7 +434,7 @@ Nodo *MatrizOrtogonal::buscarNodo(int x, int y)
 
 void MatrizOrtogonal::eliminarNodo(int x, int y)
 {
-    this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Nodo eliminado de la matriz");
+    //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Nodo eliminado de la matriz");
     Nodo *nod = buscarNodo(x,y);
     if(nod != NULL)
     {
@@ -663,10 +664,13 @@ bool MatrizOrtogonal::atacarNodo(int x, int y)
         {
             cout << "Atacando en la posicion X:"<<x<<" Y:"<<y<<endl;
             int vida = en->impacto();
+            cout << "Sumando puntos al jugador"<<endl;
+            sumarPunteo(en->getNivel());
             cout << "Vida restante del enemigo "<<vida<<" Nivel:"<<en->getNivel()<<endl;
             if(this->NumImpactos == 5)
             {
                 //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ 5 impactos generando gema");
+                cout << "5 impactos seguidos generando gema"<<endl;
                 this->NumImpactos = 0;
                 pill->generarGema();
             }
@@ -711,6 +715,28 @@ bool MatrizOrtogonal::atacarNodo(int x, int y)
     }
 }
 
+void MatrizOrtogonal::sumarPunteo(int nivel)
+{
+    switch (nivel) {
+    case 1:
+        this->Punteo += 10;
+        break;
+    case 2:
+        this->Punteo += 20;
+        break;
+    case 3:
+        this->Punteo += 40;
+        break;
+    default:
+        break;
+    }
+}
+
+int MatrizOrtogonal::getPunteo()
+{
+   return this->Punteo;
+}
+
 void MatrizOrtogonal::PilaVacia(Nodo *&nod)
 {
     //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Pila vacia eliminando");
@@ -744,12 +770,12 @@ void MatrizOrtogonal::generarEnemigo()
     Nodo *nod = buscarNodo(x,y);
     if(nod != NULL)
     {
-        //cout << "Nodo ya existente se generara malo en dicha posicion"<<endl;
+        cout << "Nodo ya existente se generara malo en dicha posicion X:"<<x<<" Y:"<<y<<endl;
         incertarMaloPila(*&nod);
     }
     else
     {
-        //cout << "Incertando nodo"<<endl;
+        cout << "Incertando nodo X;"<<x<<" Y:"<<y<<endl;
         incertarNodo(x,y);
     }
     //cout << "Generando coordenadas aleatorias para Mover tope de pila"<<endl;
@@ -763,6 +789,20 @@ void MatrizOrtogonal::movertope()
     //cout << "Moviendo Tope de pila en X:"<<x<<" Y:"<<y<<endl;
     //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Moviendo tope de pila");
     moverTopePila(x,y);
+}
+
+bool MatrizOrtogonal::graficarPila(int x, int y)
+{
+    Nodo *nod = buscarNodo(x,y);
+    if(nod != NULL)
+    {
+        nod->pila->graficarPila();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void MatrizOrtogonal::menuCab()

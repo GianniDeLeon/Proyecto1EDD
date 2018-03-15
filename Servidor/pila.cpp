@@ -4,6 +4,7 @@
 #include<stdlib.h>
 #include<time.h>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 typedef struct Pila::Nodo
@@ -87,4 +88,44 @@ void Pila::pushEnemigo(Enemigo *en)
     Nodo *newNodo = new Nodo;
     newNodo->enemi = en;
     Push(newNodo);
+}
+
+void Pila::graficarPila()
+{
+    ofstream ficheroSalida;
+    ficheroSalida.open ("Pila.dot");
+    ficheroSalida << "digraph Pila{\n";
+    Nodo *aux = inicioPila;
+    while(aux != NULL)
+    {
+        Enemigo *en = aux->enemi;
+        if(en != NULL)
+        {
+            if(aux->siguiente != NULL)
+            {
+                ficheroSalida << "EnemigoID"<<en->getId()<<" -> ";
+            }
+            else
+            {
+                ficheroSalida << "EnemigoID"<<en->getId()<<";";
+            }
+        }
+        else
+        {
+            Gema *gem = aux->gem;
+            if(aux->siguiente != NULL)
+            {
+                ficheroSalida << "GemaID"<<gem->id<<" -> ";
+            }
+            else
+            {
+                ficheroSalida << "GemaID"<<gem->id<<";";
+            }
+        }
+        aux = aux->siguiente;
+    }
+    ficheroSalida << "}";
+    ficheroSalida.close();
+    system("dot -Tpng Pila.dot -o Pila.png");
+    system("nomacs Pila.png");
 }

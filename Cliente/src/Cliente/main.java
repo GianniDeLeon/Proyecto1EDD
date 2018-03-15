@@ -29,8 +29,8 @@ public class main {
             System.out.print("Iniciando interfaz grafica");
             Inicio ini = new Inicio(transport,protocol,juego);
             ini.setVisible(true);
-            //GUI gui = new GUI(transport,protocol,juego);
-            //gui.setVisible(true);
+//            GUI gui = new GUI(transport,protocol,juego);
+//            gui.setVisible(true);
         } catch (TTransportException ex) {
             System.out.print("Servidor no encontrado");
         }
