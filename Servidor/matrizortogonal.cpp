@@ -4,6 +4,7 @@
 #include <iostream>
 #include<time.h>
 #include "gema.h"
+#include <fstream>
 using namespace std;
 
 typedef struct MatrizOrtogonal::Nodo
@@ -48,7 +49,8 @@ typedef struct MatrizOrtogonal::ListaGemas
 ListaEnemigos *LV1=NULL,*LV2=NULL,*LV3=NULL;
 ListaGemas *LG=NULL;
 NodoRaiz *inicio=NULL;
-int limit;
+bool pausa,finHilo,cheatActivo;
+int limit,gemas,idgema,falloAtac;
 
 MatrizOrtogonal::MatrizOrtogonal(int limit,QTextEdit *texto)
 {
@@ -56,9 +58,41 @@ MatrizOrtogonal::MatrizOrtogonal(int limit,QTextEdit *texto)
     this->NumImpactos =0;
     this->Punteo = 0;
     this->texto = texto;
+    gemas =0;
     inicio = new NodoRaiz;
     inicio->abajo = NULL;
     inicio->izquierda = NULL;
+    pausa = finHilo = false;
+    cheatActivo = false;
+    idgema = 1;
+    falloAtac =0;
+}
+
+void MatrizOrtogonal::limpiar()
+{
+    this->limit = limit;
+    this->NumImpactos =0;
+    this->Punteo = 0;
+    this->texto = texto;
+    gemas =0;
+    inicio = new NodoRaiz;
+    inicio->abajo = NULL;
+    inicio->izquierda = NULL;
+    pausa = finHilo = false;
+    cheatActivo = false;
+    idgema = 1;
+    falloAtac =0;
+}
+
+void MatrizOrtogonal::setPausa()
+{
+    pausa = !pausa;
+}
+
+void MatrizOrtogonal::setFinHilo()
+{
+    setPausa();
+    finHilo = !finHilo;
 }
 
 void MatrizOrtogonal::setLimit(int limit)
@@ -621,7 +655,7 @@ void MatrizOrtogonal::moverTopePila(int xi, int yi)
 
 void MatrizOrtogonal::incertarEnemigoLista(ListaEnemigos *&ini, Enemigo *en)
 {
-    this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Incertando enemigo en lista de eliminados");
+    //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Incertando enemigo en lista de eliminados");
     ListaEnemigos *nuevo = new ListaEnemigos;
     nuevo->enemigo = en;
     if(ini == NULL)
@@ -638,7 +672,6 @@ void MatrizOrtogonal::incertarEnemigoLista(ListaEnemigos *&ini, Enemigo *en)
 
 void MatrizOrtogonal::incertarGema(Gema *gem)
 {
-    this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Incertando gema en lista de gemas");
     ListaGemas *nuevo = new ListaGemas;
     nuevo->gem = gem;
     nuevo->siguiente = LG;
@@ -662,20 +695,22 @@ bool MatrizOrtogonal::atacarNodo(int x, int y)
         Enemigo *en = pill->Pop();
         if(en != NULL)
         {
+            falloAtac = 0;
             cout << "Atacando en la posicion X:"<<x<<" Y:"<<y<<endl;
             int vida = en->impacto();
-            cout << "Sumando puntos al jugador"<<endl;
-            sumarPunteo(en->getNivel());
             cout << "Vida restante del enemigo "<<vida<<" Nivel:"<<en->getNivel()<<endl;
             if(this->NumImpactos == 5)
             {
                 //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ 5 impactos generando gema");
-                cout << "5 impactos seguidos generando gema"<<endl;
+                cout << "5 impactos seguidos generando gema en X:"<<x<<" Y:"<<y<<endl;
                 this->NumImpactos = 0;
                 pill->generarGema();
             }
-            if(vida == 0)
+
+            if(vida <= 0)
             {
+                cout << "Sumando puntos al jugador"<<endl;
+                sumarPunteo(en->getNivel());
                 //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Enemigo eliminado");
                 switch (en->getNivel()) {
                 case 1:
@@ -703,16 +738,107 @@ bool MatrizOrtogonal::atacarNodo(int x, int y)
         }
         else
         {
+            gemas++;
+            cout <<"Gema conseguida cantidad de gemas: "<<gemas<<endl;
             Gema *gem = pill->getGema();
             incertarGema(gem);
+            PilaVacia(*&nod);
         }
         return true;
     }
     else
     {
+        falloAtac++;
         NumImpactos =0;
+        if(falloAtac == 5)
+        {
+            cout << "5 ataques fallidos consecutivos restando vida"<<endl;
+            this->Punteo -= 100;
+            cout << "Reviviendo enemigo" <<endl;
+            generarEnemigo();
+            falloAtac = 0;
+        }
         return false;
     }
+}
+
+void MatrizOrtogonal::graficarN1()
+{
+    ListaEnemigos *aux = LV1;
+    ofstream ficheroSalida;
+    ficheroSalida.open ("N1.dot");
+    ficheroSalida << "digraph N1{\n";
+    while(aux!=NULL)
+    {
+        ficheroSalida<<"ID"<<aux->enemigo->getId();
+        if(aux->siguiente == NULL)
+        {
+            ficheroSalida <<";\n";
+        }
+        else
+        {
+            ficheroSalida <<" -> ";
+        }
+        aux = aux->siguiente;
+    }
+    ficheroSalida << "}";
+    ficheroSalida.close();
+    system("dot -Tpng N1.dot -o N1.png");
+}
+
+void MatrizOrtogonal::graficarN2()
+{
+    ListaEnemigos *aux = LV2;
+    ofstream ficheroSalida;
+    ficheroSalida.open ("N2.dot");
+    ficheroSalida << "digraph N2{\n";
+    while(aux!=NULL)
+    {
+        ficheroSalida<<"ID"<<aux->enemigo->getId();
+        if(aux->siguiente == NULL)
+        {
+            ficheroSalida <<";\n";
+        }
+        else
+        {
+            ficheroSalida <<" -> ";
+        }
+        aux = aux->siguiente;
+    }
+    ficheroSalida << "}";
+    ficheroSalida.close();
+    system("dot -Tpng N2.dot -o N2.png");
+}
+
+void MatrizOrtogonal::graficarN3()
+{
+    ListaEnemigos *aux = LV3;
+    ofstream ficheroSalida;
+    ficheroSalida.open ("N3.dot");
+    ficheroSalida << "digraph N3{\n";
+    while(aux!=NULL)
+    {
+        ficheroSalida<<"ID"<<aux->enemigo->getId();
+        if(aux->siguiente == NULL)
+        {
+            ficheroSalida <<";\n";
+        }
+        else
+        {
+            ficheroSalida <<" -> ";
+        }
+        aux = aux->siguiente;
+    }
+    ficheroSalida << "}";
+    ficheroSalida.close();
+    system("dot -Tpng N3.dot -o N3.png");
+}
+
+void MatrizOrtogonal::graficarEnemigosEliminados()
+{
+    graficarN1();
+    graficarN2();
+    graficarN3();
 }
 
 void MatrizOrtogonal::sumarPunteo(int nivel)
@@ -743,20 +869,26 @@ void MatrizOrtogonal::PilaVacia(Nodo *&nod)
     Pila *pil = nod->pila;
     if(pil->Vacia())
     {
+        cout<<"Eliminado nodo X:"<<nod->x<<" Y:"<<nod->y<<endl;
         eliminarNodo(nod->x,nod->y);
     }
 }
 
 void MatrizOrtogonal::run()
 {
-    while(true)
+    finHilo = pausa = false;
+    while(!finHilo)
     {
-        //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Moviendo Tope de Pila");
-        movertope();
-        msleep(4000);
-        movertope();
-        msleep(4000);
-        generarEnemigo();
+        while(!pausa)
+        {
+            //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Moviendo Tope de Pila");
+            movertope();
+            msleep(4000);
+            movertope();
+            msleep(4000);
+            generarEnemigo();
+        }
+        msleep(1000);
     }
 }
 
@@ -913,4 +1045,21 @@ void MatrizOrtogonal::recorrerCaby()
         recorrerNodoY(cab->izquierda);
         cab = cab->sigiente;
     }
+}
+
+Gema *MatrizOrtogonal::getGema()
+{
+    if(!cheatActivo && gemas >= 3)
+    {
+        gemas -= 3;
+        Gema *nueva = new Gema(idgema);
+        idgema++;
+        return nueva;
+    }
+    return NULL;
+}
+
+int MatrizOrtogonal::getContGema()
+{
+    return gemas;
 }

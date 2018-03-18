@@ -27,8 +27,11 @@ public class main {
             protocol = new TBinaryProtocol(transport);
             juego = new Juego.Client(protocol);
             System.out.print("Iniciando interfaz grafica");
-            Inicio ini = new Inicio(transport,protocol,juego);
-            ini.setVisible(true);
+            Login log = new Login(transport,protocol,juego);
+            log.setVisible(true);
+//            Inicio ini = new Inicio(transport,protocol,juego);
+//            ini.setIni(ini);
+//            ini.setVisible(true);
 //            GUI gui = new GUI(transport,protocol,juego);
 //            gui.setVisible(true);
         } catch (TTransportException ex) {

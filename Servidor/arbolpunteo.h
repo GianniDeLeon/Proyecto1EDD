@@ -16,7 +16,7 @@ public:
     void graficarArbol();
     void agregarACola(Cola *&inicio,Cola *&fin, Nodo *nodo);
     Cola *sacarCola(Cola *&inicio);
-
+    void vaciarColas();
     void incertarEnArbol(int punteo, int nivel, int seg, int min);
 };
 

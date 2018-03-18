@@ -4,11 +4,15 @@
 #include "gema.h"
 #include <QThread>
 #include <QTextEdit>
+#include <string>
+using namespace std;
 class MatrizOrtogonal : public QThread
 {
 public:
     QTextEdit *texto;
     MatrizOrtogonal(int,QTextEdit *texto);
+    void setPausa();
+    void setFinHilo();
     int NumImpactos,Punteo;
     struct NodoRaiz;
     struct Nodo;
@@ -53,6 +57,14 @@ public:
     void recorrerNodoX(Nodo *nod);
     void recorrerCaby();
     void recorrerNodoY(Nodo *nod);
+    Gema *getGema();
+    bool cheat();
+    int getContGema();
+    void graficarN1();
+    void graficarN2();
+    void graficarN3();
+    void graficarEnemigosEliminados();
+    void limpiar();
 private:
     NodoRaiz *inicio;
     int limit;

@@ -9,7 +9,7 @@ using namespace std;
 typedef struct Niveles::Nodo
 {
     bool Lock;
-    int nivel;
+    int nivel,punteoG;
     MatrizOrtogonal *matriz;
     Nodo *siguiente, *anterior;
 }Nodo;
@@ -31,6 +31,7 @@ Niveles::Niveles(int tam,QTextEdit *texto)
     this->punteo = 0;
     this->inicio = NULL;
     this->texto = texto;
+    Play = NULL;
     this->jugando = NULL;
     this->inicioLisUsu = NULL;
     texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Creando niveles");
@@ -39,12 +40,13 @@ Niveles::Niveles(int tam,QTextEdit *texto)
 
 void Niveles::crearNiveles()
 {
-    int i;
+    int i,puntos = 80;
     bool lock = false;
     for(i=1;i<=this->tam;i++)
     {
         Nodo *nuevo = new Nodo;
         nuevo->nivel = i;
+        nuevo->punteoG = puntos;
         nuevo->Lock = lock;
         MatrizOrtogonal *nuevaMa = new MatrizOrtogonal(this->tam,this->texto);
         nuevo->matriz = nuevaMa;
@@ -62,6 +64,7 @@ void Niveles::crearNiveles()
             inicio = nuevo;
         }
         lock = true;
+        puntos += 20;
     }
 }
 
@@ -107,7 +110,7 @@ void Niveles::aumentarTam()
 
 bool Niveles::Jugar(int nivel)
 {
-    texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Iniciando el juego");
+    //texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Iniciando el juego");
     Nodo *aux = inicio;
     while(aux != NULL)
     {
@@ -116,13 +119,14 @@ bool Niveles::Jugar(int nivel)
             cout << "Nivel:" << nivel << " Encontrado"<<endl;
             if(aux->Lock)
             {
-                texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Nivel Blocqueado");
+                //texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Nivel Blocqueado");
                 cout << "Nivel bloqueado"<<endl;
                 return false;
             }
             else
             {
                 Play = aux;
+                Play->matriz->limpiar();
                 Play->matriz->start();
                 return true;
             }
@@ -168,7 +172,7 @@ void Niveles::graficarNiveles()
     ficheroSalida << "}";
     ficheroSalida.close();
     system("dot -Tpng niveles.dot -o niveles.png");
-    system("nomacs niveles.png");
+    //system("nomacs niveles.png");
 }
 
 bool Niveles::atacar(int x, int y)
@@ -203,6 +207,9 @@ void Niveles::finjuego()
     jugando->nivel = Play->nivel;
     jugando->punteo = this->punteo;
     jugando->seg = this->seg;
+    Play->matriz->setFinHilo();
+    jugando->incertarNodoArbol();
+    //pthread_cancel(Play->matriz->thread());
     //sacar gemas de clase matrizOrtogonal
 }
 
@@ -258,4 +265,111 @@ void Niveles::graficarLisUsuario()
         system("dot -Tpng LisUsr.dot -o LisUsr.png");
         system("nomacs LisUsr.png");
     }
+}
+
+int Niveles::getPunteo()
+{
+    return Play->matriz->getPunteo();
+}
+
+void Niveles::graficarArbol()
+{
+    jugando->arbol->recorridoAnchura();
+}
+
+void Niveles::pausar()
+{
+    Play->matriz->setPausa();
+}
+
+void Niveles::PopGemaNivel()
+{
+    while(Play->matriz->getContGema() >= 3)
+    {
+        cout <<"Extrallendo una gema del nivel: "<<Play->nivel<<endl;
+        jugando->incertarGema(Play->matriz->getGema());
+    }
+}
+
+int Niveles::getCantGemas()
+{
+    if(Play != NULL)
+    {
+        PopGemaNivel();
+    }
+    return jugando->cantGema;
+}
+
+bool Niveles::buscarUsuario(string nombre)
+{
+    if(inicioLisUsu == NULL)
+    {
+        return false;
+    }
+    else
+    {
+        LisUsuario *aux = inicioLisUsu;
+        while(aux != NULL)
+        {
+            Usuario *usr = aux->usr;
+            if(usr->nombre == nombre)
+            {
+                jugando = usr;
+                return true;
+            }
+            aux = aux->siguiente;
+        }
+        return false;
+    }
+}
+
+void Niveles::graficarLisEnemigosElim()
+{
+    Play->matriz->graficarEnemigosEliminados();
+}
+
+bool Niveles::desbloquearNivelGema(int nivel)
+{
+    Gema *gem = jugando->popGema();
+    if(gem != NULL)
+    {
+        Nodo *Ndes = buscarNivel(nivel);
+        if(Ndes != NULL)
+        {
+            Ndes->Lock = false;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
+Nodo *Niveles::buscarNivel(int nivel)
+{
+    Nodo *aux = Pnivel;
+    while(aux != NULL)
+    {
+        if(aux->nivel == nivel)
+        {
+            return aux;
+        }
+        aux = aux->siguiente;
+    }
+    return NULL;
+}
+
+bool Niveles::ganoNivel()
+{
+    if(getPunteo() >= Play->punteoG)
+    {
+        Play->siguiente->Lock = false;
+        return true;
+    }
+    return false;
 }

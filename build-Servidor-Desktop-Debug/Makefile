@@ -1109,7 +1109,8 @@ arbolpunteo.o: ../Servidor/arbolpunteo.cpp ../Servidor/arbolpunteo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arbolpunteo.o ../Servidor/arbolpunteo.cpp
 
 usuario.o: ../Servidor/usuario.cpp ../Servidor/usuario.h \
-		../Servidor/arbolpunteo.h
+		../Servidor/arbolpunteo.h \
+		../Servidor/gema.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o usuario.o ../Servidor/usuario.cpp
 
 Servidor_types.o: ../Servidor/Servidor_types.cpp ../Servidor/Servidor_types.h

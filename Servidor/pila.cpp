@@ -51,6 +51,7 @@ void Pila::generarEnemigo()
     int vida,id;
     id = rand()%10000;
     vida = 1 + rand()%(4-1);
+    this->gemPop = NULL;
     Enemigo *nuevo = new Enemigo(vida,id);
     //cout << "Id nueva: "<< id << endl;
     //cout << "Vida:" << vida << endl;

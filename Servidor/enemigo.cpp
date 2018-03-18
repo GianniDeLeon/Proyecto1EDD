@@ -13,7 +13,7 @@ Enemigo::Enemigo(int vida, int id)
         this->vida = 5;
         break;
     default:
-        this->vida = vida;
+        this->vida = 5;
         break;
     }
     this->id = id;

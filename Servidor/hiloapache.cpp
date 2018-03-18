@@ -42,9 +42,14 @@ class JuegoHandler : virtual public JuegoIf {
     return nivel->atacar(x,y);
   }
 
+  int32_t getPunteo() {
+      cout << "Retornando puteo"<<endl;
+      return nivel->getPunteo();
+    }
+
   bool graficarEnemigosEliminados() {
-    // Your implementation goes here
-    printf("graficarEnemigosEliminados\n");
+    nivel->graficarLisEnemigosElim();
+    cout << "Graficando listas de enemigos eliminados"<<endl;
   }
 
   bool cheats(const std::string& cheat) {
@@ -53,35 +58,60 @@ class JuegoHandler : virtual public JuegoIf {
   }
 
   bool DesbloquearNiveleGema(const int32_t nivel) {
-    // Your implementation goes here
-    printf("DesbloquearNiveleGema\n");
+      cout<<"Desbloqueando nivel con gema"<<endl;
+    return this->nivel->desbloquearNivelGema(nivel);
   }
 
   bool graficarPunteoLista() {
-    // Your implementation goes here
-    printf("graficarPunteoLista\n");
+    nivel->graficarLisUsuario();
+    cout << "Graficando lista de punteos general"<<endl;
   }
 
   bool graficarPunteoArbol() {
-    // Your implementation goes here
-    printf("graficarPunteoArbol\n");
+    nivel->graficarArbol();
+    cout << "Graficando arbol de punteos"<<endl;
   }
 
   bool pausar() {
-    // Your implementation goes here
-    printf("pausar\n");
+    nivel->pausar();
+    cout <<"pausando la creacion y movimiento de enemigos"<<endl;
   }
 
   void setMin(const int32_t min) {
-    // Your implementation goes here
-    printf("setMin\n");
+    nivel->min = min;
+    cout <<"Seteando minitos de juego"<<endl;
   }
 
   void setSeg(const int32_t seg) {
-    // Your implementation goes here
-    printf("setSeg\n");
+    nivel->seg = seg;
+    cout <<"seteando segundos de juego"<<endl;
   }
 
+  void finalizar() {
+      //nivel->graficarLisEnemigosElim();
+      nivel->finjuego();
+      cout << "Fin del juego"<<endl;
+    }
+
+  int32_t getCantGemas() {
+       cout <<"Retronando cantidad de Gemas"<<endl;
+      return nivel->getCantGemas();
+    }
+
+    bool buscarUsuario(const std::string& nombre) {
+        cout <<"buscando usuario..."<<endl;
+      return nivel->buscarUsuario(nombre);
+    }
+
+    bool ganoNivel() {
+      cout <<"Verificando punteo con nivel"<<endl;
+      nivel->ganoNivel();
+    }
+
+    void graficarNiveles() {
+      cout <<"Graficando niveles"<<endl;
+      nivel->graficarNiveles();
+    }
 };
 
 void HiloApache::run()

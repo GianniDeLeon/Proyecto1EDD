@@ -29,6 +29,7 @@ ArbolPunteo::ArbolPunteo()
 
 void ArbolPunteo::recorridoAnchura()
 {
+    vaciarColas();
     if(this->raiz != NULL)
         {
             agregarACola(inicio1,fin1,raiz);
@@ -139,4 +140,10 @@ Cola *ArbolPunteo::sacarCola(Cola *&inicio)
     nodo = inicio;
     inicio = inicio->siguiente;
     return nodo;
+}
+
+void ArbolPunteo::vaciarColas()
+{
+    inicio1 = NULL;
+    inicio2 = NULL;
 }

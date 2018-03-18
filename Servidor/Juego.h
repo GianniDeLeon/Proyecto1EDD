@@ -24,6 +24,7 @@ class JuegoIf {
   virtual bool crearUsuario(const std::string& nombre) = 0;
   virtual bool seleccionarNivel(const int32_t nivel) = 0;
   virtual bool atacar(const int32_t x, const int32_t y) = 0;
+  virtual int32_t getPunteo() = 0;
   virtual bool graficarEnemigosEliminados() = 0;
   virtual bool cheats(const std::string& cheat) = 0;
   virtual bool DesbloquearNiveleGema(const int32_t nivel) = 0;
@@ -32,6 +33,11 @@ class JuegoIf {
   virtual bool pausar() = 0;
   virtual void setMin(const int32_t min) = 0;
   virtual void setSeg(const int32_t seg) = 0;
+  virtual void finalizar() = 0;
+  virtual int32_t getCantGemas() = 0;
+  virtual bool buscarUsuario(const std::string& nombre) = 0;
+  virtual bool ganoNivel() = 0;
+  virtual void graficarNiveles() = 0;
 };
 
 class JuegoIfFactory {
@@ -73,6 +79,10 @@ class JuegoNull : virtual public JuegoIf {
     bool _return = false;
     return _return;
   }
+  int32_t getPunteo() {
+    int32_t _return = 0;
+    return _return;
+  }
   bool graficarEnemigosEliminados() {
     bool _return = false;
     return _return;
@@ -101,6 +111,24 @@ class JuegoNull : virtual public JuegoIf {
     return;
   }
   void setSeg(const int32_t /* seg */) {
+    return;
+  }
+  void finalizar() {
+    return;
+  }
+  int32_t getCantGemas() {
+    int32_t _return = 0;
+    return _return;
+  }
+  bool buscarUsuario(const std::string& /* nombre */) {
+    bool _return = false;
+    return _return;
+  }
+  bool ganoNivel() {
+    bool _return = false;
+    return _return;
+  }
+  void graficarNiveles() {
     return;
   }
 };
@@ -419,6 +447,98 @@ class Juego_atacar_presult {
   bool* success;
 
   _Juego_atacar_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class Juego_getPunteo_args {
+ public:
+
+  Juego_getPunteo_args(const Juego_getPunteo_args&);
+  Juego_getPunteo_args& operator=(const Juego_getPunteo_args&);
+  Juego_getPunteo_args() {
+  }
+
+  virtual ~Juego_getPunteo_args() throw();
+
+  bool operator == (const Juego_getPunteo_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_getPunteo_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_getPunteo_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_getPunteo_pargs {
+ public:
+
+
+  virtual ~Juego_getPunteo_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_getPunteo_result__isset {
+  _Juego_getPunteo_result__isset() : success(false) {}
+  bool success :1;
+} _Juego_getPunteo_result__isset;
+
+class Juego_getPunteo_result {
+ public:
+
+  Juego_getPunteo_result(const Juego_getPunteo_result&);
+  Juego_getPunteo_result& operator=(const Juego_getPunteo_result&);
+  Juego_getPunteo_result() : success(0) {
+  }
+
+  virtual ~Juego_getPunteo_result() throw();
+  int32_t success;
+
+  _Juego_getPunteo_result__isset __isset;
+
+  void __set_success(const int32_t val);
+
+  bool operator == (const Juego_getPunteo_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_getPunteo_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_getPunteo_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_getPunteo_presult__isset {
+  _Juego_getPunteo_presult__isset() : success(false) {}
+  bool success :1;
+} _Juego_getPunteo_presult__isset;
+
+class Juego_getPunteo_presult {
+ public:
+
+
+  virtual ~Juego_getPunteo_presult() throw();
+  int32_t* success;
+
+  _Juego_getPunteo_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -1172,6 +1292,442 @@ class Juego_setSeg_presult {
 
 };
 
+
+class Juego_finalizar_args {
+ public:
+
+  Juego_finalizar_args(const Juego_finalizar_args&);
+  Juego_finalizar_args& operator=(const Juego_finalizar_args&);
+  Juego_finalizar_args() {
+  }
+
+  virtual ~Juego_finalizar_args() throw();
+
+  bool operator == (const Juego_finalizar_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_finalizar_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_finalizar_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_finalizar_pargs {
+ public:
+
+
+  virtual ~Juego_finalizar_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_finalizar_result {
+ public:
+
+  Juego_finalizar_result(const Juego_finalizar_result&);
+  Juego_finalizar_result& operator=(const Juego_finalizar_result&);
+  Juego_finalizar_result() {
+  }
+
+  virtual ~Juego_finalizar_result() throw();
+
+  bool operator == (const Juego_finalizar_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_finalizar_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_finalizar_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_finalizar_presult {
+ public:
+
+
+  virtual ~Juego_finalizar_presult() throw();
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class Juego_getCantGemas_args {
+ public:
+
+  Juego_getCantGemas_args(const Juego_getCantGemas_args&);
+  Juego_getCantGemas_args& operator=(const Juego_getCantGemas_args&);
+  Juego_getCantGemas_args() {
+  }
+
+  virtual ~Juego_getCantGemas_args() throw();
+
+  bool operator == (const Juego_getCantGemas_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_getCantGemas_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_getCantGemas_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_getCantGemas_pargs {
+ public:
+
+
+  virtual ~Juego_getCantGemas_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_getCantGemas_result__isset {
+  _Juego_getCantGemas_result__isset() : success(false) {}
+  bool success :1;
+} _Juego_getCantGemas_result__isset;
+
+class Juego_getCantGemas_result {
+ public:
+
+  Juego_getCantGemas_result(const Juego_getCantGemas_result&);
+  Juego_getCantGemas_result& operator=(const Juego_getCantGemas_result&);
+  Juego_getCantGemas_result() : success(0) {
+  }
+
+  virtual ~Juego_getCantGemas_result() throw();
+  int32_t success;
+
+  _Juego_getCantGemas_result__isset __isset;
+
+  void __set_success(const int32_t val);
+
+  bool operator == (const Juego_getCantGemas_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_getCantGemas_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_getCantGemas_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_getCantGemas_presult__isset {
+  _Juego_getCantGemas_presult__isset() : success(false) {}
+  bool success :1;
+} _Juego_getCantGemas_presult__isset;
+
+class Juego_getCantGemas_presult {
+ public:
+
+
+  virtual ~Juego_getCantGemas_presult() throw();
+  int32_t* success;
+
+  _Juego_getCantGemas_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _Juego_buscarUsuario_args__isset {
+  _Juego_buscarUsuario_args__isset() : nombre(false) {}
+  bool nombre :1;
+} _Juego_buscarUsuario_args__isset;
+
+class Juego_buscarUsuario_args {
+ public:
+
+  Juego_buscarUsuario_args(const Juego_buscarUsuario_args&);
+  Juego_buscarUsuario_args& operator=(const Juego_buscarUsuario_args&);
+  Juego_buscarUsuario_args() : nombre() {
+  }
+
+  virtual ~Juego_buscarUsuario_args() throw();
+  std::string nombre;
+
+  _Juego_buscarUsuario_args__isset __isset;
+
+  void __set_nombre(const std::string& val);
+
+  bool operator == (const Juego_buscarUsuario_args & rhs) const
+  {
+    if (!(nombre == rhs.nombre))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_buscarUsuario_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_buscarUsuario_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_buscarUsuario_pargs {
+ public:
+
+
+  virtual ~Juego_buscarUsuario_pargs() throw();
+  const std::string* nombre;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_buscarUsuario_result__isset {
+  _Juego_buscarUsuario_result__isset() : success(false) {}
+  bool success :1;
+} _Juego_buscarUsuario_result__isset;
+
+class Juego_buscarUsuario_result {
+ public:
+
+  Juego_buscarUsuario_result(const Juego_buscarUsuario_result&);
+  Juego_buscarUsuario_result& operator=(const Juego_buscarUsuario_result&);
+  Juego_buscarUsuario_result() : success(0) {
+  }
+
+  virtual ~Juego_buscarUsuario_result() throw();
+  bool success;
+
+  _Juego_buscarUsuario_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const Juego_buscarUsuario_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_buscarUsuario_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_buscarUsuario_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_buscarUsuario_presult__isset {
+  _Juego_buscarUsuario_presult__isset() : success(false) {}
+  bool success :1;
+} _Juego_buscarUsuario_presult__isset;
+
+class Juego_buscarUsuario_presult {
+ public:
+
+
+  virtual ~Juego_buscarUsuario_presult() throw();
+  bool* success;
+
+  _Juego_buscarUsuario_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class Juego_ganoNivel_args {
+ public:
+
+  Juego_ganoNivel_args(const Juego_ganoNivel_args&);
+  Juego_ganoNivel_args& operator=(const Juego_ganoNivel_args&);
+  Juego_ganoNivel_args() {
+  }
+
+  virtual ~Juego_ganoNivel_args() throw();
+
+  bool operator == (const Juego_ganoNivel_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_ganoNivel_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_ganoNivel_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_ganoNivel_pargs {
+ public:
+
+
+  virtual ~Juego_ganoNivel_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_ganoNivel_result__isset {
+  _Juego_ganoNivel_result__isset() : success(false) {}
+  bool success :1;
+} _Juego_ganoNivel_result__isset;
+
+class Juego_ganoNivel_result {
+ public:
+
+  Juego_ganoNivel_result(const Juego_ganoNivel_result&);
+  Juego_ganoNivel_result& operator=(const Juego_ganoNivel_result&);
+  Juego_ganoNivel_result() : success(0) {
+  }
+
+  virtual ~Juego_ganoNivel_result() throw();
+  bool success;
+
+  _Juego_ganoNivel_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const Juego_ganoNivel_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const Juego_ganoNivel_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_ganoNivel_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _Juego_ganoNivel_presult__isset {
+  _Juego_ganoNivel_presult__isset() : success(false) {}
+  bool success :1;
+} _Juego_ganoNivel_presult__isset;
+
+class Juego_ganoNivel_presult {
+ public:
+
+
+  virtual ~Juego_ganoNivel_presult() throw();
+  bool* success;
+
+  _Juego_ganoNivel_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class Juego_graficarNiveles_args {
+ public:
+
+  Juego_graficarNiveles_args(const Juego_graficarNiveles_args&);
+  Juego_graficarNiveles_args& operator=(const Juego_graficarNiveles_args&);
+  Juego_graficarNiveles_args() {
+  }
+
+  virtual ~Juego_graficarNiveles_args() throw();
+
+  bool operator == (const Juego_graficarNiveles_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_graficarNiveles_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_graficarNiveles_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_graficarNiveles_pargs {
+ public:
+
+
+  virtual ~Juego_graficarNiveles_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_graficarNiveles_result {
+ public:
+
+  Juego_graficarNiveles_result(const Juego_graficarNiveles_result&);
+  Juego_graficarNiveles_result& operator=(const Juego_graficarNiveles_result&);
+  Juego_graficarNiveles_result() {
+  }
+
+  virtual ~Juego_graficarNiveles_result() throw();
+
+  bool operator == (const Juego_graficarNiveles_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const Juego_graficarNiveles_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Juego_graficarNiveles_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class Juego_graficarNiveles_presult {
+ public:
+
+
+  virtual ~Juego_graficarNiveles_presult() throw();
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class JuegoClient : virtual public JuegoIf {
  public:
   JuegoClient(apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -1206,6 +1762,9 @@ class JuegoClient : virtual public JuegoIf {
   bool atacar(const int32_t x, const int32_t y);
   void send_atacar(const int32_t x, const int32_t y);
   bool recv_atacar();
+  int32_t getPunteo();
+  void send_getPunteo();
+  int32_t recv_getPunteo();
   bool graficarEnemigosEliminados();
   void send_graficarEnemigosEliminados();
   bool recv_graficarEnemigosEliminados();
@@ -1230,6 +1789,21 @@ class JuegoClient : virtual public JuegoIf {
   void setSeg(const int32_t seg);
   void send_setSeg(const int32_t seg);
   void recv_setSeg();
+  void finalizar();
+  void send_finalizar();
+  void recv_finalizar();
+  int32_t getCantGemas();
+  void send_getCantGemas();
+  int32_t recv_getCantGemas();
+  bool buscarUsuario(const std::string& nombre);
+  void send_buscarUsuario(const std::string& nombre);
+  bool recv_buscarUsuario();
+  bool ganoNivel();
+  void send_ganoNivel();
+  bool recv_ganoNivel();
+  void graficarNiveles();
+  void send_graficarNiveles();
+  void recv_graficarNiveles();
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -1248,6 +1822,7 @@ class JuegoProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_crearUsuario(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_seleccionarNivel(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_atacar(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_getPunteo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_graficarEnemigosEliminados(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_cheats(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_DesbloquearNiveleGema(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -1256,12 +1831,18 @@ class JuegoProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_pausar(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_setMin(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_setSeg(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_finalizar(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_getCantGemas(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_buscarUsuario(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_ganoNivel(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_graficarNiveles(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   JuegoProcessor(::apache::thrift::stdcxx::shared_ptr<JuegoIf> iface) :
     iface_(iface) {
     processMap_["crearUsuario"] = &JuegoProcessor::process_crearUsuario;
     processMap_["seleccionarNivel"] = &JuegoProcessor::process_seleccionarNivel;
     processMap_["atacar"] = &JuegoProcessor::process_atacar;
+    processMap_["getPunteo"] = &JuegoProcessor::process_getPunteo;
     processMap_["graficarEnemigosEliminados"] = &JuegoProcessor::process_graficarEnemigosEliminados;
     processMap_["cheats"] = &JuegoProcessor::process_cheats;
     processMap_["DesbloquearNiveleGema"] = &JuegoProcessor::process_DesbloquearNiveleGema;
@@ -1270,6 +1851,11 @@ class JuegoProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["pausar"] = &JuegoProcessor::process_pausar;
     processMap_["setMin"] = &JuegoProcessor::process_setMin;
     processMap_["setSeg"] = &JuegoProcessor::process_setSeg;
+    processMap_["finalizar"] = &JuegoProcessor::process_finalizar;
+    processMap_["getCantGemas"] = &JuegoProcessor::process_getCantGemas;
+    processMap_["buscarUsuario"] = &JuegoProcessor::process_buscarUsuario;
+    processMap_["ganoNivel"] = &JuegoProcessor::process_ganoNivel;
+    processMap_["graficarNiveles"] = &JuegoProcessor::process_graficarNiveles;
   }
 
   virtual ~JuegoProcessor() {}
@@ -1323,6 +1909,15 @@ class JuegoMultiface : virtual public JuegoIf {
       ifaces_[i]->atacar(x, y);
     }
     return ifaces_[i]->atacar(x, y);
+  }
+
+  int32_t getPunteo() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->getPunteo();
+    }
+    return ifaces_[i]->getPunteo();
   }
 
   bool graficarEnemigosEliminados() {
@@ -1397,6 +1992,51 @@ class JuegoMultiface : virtual public JuegoIf {
     ifaces_[i]->setSeg(seg);
   }
 
+  void finalizar() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->finalizar();
+    }
+    ifaces_[i]->finalizar();
+  }
+
+  int32_t getCantGemas() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->getCantGemas();
+    }
+    return ifaces_[i]->getCantGemas();
+  }
+
+  bool buscarUsuario(const std::string& nombre) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->buscarUsuario(nombre);
+    }
+    return ifaces_[i]->buscarUsuario(nombre);
+  }
+
+  bool ganoNivel() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->ganoNivel();
+    }
+    return ifaces_[i]->ganoNivel();
+  }
+
+  void graficarNiveles() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->graficarNiveles();
+    }
+    ifaces_[i]->graficarNiveles();
+  }
+
 };
 
 // The 'concurrent' client is a thread safe client that correctly handles
@@ -1436,6 +2076,9 @@ class JuegoConcurrentClient : virtual public JuegoIf {
   bool atacar(const int32_t x, const int32_t y);
   int32_t send_atacar(const int32_t x, const int32_t y);
   bool recv_atacar(const int32_t seqid);
+  int32_t getPunteo();
+  int32_t send_getPunteo();
+  int32_t recv_getPunteo(const int32_t seqid);
   bool graficarEnemigosEliminados();
   int32_t send_graficarEnemigosEliminados();
   bool recv_graficarEnemigosEliminados(const int32_t seqid);
@@ -1460,6 +2103,21 @@ class JuegoConcurrentClient : virtual public JuegoIf {
   void setSeg(const int32_t seg);
   int32_t send_setSeg(const int32_t seg);
   void recv_setSeg(const int32_t seqid);
+  void finalizar();
+  int32_t send_finalizar();
+  void recv_finalizar(const int32_t seqid);
+  int32_t getCantGemas();
+  int32_t send_getCantGemas();
+  int32_t recv_getCantGemas(const int32_t seqid);
+  bool buscarUsuario(const std::string& nombre);
+  int32_t send_buscarUsuario(const std::string& nombre);
+  bool recv_buscarUsuario(const int32_t seqid);
+  bool ganoNivel();
+  int32_t send_ganoNivel();
+  bool recv_ganoNivel(const int32_t seqid);
+  void graficarNiveles();
+  int32_t send_graficarNiveles();
+  void recv_graficarNiveles(const int32_t seqid);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;

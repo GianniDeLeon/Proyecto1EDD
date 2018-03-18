@@ -1,9 +1,9 @@
-digraph niveles{Unlock1 -> Lock2;
-Lock2 -> Unlock1;
-Lock2 -> Lock3;
-Lock3 -> Lock2;
-Lock3 -> Lock4;
-Lock4 -> Lock3;
+digraph niveles{Unlock1 -> Unlock2;
+Unlock2 -> Unlock1;
+Unlock2 -> Unlock3;
+Unlock3 -> Unlock2;
+Unlock3 -> Lock4;
+Lock4 -> Unlock3;
 Lock4 -> Lock5;
 Lock5 -> Lock4;
 Lock5 -> Lock6;

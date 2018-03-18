@@ -32,6 +32,16 @@ public:
     void setSeg(int seg);
     void pushLisUsuario(Usuario *usr);
     void graficarLisUsuario();
+    void graficarArbol();
+    void pausar();
+    int getPunteo();
+    void PopGemaNivel();
+    int getCantGemas();
+    bool buscarUsuario(string nombre);
+    void graficarLisEnemigosElim();
+    bool desbloquearNivelGema(int nivel);
+    Nodo *buscarNivel(int nivel);
+    bool ganoNivel();
 };
 
 #endif // NIVELES_H
