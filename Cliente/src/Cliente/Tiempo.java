@@ -19,12 +19,12 @@ import org.apache.thrift.TException;
 public class Tiempo extends Thread {
 
     int seg, min, nivel;
-    JLabel texto,gemas;
+    JLabel texto,gemas,punteo;
     Juego.Client juego;
     boolean pausa, finHilo;
     JButton selecNivel,disparo;
     
-    public Tiempo(JLabel texto, int nivel, Juego.Client juego,JButton selecNivel,JLabel gemas,JButton disparo) {
+    public Tiempo(JLabel texto, int nivel, Juego.Client juego,JButton selecNivel,JLabel gemas,JButton disparo,JLabel punteo) {
         seg = min = 0;
         this.nivel = nivel;
         this.texto = texto;
@@ -33,6 +33,8 @@ public class Tiempo extends Thread {
         this.selecNivel = selecNivel;
         this.gemas = gemas;
         this.disparo = disparo;
+        setCheat = false;
+        this.punteo = punteo;
     }
 
     @Override
@@ -79,6 +81,10 @@ public class Tiempo extends Thread {
 
     public void finJuego() {
         try {
+            if(setCheat)
+            {
+                tiro.setFin();
+            }
             disparo.setEnabled(false);
             texto.setText("00:00");
             selecNivel.setEnabled(true);
@@ -115,5 +121,14 @@ public class Tiempo extends Thread {
         SetPausa();
         finHilo = true;
         JOptionPane.showMessageDialog(null, "Se a terminado el tiempo");
+    }
+    
+    CheatTiro tiro;
+    boolean setCheat;
+    public void cheatTiro()
+    {
+        tiro = new CheatTiro(juego,punteo);
+        setCheat = true;
+        tiro.start();
     }
 }

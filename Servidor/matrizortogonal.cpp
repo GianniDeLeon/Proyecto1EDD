@@ -21,6 +21,12 @@ typedef struct MatrizOrtogonal::CabezeraX
     Nodo *abajo;
 }CabezeraX;
 
+typedef struct MatrizOrtogonal::NodoCheat
+{
+    int x,y;
+    NodoCheat *siguiente;
+}NodoCheat;
+
 typedef struct MatrizOrtogonal::CabezeraY
 {
     int y;
@@ -51,6 +57,7 @@ ListaGemas *LG=NULL;
 NodoRaiz *inicio=NULL;
 bool pausa,finHilo,cheatActivo;
 int limit,gemas,idgema,falloAtac;
+NodoCheat *inicioCheat;
 
 MatrizOrtogonal::MatrizOrtogonal(int limit,QTextEdit *texto)
 {
@@ -66,6 +73,7 @@ MatrizOrtogonal::MatrizOrtogonal(int limit,QTextEdit *texto)
     cheatActivo = false;
     idgema = 1;
     falloAtac =0;
+    inicioCheat = NULL;
 }
 
 void MatrizOrtogonal::limpiar()
@@ -687,6 +695,22 @@ bool MatrizOrtogonal::atacarNodo(int x, int y)
 {
     cout << "Iniciando el ataque en X:"<<x<<" Y:"<<y<<endl;
     //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Atacando nodo");
+    if(cheatActivo)
+    {
+        cout <<"Cheat's activado cambiando coordenadas"<<endl;
+        NodoCheat *atac = PopCheat();
+        if(atac != NULL)
+        {
+            x = atac->x;
+            y = atac->y;
+            NumImpactos = 0;
+        }
+        else
+        {
+            generarEnemigo();
+            atacarNodo(x,y);
+        }
+    }
     Nodo *nod = buscarNodo(x,y);
     if(nod != NULL)
     {
@@ -705,6 +729,11 @@ bool MatrizOrtogonal::atacarNodo(int x, int y)
                 cout << "5 impactos seguidos generando gema en X:"<<x<<" Y:"<<y<<endl;
                 this->NumImpactos = 0;
                 pill->generarGema();
+            }
+
+            if(cheatActivo && vida > 0)
+            {
+                PushCheat(x,y);
             }
 
             if(vida <= 0)
@@ -882,11 +911,11 @@ void MatrizOrtogonal::run()
         while(!pausa)
         {
             //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Moviendo Tope de Pila");
-            movertope();
-            msleep(4000);
-            movertope();
-            msleep(4000);
             generarEnemigo();
+            msleep(4000);
+            movertope();
+            msleep(4000);
+            movertope();
         }
         msleep(1000);
     }
@@ -909,6 +938,11 @@ void MatrizOrtogonal::generarEnemigo()
     {
         cout << "Incertando nodo X;"<<x<<" Y:"<<y<<endl;
         incertarNodo(x,y);
+    }
+    if(cheatActivo)
+    {
+        cout << "Cheat's Activo agregando a pila para disparar"<<endl;
+        PushCheat(x,y);
     }
     //cout << "Generando coordenadas aleatorias para Mover tope de pila"<<endl;
 }
@@ -1063,3 +1097,126 @@ int MatrizOrtogonal::getContGema()
 {
     return gemas;
 }
+
+bool MatrizOrtogonal::cheat()
+{
+    cheatActivo = !cheatActivo;
+    return cheatActivo;
+}
+
+void MatrizOrtogonal::PushCheat(int x, int y)
+{
+    NodoCheat *nuevo = crearNodoCheat(x,y);
+    nuevo->siguiente = inicioCheat;
+    inicioCheat = nuevo;
+}
+
+NodoCheat *MatrizOrtogonal::crearNodoCheat(int x, int y)
+{
+    NodoCheat *nuevo = new NodoCheat;
+    nuevo->x = x;
+    nuevo->y = y;
+    nuevo->siguiente = NULL;
+    return nuevo;
+}
+
+NodoCheat *MatrizOrtogonal::PopCheat()
+{
+    if(inicioCheat != NULL)
+    {
+        NodoCheat *pop = inicioCheat;
+        if(inicioCheat->siguiente == NULL)
+        {
+            inicioCheat = NULL;
+        }
+        else
+        {
+            inicioCheat = inicioCheat->siguiente;
+        }
+        return pop;
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
+void MatrizOrtogonal::graficarMatriz()
+{
+    ofstream ficheroSalida;
+    ficheroSalida.open ("matriz.dot");
+    ficheroSalida << "digraph matriz{"
+                     "bgcolor=\"purple:pink\" style=\"filled\""
+                     "subgraph cluster1 {fillcolor=\"blue:green\" style=\"filled\""
+                           "node [shape=circle fillcolor=\"gold:brown\" style=\"radial\" gradientangle=180]"
+                           "a0 [label=<"
+                    "<TABLE border=\"10\" cellspacing=\"10\" cellpadding=\"10\" style=\"rounded\" bgcolor=\"yellow:violet\" gradientangle=\"315\">\";";
+    int x,y;
+    //stringstream xi,yi;
+    for(y=1;y<=limit;y++)
+    {
+        ficheroSalida << "<TR>\n";
+        for(x=1;x<=limit;x++)
+        {
+            //xi="";
+            //yi+"";
+            Nodo *aux = buscarNodo(x,y);
+            //xi << x;
+            //yi << y;
+            if(aux!=NULL)
+            {
+                ficheroSalida<<"<TD border=\"3\"  bgcolor=\"green\" gradientangle=\"315\">"<<x<<","<<y<<"</TD>";
+            }
+            else
+            {
+                ficheroSalida<<"<TD border=\"3\"  bgcolor=\"violet\"  gradientangle=\"315\">NULL</TD>";
+            }
+        }
+        ficheroSalida << "</TR>\n";
+    }
+    ficheroSalida << "</TABLE>>];\n}\n}";
+    ficheroSalida.close();
+    system("dot -Tpng matriz.dot -o matriz.png");
+    system("nomacs matriz.png");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

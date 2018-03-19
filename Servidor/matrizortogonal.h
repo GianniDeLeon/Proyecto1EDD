@@ -14,6 +14,7 @@ public:
     void setPausa();
     void setFinHilo();
     int NumImpactos,Punteo;
+    struct NodoCheat;
     struct NodoRaiz;
     struct Nodo;
     struct CabezeraX;
@@ -65,6 +66,10 @@ public:
     void graficarN3();
     void graficarEnemigosEliminados();
     void limpiar();
+    void PushCheat(int x, int y);
+    NodoCheat *crearNodoCheat(int x, int y);
+    NodoCheat *PopCheat();
+    void graficarMatriz();
 private:
     NodoRaiz *inicio;
     int limit;

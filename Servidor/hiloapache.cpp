@@ -53,8 +53,8 @@ class JuegoHandler : virtual public JuegoIf {
   }
 
   bool cheats(const std::string& cheat) {
-    // Your implementation goes here
-    printf("cheats\n");
+    cout <<"Activando Cheats"<<endl;
+    nivel->onOffCheat();
   }
 
   bool DesbloquearNiveleGema(const int32_t nivel) {

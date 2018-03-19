@@ -48,14 +48,15 @@ void Niveles::crearNiveles()
         nuevo->nivel = i;
         nuevo->punteoG = puntos;
         nuevo->Lock = lock;
+        nuevo->anterior = NULL;
+        nuevo->siguiente = NULL;
         MatrizOrtogonal *nuevaMa = new MatrizOrtogonal(this->tam,this->texto);
         nuevo->matriz = nuevaMa;
         if(inicio == NULL)
         {
-            nuevo->anterior = NULL;
-            nuevo->siguiente = NULL;
             inicio = nuevo;
             Pnivel = nuevo;
+            lock = true;
         }
         else
         {
@@ -63,7 +64,6 @@ void Niveles::crearNiveles()
             nuevo->anterior = inicio;
             inicio = nuevo;
         }
-        lock = true;
         puntos += 20;
     }
 }
@@ -372,4 +372,14 @@ bool Niveles::ganoNivel()
         return true;
     }
     return false;
+}
+
+bool Niveles::onOffCheat()
+{
+    return Play->matriz->cheat();
+}
+
+void Niveles::graficarMatriz()
+{
+    Play->matriz->graficarMatriz();
 }

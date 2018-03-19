@@ -110,3 +110,12 @@ void MainWindow::on_pushButton_4_clicked()
         ui->graphicsView->setScene(scene);
     }
 }
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    niveles->graficarMatriz();
+    QGraphicsScene *scene = new QGraphicsScene();
+    QPixmap m("matriz.png");
+    scene->setBackgroundBrush(m);
+    ui->graphicsView->setScene(scene);
+}

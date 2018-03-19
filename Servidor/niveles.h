@@ -42,6 +42,8 @@ public:
     bool desbloquearNivelGema(int nivel);
     Nodo *buscarNivel(int nivel);
     bool ganoNivel();
+    bool onOffCheat();
+    void graficarMatriz();
 };
 
 #endif // NIVELES_H

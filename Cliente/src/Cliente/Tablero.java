@@ -5,6 +5,7 @@
  */
 package Cliente;
 
+import java.awt.Color;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +32,7 @@ public class Tablero extends javax.swing.JFrame {
     Tiempo tiempo;
     int nivel;
 
-    public Tablero(TSocket transport, TProtocol protocol, Juego.Client juego,Login login) {
+    public Tablero(TSocket transport, TProtocol protocol, Juego.Client juego, Login login) {
         this.transport = transport;
         this.protocol = protocol;
         this.juego = juego;
@@ -45,7 +46,7 @@ public class Tablero extends javax.swing.JFrame {
     public void graficaNiveles() {
         //graficar niveles
         try {
-            jLabel7.setText(juego.getCantGemas()+"");
+            jLabel7.setText(juego.getCantGemas() + "");
             juego.graficarNiveles();
         } catch (TException ex) {
             Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,7 +59,7 @@ public class Tablero extends javax.swing.JFrame {
         jTextField4.setText("201503823Cheats");
         jLabel11.setText("00:00");
         try {
-            jLabel7.setText(juego.getCantGemas()+"");
+            jLabel7.setText(juego.getCantGemas() + "");
         } catch (TException ex) {
             Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -300,7 +301,7 @@ public class Tablero extends javax.swing.JFrame {
                 nivel = Integer.parseInt(jTextField1.getText());
                 if (juego.seleccionarNivel(nivel)) {
                     jButton2.setEnabled(true);
-                    tiempo = new Tiempo(jLabel11, nivel, juego, jButton1,jLabel7,jButton2);
+                    tiempo = new Tiempo(jLabel11, nivel, juego, jButton1, jLabel7, jButton2,jLabel5);
                     jLabel7.setText(juego.getCantGemas() + "");
                     JOptionPane.showMessageDialog(null, "Iniciando el juego");
                     tiempo.start();
@@ -311,24 +312,43 @@ public class Tablero extends javax.swing.JFrame {
             } catch (TException ex) {
                 Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(null, "No se seleccion ningun nivel valido");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    boolean par = false;
+    PartyMode parti;
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        if(jLabel13.getText().equals("Desactivado"))
-        {
-            jLabel13.setText("Activado");
-            jButton3.setText("Desactivar");
-        }
-        else
-        {
-            jLabel13.setText("Desactivado");
-            jButton3.setText("Activar");
+        try {
+            // TODO add your handling code here:
+            if (jTextField4.getText().equals("edd-b-practica1-201503823")) {
+                if (juego.cheats("")) {
+                    jTextField2.setEditable(false);
+                    jTextField3.setEditable(false);
+                    jTextField2.setText("0");
+                    jTextField3.setText("0");
+                    jLabel13.setText("Activado");
+                    jButton3.setText("Desactivar");
+                    tiempo.cheatTiro();
+                } else {
+                    jTextField2.setEditable(true);
+                    jTextField3.setEditable(true);
+                    jLabel13.setText("Desactivado");
+                    jButton3.setText("Activar");
+                }
+            } else if (jTextField4.getText().equals("201503823party")) {
+                if (!par) {
+                    parti = new PartyMode(this);
+                    parti.start();
+                    par = true;
+                } else {
+                    parti.setFin();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "CheatCode no valido");
+            }
+        } catch (TException ex) {
+            Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
