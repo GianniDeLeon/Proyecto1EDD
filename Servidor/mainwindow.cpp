@@ -45,14 +45,19 @@ void MainWindow::on_pushButton_clicked()
         ui->pushButton->setEnabled(false);
         ui->TamNiveles->setText("");
         int tam2 = tam.toInt();
-        ui->textEdit->setText("201503823@Gianni:~ Iniciando los niveles");
+        ui->textEdit->append("201503823@Gianni:~ Iniciando los niveles");
+        //niveles = new Niveles(tam2,ui->textEdit);
         niveles = new Niveles(tam2,ui->textEdit);
-        ui->textEdit->setText("201503823@Gianni:~ Graficando los niveles");
+//        connect(niveles,&Niveles::escritura,[&](QString n){
+//            //return connect(sender, signal, sender, std::move(slot), Qt::DirectConnection);
+//            ui->textEdit->setPlainText(n);
+//        });
+        ui->textEdit->append("201503823@Gianni:~ Graficando los niveles");
         niveles->graficarNiveles();
-        ui->textEdit->setText("201503823@Gianni:~ Iniciando Servicios de apache");
-        HiloApache *apach = new HiloApache(niveles);
+        ui->textEdit->append("201503823@Gianni:~ Iniciando Servicios de apache");
+        HiloApache *apach = new HiloApache(niveles,ui->textEdit);
         apach->start();
-        ui->textEdit->setText("201503823@Gianni:~ Apache iniciado exitosamente");
+        ui->textEdit->append("201503823@Gianni:~ Apache iniciado exitosamente");
     }
 }
 
@@ -75,6 +80,7 @@ void MainWindow::on_pushButton_2_clicked()
         ui->lineEdit->setText("");
         int tam2 = tam.toInt();
         niveles->setTam(tam2);
+        ui->textEdit->append("201503823@Gianni:~ Cambio de tamaño de niveles y tamaño maximo de matriz");
     }
 }
 
@@ -85,6 +91,7 @@ void MainWindow::on_pushButton_6_clicked()
     QPixmap m("niveles.png");
     scene->setBackgroundBrush(m);
     ui->graphicsView->setScene(scene);
+    ui->textEdit->append("201503823@Gianni:~ Graficando Niveles");
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -108,6 +115,7 @@ void MainWindow::on_pushButton_4_clicked()
         QPixmap m("Pila.png");
         scene->setBackgroundBrush(m);
         ui->graphicsView->setScene(scene);
+        ui->textEdit->append("201503823@Gianni:~ Graficando pila");
     }
 }
 
@@ -118,4 +126,41 @@ void MainWindow::on_pushButton_3_clicked()
     QPixmap m("matriz.png");
     scene->setBackgroundBrush(m);
     ui->graphicsView->setScene(scene);
+    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    QRect rcontent = ui->graphicsView->contentsRect();
+    ui->graphicsView->setSceneRect(0, 0, rcontent.width(), rcontent.height());
+    ui->textEdit->append("201503823@Gianni:~ Graficando matriz");
+    //raphicsView.setSceneRect(0, 0, rcontent.width(), rcontent.height());
+    //ui->graphicsView->ensureVisible();
+    //v.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+}
+
+void MainWindow::on_actionsalir_triggered()
+{
+    exit(0);
+}
+
+void MainWindow::on_actionDesarrollador_triggered()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Gianni De Leon\n201503823\nEDD seccion B\n1er Semestre 2018");
+    msgBox.exec();
+}
+
+void MainWindow::on_actionAplicacion_triggered()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Servidor desarrollado en C++ y QT con el IDE QTCreator\nPara conexiones se uso ApacheThrift\nCliente desarrollado en java");
+    msgBox.exec();
+}
+
+void MainWindow::on_actionManual_Tecnico_triggered()
+{
+    system("okular /home/mrrobot/Público/MultimediaEDDP1/ManualTecnico.pdf");
+}
+
+void MainWindow::on_actionManual_de_Usuario_triggered()
+{
+    system("okular /home/mrrobot/Público/MultimediaEDDP1/ManualdeUsuario.pdf");
 }

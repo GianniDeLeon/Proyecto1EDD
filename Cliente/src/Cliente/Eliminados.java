@@ -19,9 +19,9 @@ public class Eliminados extends javax.swing.JFrame {
      */
     public Eliminados() {
         initComponents();
-        String path1 = "/home/mrrobot/Documentos/2486034770301@ingenieria.usac.edu.gt/Estructuras/Laboratorio/Proyecto1EDD/build-Servidor-Desktop-Debug/N1.png";
-        String path2 = "/home/mrrobot/Documentos/2486034770301@ingenieria.usac.edu.gt/Estructuras/Laboratorio/Proyecto1EDD/build-Servidor-Desktop-Debug/N2.png";
-        String path3 = "/home/mrrobot/Documentos/2486034770301@ingenieria.usac.edu.gt/Estructuras/Laboratorio/Proyecto1EDD/build-Servidor-Desktop-Debug/N3.png";
+        String path1 = "/home/mrrobot/Público/MultimediaEDDP1/N1.png";
+        String path2 = "/home/mrrobot/Público/MultimediaEDDP1/N2.png";
+        String path3 = "/home/mrrobot/Público/MultimediaEDDP1/N3.png";
         ImageIcon N1 = new ImageIcon(path1);
         ImageIcon N2 = new ImageIcon(path2);
         ImageIcon N3 = new ImageIcon(path3);

@@ -51,7 +51,7 @@ public class Tablero extends javax.swing.JFrame {
         } catch (TException ex) {
             Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String path = "/home/mrrobot/Documentos/2486034770301@ingenieria.usac.edu.gt/Estructuras/Laboratorio/Proyecto1EDD/build-Servidor-Desktop-Debug/niveles.png";
+        String path = "/home/mrrobot/Público/MultimediaEDDP1/niveles.png";
         ImageIcon icon = new ImageIcon(path);
         icon.getImage().flush();
         jLabel2.setIcon(icon);
@@ -99,8 +99,9 @@ public class Tablero extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -250,13 +251,13 @@ public class Tablero extends javax.swing.JFrame {
 
         jMenu1.setText("Juego");
 
-        jMenuItem1.setText("Salir De usuario");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem5.setText("Pausar");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuItem5ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(jMenuItem5);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setText("Recargar");
@@ -266,6 +267,14 @@ public class Tablero extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem4);
+
+        jMenuItem1.setText("Salir De usuario");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
 
@@ -301,11 +310,15 @@ public class Tablero extends javax.swing.JFrame {
                 nivel = Integer.parseInt(jTextField1.getText());
                 if (juego.seleccionarNivel(nivel)) {
                     jButton2.setEnabled(true);
-                    tiempo = new Tiempo(jLabel11, nivel, juego, jButton1, jLabel7, jButton2,jLabel5);
+                    tiempo = new Tiempo(jLabel11, nivel, juego, jButton1, jLabel7, jButton2, jLabel5);
                     jLabel7.setText(juego.getCantGemas() + "");
                     JOptionPane.showMessageDialog(null, "Iniciando el juego");
                     tiempo.start();
                     jButton1.setEnabled(false);
+                    jTextField2.setEditable(true);
+                    jTextField3.setEditable(true);
+                    jLabel13.setText("Desactivado");
+                    jButton3.setText("Activar");
                 } else {
                     JOptionPane.showMessageDialog(null, "El nivel esta bloqueado o no existe");
                 }
@@ -322,7 +335,7 @@ public class Tablero extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             if (jTextField4.getText().equals("edd-b-practica1-201503823")) {
-                if (juego.cheats("")) {
+                if (juego.cheats("edd-b-practica1-201503823")) {
                     jTextField2.setEditable(false);
                     jTextField3.setEditable(false);
                     jTextField2.setText("0");
@@ -346,6 +359,11 @@ public class Tablero extends javax.swing.JFrame {
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "CheatCode no valido");
+                jTextField2.setEditable(true);
+                jTextField3.setEditable(true);
+                jLabel13.setText("Desactivado");
+                jButton3.setText("Activar");
+                jButton2.setEnabled(true);
             }
         } catch (TException ex) {
             Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
@@ -412,6 +430,15 @@ public class Tablero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        try {
+            juego.pausar();
+            tiempo.SetPausa();
+        } catch (TException ex) {
+            Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -439,6 +466,7 @@ public class Tablero extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

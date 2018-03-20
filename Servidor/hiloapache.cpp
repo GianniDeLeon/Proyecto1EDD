@@ -16,100 +16,111 @@ using namespace ::apache::thrift::server;
 
 using namespace  ::Servidor;
 
-HiloApache::HiloApache(Niveles *nivel)
+HiloApache::HiloApache(Niveles *nivel,QTextEdit *texto)
 {
     this->nivel = nivel;
+    this->texto = texto;
 }
 
 class JuegoHandler : virtual public JuegoIf {
  public:
     Niveles *nivel;
-  JuegoHandler(Niveles *nivel) {
+    QTextEdit *texto;
+  JuegoHandler(Niveles *nivel,QTextEdit *texto) {
     this->nivel = nivel;
+      this->texto = texto;
   }
 
   bool crearUsuario(const std::string& nombre) {
-    cout << "Recibiendo nombre de usuario..."<<endl;
+    texto->append("201503823@Gianni:~ Recibiendo conexcion de cliente...");
+    texto->append("201503823@Gianni:~ Creando usuario");
       return nivel->crearUsuario(nombre);
   }
 
   bool seleccionarNivel(const int32_t nivel) {
-      cout << "Recibiendo nivel a jugar"<<endl;
+      QString printable = QStringLiteral("201503823@Gianni:~ Buscando nivel %1").arg(nivel);
+    texto->append(printable);
+    texto->append("201503823@Gianni:~ Iniciando juego");
     return this->nivel->Jugar(nivel);
   }
 
   bool atacar(const int32_t x, const int32_t y) {
+       QString printable = QStringLiteral("201503823@Gianni:~ Iniciando ataque en X: %1 Y: %2").arg(x).arg(y);
+    texto->append(printable);
     return nivel->atacar(x,y);
   }
 
   int32_t getPunteo() {
-      cout << "Retornando puteo"<<endl;
+      texto->append("201503823@Gianni:~ Retornando punteo del jugador");
       return nivel->getPunteo();
     }
 
   bool graficarEnemigosEliminados() {
     nivel->graficarLisEnemigosElim();
-    cout << "Graficando listas de enemigos eliminados"<<endl;
+    texto->append("201503823@Gianni:~ Graficando enemigos eliminados");
+    return true;
   }
 
   bool cheats(const std::string& cheat) {
-    cout <<"Activando Cheats"<<endl;
-    nivel->onOffCheat();
+    texto->append("201503823@Gianni:~ Activando cheat");
+    return nivel->onOffCheat();
   }
 
   bool DesbloquearNiveleGema(const int32_t nivel) {
-      cout<<"Desbloqueando nivel con gema"<<endl;
+      QString printable = QStringLiteral("201503823@Gianni:~ Desbloqueando el nivel: %1 con una gema").arg(nivel);
+      texto->append(printable);
     return this->nivel->desbloquearNivelGema(nivel);
   }
 
   bool graficarPunteoLista() {
     nivel->graficarLisUsuario();
-    cout << "Graficando lista de punteos general"<<endl;
+    texto->append("201503823@Gianni:~ Graficando lista de punteos general");
+    return true;
   }
 
   bool graficarPunteoArbol() {
     nivel->graficarArbol();
-    cout << "Graficando arbol de punteos"<<endl;
+    texto->append("201503823@Gianni:~ Graficando lista de punteos personales en arbol");
+    return true;
   }
 
   bool pausar() {
     nivel->pausar();
-    cout <<"pausando la creacion y movimiento de enemigos"<<endl;
+    texto->append("201503823@Gianni:~ Pausando el la creaciondel juego");
+    return true;
   }
 
   void setMin(const int32_t min) {
     nivel->min = min;
-    cout <<"Seteando minitos de juego"<<endl;
   }
 
   void setSeg(const int32_t seg) {
     nivel->seg = seg;
-    cout <<"seteando segundos de juego"<<endl;
   }
 
   void finalizar() {
       //nivel->graficarLisEnemigosElim();
       nivel->finjuego();
-      cout << "Fin del juego"<<endl;
+      texto->append("201503823@Gianni:~ Fianlizando juego");
     }
 
   int32_t getCantGemas() {
-       cout <<"Retronando cantidad de Gemas"<<endl;
+       texto->append("201503823@Gianni:~ Retornando cantidad de gemas");
       return nivel->getCantGemas();
     }
 
     bool buscarUsuario(const std::string& nombre) {
-        cout <<"buscando usuario..."<<endl;
+        texto->append("201503823@Gianni:~ Buscando usuario...");
       return nivel->buscarUsuario(nombre);
     }
 
     bool ganoNivel() {
-      cout <<"Verificando punteo con nivel"<<endl;
-      nivel->ganoNivel();
+      texto->append("201503823@Gianni:~ Verificando el punteo con el minimo del nivel");
+      return nivel->ganoNivel();
     }
 
     void graficarNiveles() {
-      cout <<"Graficando niveles"<<endl;
+      texto->append("201503823@Gianni:~ Graficando lista de niveles");
       nivel->graficarNiveles();
     }
 };
@@ -117,7 +128,7 @@ class JuegoHandler : virtual public JuegoIf {
 void HiloApache::run()
 {
     int port = 9090;
-    ::apache::thrift::stdcxx::shared_ptr<JuegoHandler> handler(new JuegoHandler(this->nivel));
+    ::apache::thrift::stdcxx::shared_ptr<JuegoHandler> handler(new JuegoHandler(this->nivel,this->texto));
     ::apache::thrift::stdcxx::shared_ptr<TProcessor> processor(new JuegoProcessor(handler));
     ::apache::thrift::stdcxx::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
     ::apache::thrift::stdcxx::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());

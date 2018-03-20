@@ -111,15 +111,18 @@ void Niveles::aumentarTam()
 bool Niveles::Jugar(int nivel)
 {
     //texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Iniciando el juego");
+    //emit escritura("\n201503823@Gianni:~ Iniciando el juego");
     Nodo *aux = inicio;
     while(aux != NULL)
     {
         if(aux->nivel == nivel)
         {
-            cout << "Nivel:" << nivel << " Encontrado"<<endl;
+            //cout << "Nivel:" << nivel << " Encontrado"<<endl;
+            //emit escritura("\n201503823@Gianni:~ Nivel: Encontrado");
             if(aux->Lock)
             {
                 //texto->setText(texto->toPlainText() + "\n201503823@Gianni:~ Nivel Blocqueado");
+                //emit escritura("\n201503823@Gianni:~ Nivel Bloqueado");
                 cout << "Nivel bloqueado"<<endl;
                 return false;
             }
@@ -133,12 +136,13 @@ bool Niveles::Jugar(int nivel)
         }
         aux = aux->anterior;
     }
+    return false;
 }
 
 void Niveles::graficarNiveles()
 {
     ofstream ficheroSalida;
-    ficheroSalida.open ("niveles.dot");
+    ficheroSalida.open ("/home/mrrobot/Público/MultimediaEDDP1/niveles.dot");
     ficheroSalida << "digraph niveles{";
     Nodo *aux = Pnivel;
     Nodo *ant = Pnivel;
@@ -171,7 +175,7 @@ void Niveles::graficarNiveles()
     }
     ficheroSalida << "}";
     ficheroSalida.close();
-    system("dot -Tpng niveles.dot -o niveles.png");
+    system("dot -Tpng /home/mrrobot/Público/MultimediaEDDP1/niveles.dot -o /home/mrrobot/Público/MultimediaEDDP1/niveles.png");
     //system("nomacs niveles.png");
 }
 
@@ -198,6 +202,7 @@ bool Niveles::crearUsuario(string nombre)
 {
     this->jugando = new Usuario(nombre);
     pushLisUsuario(jugando);
+    return true;
 }
 
 void Niveles::finjuego()
@@ -244,7 +249,7 @@ void Niveles::graficarLisUsuario()
     {
         LisUsuario *aux = inicioLisUsu;
         ofstream ficheroSalida;
-        ficheroSalida.open ("LisUsr.dot");
+        ficheroSalida.open ("/home/mrrobot/Público/MultimediaEDDP1/LisUsr.dot");
         ficheroSalida << "digraph LisUsr{";
         while(aux != NULL)
         {
@@ -262,8 +267,8 @@ void Niveles::graficarLisUsuario()
         }
         ficheroSalida << "}";
         ficheroSalida.close();
-        system("dot -Tpng LisUsr.dot -o LisUsr.png");
-        system("nomacs LisUsr.png");
+        system("dot -Tpng /home/mrrobot/Público/MultimediaEDDP1/LisUsr.dot -o /home/mrrobot/Público/MultimediaEDDP1/LisUsr.png");
+        system("nomacs /home/mrrobot/Público/MultimediaEDDP1/LisUsr.png");
     }
 }
 
@@ -383,3 +388,4 @@ void Niveles::graficarMatriz()
 {
     Play->matriz->graficarMatriz();
 }
+

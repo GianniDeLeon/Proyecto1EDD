@@ -56,7 +56,7 @@ void ArbolPunteo::recorridoAnchura()
 void ArbolPunteo::graficarArbol()
 {
     ofstream ficheroSalida;
-    ficheroSalida.open ("arbol.dot");
+    ficheroSalida.open ("/home/mrrobot/Público/MultimediaEDDP1/arbol.dot");
     ficheroSalida << "digraph Arbol{";
     Cola *inicio = inicio2;
     while(inicio != NULL)
@@ -75,8 +75,8 @@ void ArbolPunteo::graficarArbol()
     }
     ficheroSalida << "}";
     ficheroSalida.close();
-    system("dot -Tpng arbol.dot -o arbol.png");
-    system("nomacs arbol.png");
+    system("dot -Tpng /home/mrrobot/Público/MultimediaEDDP1/arbol.dot -o /home/mrrobot/Público/MultimediaEDDP1/arbol.png");
+    system("nomacs /home/mrrobot/Público/MultimediaEDDP1/arbol.png");
 }
 
 Nodo *ArbolPunteo::crearNodo(int punteo, int nivel, int seg, int min)

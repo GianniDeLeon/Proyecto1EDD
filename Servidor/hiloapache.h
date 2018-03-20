@@ -6,9 +6,9 @@
 class HiloApache : public QThread
 {
 public:
-    HiloApache(Niveles *nivel);
+    HiloApache(Niveles *nivel,QTextEdit *texto);
     Niveles *nivel;
-
+    QTextEdit *texto;
 protected:
     void run();
 };

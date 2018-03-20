@@ -6,7 +6,7 @@
 #include <string>
 #include "usuario.h"
 using namespace std;
-class Niveles
+class Niveles : public QObject
 {
 public:
     int tam,min,seg,punteo;
@@ -44,6 +44,8 @@ public:
     bool ganoNivel();
     bool onOffCheat();
     void graficarMatriz();
+signals:
+    void escritura(QString);
 };
 
 #endif // NIVELES_H

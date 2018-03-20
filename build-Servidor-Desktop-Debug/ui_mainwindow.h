@@ -18,12 +18,12 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextEdit>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -31,6 +31,11 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *actionsalir;
+    QAction *actionDesarrollador;
+    QAction *actionAplicacion;
+    QAction *actionManual_Tecnico;
+    QAction *actionManual_de_Usuario;
     QWidget *centralWidget;
     QTabWidget *tabWidget;
     QWidget *InicioServidor;
@@ -52,20 +57,32 @@ public:
     QLineEdit *lineEdit_3;
     QPushButton *pushButton_5;
     QPushButton *pushButton_6;
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
     QStatusBar *statusBar;
+    QMenuBar *menuBar;
+    QMenu *menua;
+    QMenu *menuAcerca_de;
+    QMenu *menuManuales;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(641, 464);
+        actionsalir = new QAction(MainWindow);
+        actionsalir->setObjectName(QStringLiteral("actionsalir"));
+        actionDesarrollador = new QAction(MainWindow);
+        actionDesarrollador->setObjectName(QStringLiteral("actionDesarrollador"));
+        actionAplicacion = new QAction(MainWindow);
+        actionAplicacion->setObjectName(QStringLiteral("actionAplicacion"));
+        actionManual_Tecnico = new QAction(MainWindow);
+        actionManual_Tecnico->setObjectName(QStringLiteral("actionManual_Tecnico"));
+        actionManual_de_Usuario = new QAction(MainWindow);
+        actionManual_de_Usuario->setObjectName(QStringLiteral("actionManual_de_Usuario"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setGeometry(QRect(0, 0, 641, 421));
+        tabWidget->setGeometry(QRect(0, 0, 651, 421));
         InicioServidor = new QWidget();
         InicioServidor->setObjectName(QStringLiteral("InicioServidor"));
         pushButton = new QPushButton(InicioServidor);
@@ -102,7 +119,7 @@ public:
         tab->setObjectName(QStringLiteral("tab"));
         graphicsView = new QGraphicsView(tab);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(0, 0, 641, 301));
+        graphicsView->setGeometry(QRect(0, 0, 631, 301));
         pushButton_3 = new QPushButton(tab);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
         pushButton_3->setGeometry(QRect(0, 320, 111, 26));
@@ -129,20 +146,32 @@ public:
         pushButton_6->setGeometry(QRect(550, 320, 80, 26));
         tabWidget->addTab(tab, QString());
         MainWindow->setCentralWidget(centralWidget);
-        menuBar = new QMenuBar(MainWindow);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 641, 23));
-        MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
+        menuBar = new QMenuBar(MainWindow);
+        menuBar->setObjectName(QStringLiteral("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 641, 23));
+        menua = new QMenu(menuBar);
+        menua->setObjectName(QStringLiteral("menua"));
+        menuAcerca_de = new QMenu(menuBar);
+        menuAcerca_de->setObjectName(QStringLiteral("menuAcerca_de"));
+        menuManuales = new QMenu(menuBar);
+        menuManuales->setObjectName(QStringLiteral("menuManuales"));
+        MainWindow->setMenuBar(menuBar);
+
+        menuBar->addAction(menua->menuAction());
+        menuBar->addAction(menuAcerca_de->menuAction());
+        menuBar->addAction(menuManuales->menuAction());
+        menua->addAction(actionsalir);
+        menuAcerca_de->addAction(actionDesarrollador);
+        menuAcerca_de->addAction(actionAplicacion);
+        menuManuales->addAction(actionManual_Tecnico);
+        menuManuales->addAction(actionManual_de_Usuario);
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -150,7 +179,12 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Servidor Gianni", nullptr));
+        actionsalir->setText(QApplication::translate("MainWindow", "&salir", nullptr));
+        actionDesarrollador->setText(QApplication::translate("MainWindow", "&Desarrollador", nullptr));
+        actionAplicacion->setText(QApplication::translate("MainWindow", "&Aplicacion", nullptr));
+        actionManual_Tecnico->setText(QApplication::translate("MainWindow", "Manual Tecnico", nullptr));
+        actionManual_de_Usuario->setText(QApplication::translate("MainWindow", "Manual de Usuario", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Iniciar Servidor", nullptr));
         label->setText(QApplication::translate("MainWindow", "Cantidad de niveles:", nullptr));
         label_2->setText(QApplication::translate("MainWindow", "Cantidad De niveles:", nullptr));
@@ -164,6 +198,9 @@ public:
         pushButton_5->setText(QApplication::translate("MainWindow", "Arbol de Punteos", nullptr));
         pushButton_6->setText(QApplication::translate("MainWindow", "Niveles", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "Graficas", nullptr));
+        menua->setTitle(QApplication::translate("MainWindow", "&Juego", nullptr));
+        menuAcerca_de->setTitle(QApplication::translate("MainWindow", "Acerca &de", nullptr));
+        menuManuales->setTitle(QApplication::translate("MainWindow", "&Manuales", nullptr));
     } // retranslateUi
 
 };

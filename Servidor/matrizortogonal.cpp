@@ -52,9 +52,9 @@ typedef struct MatrizOrtogonal::ListaGemas
     ListaGemas *siguiente;
 }ListaGemas;
 
-ListaEnemigos *LV1=NULL,*LV2=NULL,*LV3=NULL;
-ListaGemas *LG=NULL;
-NodoRaiz *inicio=NULL;
+ListaEnemigos *LV1,*LV2,*LV3;
+ListaGemas *LG;
+NodoRaiz *inicio;
 bool pausa,finHilo,cheatActivo;
 int limit,gemas,idgema,falloAtac;
 NodoCheat *inicioCheat;
@@ -74,6 +74,10 @@ MatrizOrtogonal::MatrizOrtogonal(int limit,QTextEdit *texto)
     idgema = 1;
     falloAtac =0;
     inicioCheat = NULL;
+    LV1=NULL;
+    LV2=NULL;
+    LV3=NULL;
+    LG=NULL;
 }
 
 void MatrizOrtogonal::limpiar()
@@ -90,6 +94,10 @@ void MatrizOrtogonal::limpiar()
     cheatActivo = false;
     idgema = 1;
     falloAtac =0;
+    LV1=NULL;
+    LV2=NULL;
+    LV3=NULL;
+    LG=NULL;
 }
 
 void MatrizOrtogonal::setPausa()
@@ -165,6 +173,8 @@ CabezeraX *MatrizOrtogonal::crearCabezerax(int x)
 {
     CabezeraX *nueva = new CabezeraX;
     nueva->abajo = NULL;
+    nueva->anterior = NULL;
+    nueva->sigiente = NULL;
     nueva->x = x;
     return nueva;
 }
@@ -226,6 +236,8 @@ CabezeraY *MatrizOrtogonal::crearCabezeray(int y)
     CabezeraY *nueva = new CabezeraY;
     nueva->y = y;
     nueva->izquierda = NULL;
+    nueva->anterior = NULL;
+    nueva->sigiente = NULL;
     return nueva;
 }
 
@@ -693,7 +705,7 @@ ListaGemas *MatrizOrtogonal::getListaGemas()
 
 bool MatrizOrtogonal::atacarNodo(int x, int y)
 {
-    cout << "Iniciando el ataque en X:"<<x<<" Y:"<<y<<endl;
+    //cout << "Iniciando el ataque en X:"<<x<<" Y:"<<y<<endl;
     //this->texto->setText(this->texto->toPlainText() + "\n201503823@Gianni:~ Atacando nodo");
     if(cheatActivo)
     {
@@ -720,7 +732,7 @@ bool MatrizOrtogonal::atacarNodo(int x, int y)
         if(en != NULL)
         {
             falloAtac = 0;
-            cout << "Atacando en la posicion X:"<<x<<" Y:"<<y<<endl;
+            //cout << "Atacando en la posicion X:"<<x<<" Y:"<<y<<endl;
             int vida = en->impacto();
             cout << "Vida restante del enemigo "<<vida<<" Nivel:"<<en->getNivel()<<endl;
             if(this->NumImpactos == 5)
@@ -795,8 +807,12 @@ void MatrizOrtogonal::graficarN1()
 {
     ListaEnemigos *aux = LV1;
     ofstream ficheroSalida;
-    ficheroSalida.open ("N1.dot");
+    ficheroSalida.open ("/home/mrrobot/Público/MultimediaEDDP1/N1.dot");
     ficheroSalida << "digraph N1{\n";
+    if(aux == NULL)
+    {
+        ficheroSalida << "SinElementos\n";
+    }
     while(aux!=NULL)
     {
         ficheroSalida<<"ID"<<aux->enemigo->getId();
@@ -812,15 +828,19 @@ void MatrizOrtogonal::graficarN1()
     }
     ficheroSalida << "}";
     ficheroSalida.close();
-    system("dot -Tpng N1.dot -o N1.png");
+    system("dot -Tpng /home/mrrobot/Público/MultimediaEDDP1/N1.dot -o /home/mrrobot/Público/MultimediaEDDP1/N1.png");
 }
 
 void MatrizOrtogonal::graficarN2()
 {
     ListaEnemigos *aux = LV2;
     ofstream ficheroSalida;
-    ficheroSalida.open ("N2.dot");
+    ficheroSalida.open ("/home/mrrobot/Público/MultimediaEDDP1/N2.dot");
     ficheroSalida << "digraph N2{\n";
+    if(aux == NULL)
+    {
+        ficheroSalida << "SinElementos\n";
+    }
     while(aux!=NULL)
     {
         ficheroSalida<<"ID"<<aux->enemigo->getId();
@@ -836,15 +856,19 @@ void MatrizOrtogonal::graficarN2()
     }
     ficheroSalida << "}";
     ficheroSalida.close();
-    system("dot -Tpng N2.dot -o N2.png");
+    system("dot -Tpng /home/mrrobot/Público/MultimediaEDDP1/N2.dot -o /home/mrrobot/Público/MultimediaEDDP1/N2.png");
 }
 
 void MatrizOrtogonal::graficarN3()
 {
     ListaEnemigos *aux = LV3;
     ofstream ficheroSalida;
-    ficheroSalida.open ("N3.dot");
+    ficheroSalida.open ("/home/mrrobot/Público/MultimediaEDDP1/N3.dot");
     ficheroSalida << "digraph N3{\n";
+    if(aux == NULL)
+    {
+        ficheroSalida << "SinElementos\n";
+    }
     while(aux!=NULL)
     {
         ficheroSalida<<"ID"<<aux->enemigo->getId();
@@ -860,7 +884,7 @@ void MatrizOrtogonal::graficarN3()
     }
     ficheroSalida << "}";
     ficheroSalida.close();
-    system("dot -Tpng N3.dot -o N3.png");
+    system("dot -Tpng /home/mrrobot/Público/MultimediaEDDP1/N3.dot -o /home/mrrobot/Público/MultimediaEDDP1/N3.png");
 }
 
 void MatrizOrtogonal::graficarEnemigosEliminados()
@@ -1144,7 +1168,7 @@ NodoCheat *MatrizOrtogonal::PopCheat()
 void MatrizOrtogonal::graficarMatriz()
 {
     ofstream ficheroSalida;
-    ficheroSalida.open ("matriz.dot");
+    ficheroSalida.open ("/home/mrrobot/Público/MultimediaEDDP1/matriz.dot");
     ficheroSalida << "digraph matriz{"
                      "bgcolor=\"purple:pink\" style=\"filled\""
                      "subgraph cluster1 {fillcolor=\"blue:green\" style=\"filled\""
@@ -1176,8 +1200,8 @@ void MatrizOrtogonal::graficarMatriz()
     }
     ficheroSalida << "</TABLE>>];\n}\n}";
     ficheroSalida.close();
-    system("dot -Tpng matriz.dot -o matriz.png");
-    system("nomacs matriz.png");
+    system("dot -Tpng /home/mrrobot/Público/MultimediaEDDP1/matriz.dot -o /home/mrrobot/Público/MultimediaEDDP1/matriz.png");
+    system("nomacs /home/mrrobot/Público/MultimediaEDDP1/matriz.png");
 }
 
 

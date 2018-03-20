@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTextEdit>
+#include "niveles.h"
 namespace Ui {
 class MainWindow;
 }
@@ -26,6 +27,16 @@ private slots:
     void on_pushButton_4_clicked();
 
     void on_pushButton_3_clicked();
+
+    void on_actionsalir_triggered();
+
+    void on_actionDesarrollador_triggered();
+
+    void on_actionAplicacion_triggered();
+
+    void on_actionManual_Tecnico_triggered();
+
+    void on_actionManual_de_Usuario_triggered();
 
 private:
     Ui::MainWindow *ui;

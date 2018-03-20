@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Servidor Gianni</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="tabWidget">
@@ -19,12 +19,12 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>641</width>
+      <width>651</width>
       <height>421</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="InicioServidor">
      <attribute name="title">
@@ -136,7 +136,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>641</width>
+        <width>631</width>
         <height>301</height>
        </rect>
       </property>
@@ -242,6 +242,7 @@
     </widget>
    </widget>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -251,16 +252,55 @@
      <height>23</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menua">
+    <property name="title">
+     <string>&amp;Juego</string>
+    </property>
+    <addaction name="actionsalir"/>
+   </widget>
+   <widget class="QMenu" name="menuAcerca_de">
+    <property name="title">
+     <string>Acerca &amp;de</string>
+    </property>
+    <addaction name="actionDesarrollador"/>
+    <addaction name="actionAplicacion"/>
+   </widget>
+   <widget class="QMenu" name="menuManuales">
+    <property name="title">
+     <string>&amp;Manuales</string>
+    </property>
+    <addaction name="actionManual_Tecnico"/>
+    <addaction name="actionManual_de_Usuario"/>
+   </widget>
+   <addaction name="menua"/>
+   <addaction name="menuAcerca_de"/>
+   <addaction name="menuManuales"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionsalir">
+   <property name="text">
+    <string>&amp;salir</string>
+   </property>
+  </action>
+  <action name="actionDesarrollador">
+   <property name="text">
+    <string>&amp;Desarrollador</string>
+   </property>
+  </action>
+  <action name="actionAplicacion">
+   <property name="text">
+    <string>&amp;Aplicacion</string>
+   </property>
+  </action>
+  <action name="actionManual_Tecnico">
+   <property name="text">
+    <string>Manual Tecnico</string>
+   </property>
+  </action>
+  <action name="actionManual_de_Usuario">
+   <property name="text">
+    <string>Manual de Usuario</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

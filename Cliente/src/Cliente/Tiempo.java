@@ -23,7 +23,6 @@ public class Tiempo extends Thread {
     Juego.Client juego;
     boolean pausa, finHilo;
     JButton selecNivel,disparo;
-    
     public Tiempo(JLabel texto, int nivel, Juego.Client juego,JButton selecNivel,JLabel gemas,JButton disparo,JLabel punteo) {
         seg = min = 0;
         this.nivel = nivel;
@@ -118,6 +117,10 @@ public class Tiempo extends Thread {
     }
 
     public void SetFinHilo() {
+        if(setCheat)
+        {
+            tiro.setFin();
+        }
         SetPausa();
         finHilo = true;
         JOptionPane.showMessageDialog(null, "Se a terminado el tiempo");

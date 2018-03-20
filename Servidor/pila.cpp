@@ -14,11 +14,12 @@ typedef struct Pila::Nodo
     Nodo *siguiente;
 }Nodo;
 
-Nodo *inicioPila=NULL;
+Nodo *inicioPila;
 
 Pila::Pila()
 {
     //srand(time(NULL));
+    inicioPila = NULL;
 }
 
 void Pila::Push(Nodo *nuevo)
@@ -94,7 +95,7 @@ void Pila::pushEnemigo(Enemigo *en)
 void Pila::graficarPila()
 {
     ofstream ficheroSalida;
-    ficheroSalida.open ("Pila.dot");
+    ficheroSalida.open ("/home/mrrobot/Público/MultimediaEDDP1/Pila.dot");
     ficheroSalida << "digraph Pila{\n";
     Nodo *aux = inicioPila;
     while(aux != NULL)
@@ -127,6 +128,6 @@ void Pila::graficarPila()
     }
     ficheroSalida << "}";
     ficheroSalida.close();
-    system("dot -Tpng Pila.dot -o Pila.png");
-    system("nomacs Pila.png");
+    system("dot -Tpng /home/mrrobot/Público/MultimediaEDDP1/Pila.dot -o /home/mrrobot/Público/MultimediaEDDP1/Pila.png");
+    system("nomacs /home/mrrobot/Público/MultimediaEDDP1/Pila.png");
 }
